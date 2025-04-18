@@ -1,0 +1,66 @@
+{% extends 'base_minimal.html' %}
+
+{% block content %}
+<div class="profile-container">
+    <h1>Create Account</h1>
+    <p class="tagline">Join the Boost.dev community</p>
+    
+    <form method="post" action="{% url 'register' %}">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="{{ form.username.id_for_label }}">Username</label>
+            {{ form.username }}
+            {% if form.username.errors %}
+                <div class="error">{{ form.username.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="{{ form.email.id_for_label }}">Email</label>
+            {{ form.email }}
+            {% if form.email.errors %}
+                <div class="error">{{ form.email.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="{{ form.password1.id_for_label }}">Password</label>
+            {{ form.password1 }}
+            {% if form.password1.errors %}
+                <div class="error">{{ form.password1.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="{{ form.password2.id_for_label }}">Confirm Password</label>
+            {{ form.password2 }}
+            {% if form.password2.errors %}
+                <div class="error">{{ form.password2.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="{{ form.github_username.id_for_label }}">GitHub Username (Optional)</label>
+            {{ form.github_username }}
+            {% if form.github_username.errors %}
+                <div class="error">{{ form.github_username.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="{{ form.experience_level.id_for_label }}">Experience Level</label>
+            {{ form.experience_level }}
+            {% if form.experience_level.errors %}
+                <div class="error">{{ form.experience_level.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+    
+    <div class="form-footer">
+        <p>Already have an account? <a href="{% url 'login' %}">Log in</a></p>
+    </div>
+</div>
+{% endblock %}

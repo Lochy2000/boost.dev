@@ -1,0 +1,31 @@
+{% extends 'dashboard/dash_base.html' %}
+
+{% block dashboard_content %}
+<div class="dashboard-container">
+    <h1>Welcome, {{ user.username }}!</h1>
+    <p class="tagline">Your development journey is going to accelerate.</p>
+    
+    <div class="dashboard-stats">
+        <div class="stat-card">
+            <h3>Submissions</h3>
+            <p class="stat-value">{{ user.submission_set.count }}</p>
+        </div>
+        
+        <div class="stat-card">
+            <h3>Wins</h3>
+            <p class="stat-value">{{ user.win_set.count }}</p>
+        </div>
+        
+        <div class="stat-card">
+            <h3>Experience</h3>
+            <p class="stat-value">{{ user.userprofile.experience_level|title }}</p>
+        </div>
+    </div>
+    
+    <div class="dashboard-actions">
+        <a href="{% url 'profile' %}" class="btn btn-primary">Edit Profile</a>
+        <a href="{% url 'submissions' %}" class="btn btn-secondary">My Submissions</a>
+        <a href="{% url 'new_submission' %}" class="btn btn-secondary">New Submission</a>
+    </div>
+</div>
+{% endblock %}

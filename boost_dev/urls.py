@@ -17,9 +17,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from dashboard import views
+from users import views as user_views
 
 urlpatterns = [
     path('', views.home, name='home'),
+    path('dashboard/', views.dashboard, name='dashboard'),
+    path('register/', user_views.register_view, name='register'),
+    path('login/', user_views.login_view, name='login'),
+    path('users/', include('users.urls')),
+    path('social-auth/', include('social_django.urls', namespace='social')),
     path('grappelli/', include('grappelli.urls')),
     path('admin/', admin.site.urls),
+    path('submissions/', include('submissions.urls')),
 ]

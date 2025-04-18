@@ -37,8 +37,30 @@ class DailyPrompt(models.Model):
     @classmethod
     def get_today(cls):
         today = timezone.now().date()
+        
+        # Check if we have active quotes and challenges
+        active_quote = Quote.objects.filter(is_active=True).order_by('?').first()
+        active_challenge = Challenge.objects.filter(is_active=True).order_by('?').first()
+        
+        # Create fallback objects if needed
+        if not active_quote:
+            active_quote = Quote.objects.create(
+                text="The journey of a thousand miles begins with a single step.",
+                author="Lao Tzu",
+                is_active=True
+            )
+        
+        if not active_challenge:
+            active_challenge = Challenge.objects.create(
+                title="Getting Started Challenge",
+                description="Set up your development environment and commit your first code change.",
+                difficulty="easy",
+                is_active=True
+            )
+        
+        # Now we can safely use get_or_create
         prompt, created = cls.objects.get_or_create(date=today, defaults={
-            'quote': Quote.objects.filter(is_active=True).order_by('?').first(),
-            'challenge': Challenge.objects.filter(is_active=True).order_by('?').first()
+            'quote': active_quote,
+            'challenge': active_challenge
         })
         return prompt

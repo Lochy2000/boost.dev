@@ -1,0 +1,10 @@
+{% extends 'base_minimal.html' %}
+
+{% block content %}
+<!-- Dashboard content for logged-in users -->
+<div class="dashboard-container">
+    {% block dashboard_content %}
+    <!-- Dashboard specific content goes here -->
+    {% endblock %}
+</div>
+{% endblock %}

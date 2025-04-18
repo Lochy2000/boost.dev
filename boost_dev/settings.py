@@ -50,6 +50,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'social_django',  # Add social-auth-app-django
+
     'tailwind',
     'theme',
 
@@ -77,13 +79,15 @@ ROOT_URLCONF = 'boost_dev.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'theme', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',  # Add for social auth
+                'social_django.context_processors.login_redirect',  # Add for social auth
             ],
         },
     },
@@ -149,3 +153,20 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 NPM_BIN_PATH = 'NPM_BIN_PATH', "C:/Program Files/nodejs/npm.cmd"  # for installing tailwindcss
+
+# Authentication
+AUTHENTICATION_BACKENDS = [
+    'social_core.backends.github.GithubOAuth2',
+    'social_core.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+# Social Auth settings
+SOCIAL_AUTH_GITHUB_KEY = os.environ.get('GITHUB_KEY', '')
+SOCIAL_AUTH_GITHUB_SECRET = os.environ.get('GITHUB_SECRET', '')
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get('GOOGLE_KEY', '')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get('GOOGLE_SECRET', '')
+
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/dashboard/'
+SOCIAL_AUTH_LOGIN_ERROR_URL = '/login/'
