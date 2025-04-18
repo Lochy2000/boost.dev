@@ -19,6 +19,13 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Optionally, if you have static files in your app directories:
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'theme/static'),
+# ]
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -89,10 +96,7 @@ WSGI_APPLICATION = 'boost_dev.wsgi.application'
 # }
 
 DATABASES = {
-    'default': os.environ.get('dj_database_url').config(
-        default='sqlite:///db.sqlite3',  # fallback for local dev
-        conn_max_age=600,
-    )
+    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
 }
 
 
