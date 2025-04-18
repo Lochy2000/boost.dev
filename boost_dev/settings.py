@@ -21,10 +21,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# Optionally, if you have static files in your app directories:
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, 'theme/static'),
-# ]
+# Static files in app directories and project level
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'theme/static'),
+]
 
 
 # Quick-start development settings - unsuitable for production
