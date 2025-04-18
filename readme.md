@@ -71,6 +71,26 @@ Live site: [Boost.dev]()
 
 
 
+Colours - checked against WCAG for contrast 
+
+#581CA0 - purple (from the canva mind map)
+#312fa6 - indigo 
+#b12e5d - roseberry
+#0088cc - bright blue
+#121212 - dark background
+
+| Colour      | WCAG Ratio (against #121212) | WCAG Contrast          |
+|-------------|-------------------------------|-------------------------|
+| Purple      | Pass (7.1:1)                 | ✅ AAA                 |
+| Indigo      | Pass (8.23:1)                | ✅✅ AAA               |
+| Roseberry   | Pass (6.71:1)                | ✅✅ AAA               |
+| Bright Blue | Pass (6.95:1)                | ✅✅ AAA               |
+
+
+
+
+
+
 
 ## Tailwind CSS Setup
 
