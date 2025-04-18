@@ -1,0 +1,50 @@
+{% extends 'base_minimal.html' %}
+
+{% block content %}
+<div class="profile-container">
+    <h1>Your Profile</h1>
+    <p class="tagline">Update your information</p>
+    
+    <form method="post" action="{% url 'profile' %}">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="{{ form.bio.id_for_label }}">Bio</label>
+            {{ form.bio }}
+            {% if form.bio.errors %}
+                <div class="error">{{ form.bio.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="{{ form.github_username.id_for_label }}">GitHub Username</label>
+            {{ form.github_username }}
+            {% if form.github_username.errors %}
+                <div class="error">{{ form.github_username.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="{{ form.experience_level.id_for_label }}">Experience Level</label>
+            {{ form.experience_level }}
+            {% if form.experience_level.errors %}
+                <div class="error">{{ form.experience_level.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="{{ form.avatar.id_for_label }}">Avatar URL</label>
+            {{ form.avatar }}
+            {% if form.avatar.errors %}
+                <div class="error">{{ form.avatar.errors }}</div>
+            {% endif %}
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Update Profile</button>
+    </form>
+    
+    <div class="form-footer">
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
+    </div>
+</div>
+{% endblock %}
