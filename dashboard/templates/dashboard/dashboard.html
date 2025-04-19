@@ -1,31 +1,41 @@
 {% extends 'dashboard/dash_base.html' %}
 
 {% block dashboard_content %}
-<div class="dashboard-container">
-    <h1>Welcome, {{ user.username }}!</h1>
-    <p class="tagline">Your development journey is going to accelerate.</p>
-    
-    <div class="dashboard-stats">
-        <div class="stat-card">
-            <h3>Submissions</h3>
-            <p class="stat-value">{{ user.submission_set.count }}</p>
+<div class="px-6 py-8 max-w-5xl mx-auto space-y-8">
+    <!-- Greeting -->
+    <div>
+        <h1 class="text-3xl font-bold text-indigo-400">Welcome back, {{ user.username }} 👋</h1>
+        <p class="mt-2 text-gray-400 text-lg italic">Let’s keep growing, one tiny win at a time.</p>
+    </div>
+
+    <!-- Daily Prompt -->
+    <div class="bg-gradient-to-r from-purple-600 to-indigo-600 rounded p-6 shadow-lg text-white">
+        <h2 class="text-xl font-semibold mb-2">💡 Daily Boost</h2>
+        <p class="quote mb-4 italic text-gray-700"></p><i class="fas fa-quote-left my-2 me-2"></i>{{ daily_prompt.quote.text }} <i class="fas fa-quote-right me-2"></i></p>
+        <p class="text-lg font-light tracking-wide">{{ daily_prompt.quote.author }}</p>
+    </div>
+
+    <!-- Stats Section -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div class="bg-[#1e1f23] rounded p-5 shadow text-center">
+            <h3 class="text-gray-400 uppercase text-sm tracking-wide">Submissions</h3>
+            <p class="text-3xl font-bold text-white mt-2">{{ user.submission_set.count }}</p>
         </div>
-        
-        <div class="stat-card">
-            <h3>Wins</h3>
-            <p class="stat-value">{{ user.win_set.count }}</p>
+        <div class="bg-[#1e1f23] rounded p-5 shadow text-center">
+            <h3 class="text-gray-400 uppercase text-sm tracking-wide">Wins</h3>
+            <p class="text-3xl font-bold text-white mt-2">{{ user.win_set.count }}</p>
         </div>
-        
-        <div class="stat-card">
-            <h3>Experience</h3>
-            <p class="stat-value">{{ user.userprofile.experience_level|title }}</p>
+        <div class="bg-[#1e1f23] rounded p-5 shadow text-center">
+            <h3 class="text-gray-400 uppercase text-sm tracking-wide">Experience</h3>
+            <p class="text-3xl font-bold text-white mt-2">{{ user.userprofile.experience_level|title }}</p>
         </div>
     </div>
-    
-    <div class="dashboard-actions">
-        <a href="{% url 'profile' %}" class="btn btn-primary">Edit Profile</a>
-        <a href="{% url 'submissions' %}" class="btn btn-secondary">My Submissions</a>
-        <a href="{% url 'new_submission' %}" class="btn btn-secondary">New Submission</a>
+
+    <!-- Action Buttons -->
+    <div class="flex flex-wrap gap-4 justify-start pt-4">
+        <a href="{% url 'profile' %}" class="bg-indigo-500 hover:bg-indigo-600 text-white px-5 py-3 rounded shadow transition-all">Edit Profile</a>
+        <a href="{% url 'submissions' %}" class="bg-gray-700 hover:bg-gray-600 text-white px-5 py-3 rounded shadow transition-all">My Submissions</a>
+        <a href="{% url 'new_submission' %}" class="bg-rose-600 hover:bg-rose-700 text-white px-5 py-3 rounded shadow transition-all">New Submission</a>
     </div>
 </div>
 {% endblock %}

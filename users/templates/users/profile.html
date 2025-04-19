@@ -1,50 +1,86 @@
 {% extends 'base_minimal.html' %}
 
 {% block content %}
-<div class="profile-container">
-    <h1>Your Profile</h1>
-    <p class="tagline">Update your information</p>
+
+<div class="max-w-5xl mx-auto px-4 py-12 text-gray-200">
+    <!-- Top bar -->
+    <div class="flex justify-between items-center mb-10">
+        <div>
+            <h1 class="text-4xl font-extrabold text-white">Edit Your Profile</h1>
+            <p class="text-sm text-gray-400 mt-1">Customize your vibe. Show off your dev energy ✨</p>
+        </div>
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white px-5 py-3 rounded shadow transition-all">
+                Log Out
+            </button>
+        </form>
+    </div>
     
-    <form method="post" action="{% url 'profile' %}">
-        {% csrf_token %}
-        
-        <div class="form-group">
-            <label for="{{ form.bio.id_for_label }}">Bio</label>
-            {{ form.bio }}
-            {% if form.bio.errors %}
-                <div class="error">{{ form.bio.errors }}</div>
-            {% endif %}
-        </div>
-        
-        <div class="form-group">
-            <label for="{{ form.github_username.id_for_label }}">GitHub Username</label>
-            {{ form.github_username }}
-            {% if form.github_username.errors %}
-                <div class="error">{{ form.github_username.errors }}</div>
-            {% endif %}
-        </div>
-        
-        <div class="form-group">
-            <label for="{{ form.experience_level.id_for_label }}">Experience Level</label>
-            {{ form.experience_level }}
-            {% if form.experience_level.errors %}
-                <div class="error">{{ form.experience_level.errors }}</div>
-            {% endif %}
-        </div>
-        
-        <div class="form-group">
-            <label for="{{ form.avatar.id_for_label }}">Avatar URL</label>
-            {{ form.avatar }}
-            {% if form.avatar.errors %}
-                <div class="error">{{ form.avatar.errors }}</div>
-            {% endif %}
-        </div>
-        
-        <button type="submit" class="btn btn-primary">Update Profile</button>
-    </form>
     
-    <div class="form-footer">
-        <a href="{% url 'dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
+    <div class="grid md:grid-cols-3 gap-10">
+        <!-- Left column: Avatar preview -->
+        <div class="flex flex-col items-center text-center space-y-4 md:col-span-1">
+            <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-[#312fa6] shadow-md">
+                {% if user.userprofile.avatar %}
+                    <img src="{{ user.userprofile.avatar }}" alt="Profile Picture" class="w-full h-full object-cover">
+                {% else %}
+                    <img src="https://res.cloudinary.com/dn7aws3wl/image/upload/v1739390582/nobody_pcaqjl.jpg" alt="Default Profile Picture" class="w-full h-full object-cover">
+                {% endif %}
+            </div>
+            <p class="text-sm text-gray-400">Avatar preview</p>
+        </div>
+
+        <!-- Right column: Form -->
+        <div class="md:col-span-2">
+            <form method="post" action="{% url 'profile' %}" class="space-y-6">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+
+                <div>
+                    <label for="{{ form.avatar.id_for_label }}" class="block mb-1 text-sm text-gray-300">Avatar URL</label>
+                    {{ form.avatar }}
+                    {% for error in form.avatar.errors %}
+                        <p class="text-sm text-red-500 mt-1">{{ error }}</p>
+                    {% endfor %}
+                </div>
+
+                <div>
+                    <label for="{{ form.bio.id_for_label }}" class="block mb-1 text-sm text-gray-300">Short Bio</label>
+                    {{ form.bio }}
+                    {% for error in form.bio.errors %}
+                        <p class="text-sm text-red-500 mt-1">{{ error }}</p>
+                    {% endfor %}
+                </div>
+
+                <div>
+                    <label for="{{ form.github_username.id_for_label }}" class="block mb-1 text-sm text-gray-300 flex items-center gap-2">
+                        <i class="fab fa-github text-white text-2xl"></i>
+                        GitHub Username
+                    </label>
+                    {{ form.github_username }}
+                    {% for error in form.github_username.errors %}
+                        <p class="text-sm text-red-500 mt-1">{{ error }}</p>
+                    {% endfor %}
+                </div>
+
+                <div>
+                    <label for="{{ form.experience_level.id_for_label }}" class="block mb-1 text-sm text-gray-300">Experience Level</label>
+                    {{ form.experience_level }}
+                    {% for error in form.experience_level.errors %}
+                        <p class="text-sm text-red-500 mt-1">{{ error }}</p>
+                    {% endfor %}
+                </div>
+
+                <!-- Buttons -->
+                <div class="flex items-center justify-between pt-6">
+                    <a href="{% url 'dashboard' %}" class="text-sm text-gray-400 hover:text-white transition">← Back to Dashboard</a>
+                    <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white px-5 py-3 rounded shadow transition-all">
+                        Save Changes
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 {% endblock %}
