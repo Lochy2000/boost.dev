@@ -11,7 +11,8 @@
     <!-- Daily Prompt -->
     <div class="bg-gradient-to-r from-purple-600 to-indigo-600 rounded p-6 shadow-lg text-white">
         <h2 class="text-xl font-semibold mb-2">💡 Daily Boost</h2>
-        <p class="text-lg font-light tracking-wide">{{ daily_prompt.text }}</p>
+        <p class="quote mb-4 italic text-gray-700"></p><i class="fas fa-quote-left my-2 me-2"></i>{{ daily_prompt.quote.text }} <i class="fas fa-quote-right me-2"></i></p>
+        <p class="text-lg font-light tracking-wide">{{ daily_prompt.quote.author }}</p>
     </div>
 
     <!-- Stats Section -->
