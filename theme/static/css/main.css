@@ -14,16 +14,26 @@
 }
 
 body {
-    background-color: var(--primary);
-    color: var(--text);
-    line-height: 1.6;
+    background: radial-gradient(circle, #b12e5d 0%, #b12e5d 30%, #312fa6 100%);
     height: 100vh;
+    margin: 0;
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Ensure header stays at the top */
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    overflow: hidden;
+    color: var(--text);
 }
 
 header {
+    position: absolute; /* Position the header at the top-left corner */
+    top: 0;
+    left: 0;
+    width: 100%; /* Optional: Make the header span the full width */
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Align the logo to the left */
     padding: 1.5rem 2rem;
+    z-index: 10; /* Ensure the header stays above other content */
 }
 
 .logo {
@@ -119,6 +129,14 @@ h1 {
 
 .btn-secondary:hover {
     border-color: var(--text);
+}
+
+.btn-half {
+    font-size: 0.75rem; /* Smaller font size */
+    padding: 0.25rem 0.5rem; /* Smaller padding */
+    width: 50%; /* Make the button half the size */
+    text-align: center; /* Center the text inside the button */
+    display: inline-block; /* Ensure proper alignment */
 }
 
 .divider {
@@ -274,16 +292,4 @@ footer {
     .tagline {
         font-size: 1.1rem;
     }
-}
-
-body {
-    background: radial-gradient(circle, #b12e5d 0%, #b12e5d 30%, #312fa6 100%);
-    height: 100vh;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    overflow: hidden;
-    color: var(--text);
 }
