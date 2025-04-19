@@ -59,8 +59,9 @@
         <button type="submit" class="btn btn-primary">Register</button>
     </form>
     
-    <div class="form-footer">
-        <p>Already have an account? <a href="{% url 'login' %}">Log in</a></p>
+    <div class="form-footer" style="text-align: center; margin-top: 20px;">
+        <p>Already have an account?</p>
+        <a href="{% url 'login' %}" class="btn btn-secondary btn-small btn-half">Log in</a>
     </div>
 </div>
 {% endblock %}
