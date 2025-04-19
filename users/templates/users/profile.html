@@ -2,6 +2,11 @@
 
 {% block content %}
 <div class="max-w-5xl mx-auto px-4 py-12 text-gray-200">
+    <form method="post" action="{% url 'logout' %}" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-outline-light">Log Out</button>
+    </form>
+    
     <h1 class="text-3xl font-bold text-white mb-1">Edit Your Profile</h1>
     <p class="text-sm text-gray-400 mb-8">Customize your profile to match your dev personality ✨</p>
 
