@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>All Wins</h1>
+  <ul>
+    {% for win in wins %}
+      <li>{{ win.content }}</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
