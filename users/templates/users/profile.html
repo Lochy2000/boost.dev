@@ -2,14 +2,21 @@
 
 {% block content %}
 <div class="max-w-5xl mx-auto px-4 py-12 text-gray-200">
-    <form method="post" action="{% url 'logout' %}" style="display: inline;">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-outline-light">Log Out</button>
-    </form>
+    <!-- Top bar -->
+    <div class="flex justify-between items-center mb-10">
+        <div>
+            <h1 class="text-4xl font-extrabold text-white">Edit Your Profile</h1>
+            <p class="text-sm text-gray-400 mt-1">Customize your vibe. Show off your dev energy ✨</p>
+        </div>
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white px-5 py-3 rounded shadow transition-all">
+                Log Out
+            </button>
+        </form>
+    </div>
     
-    <h1 class="text-3xl font-bold text-white mb-1">Edit Your Profile</h1>
-    <p class="text-sm text-gray-400 mb-8">Customize your profile to match your dev personality ✨</p>
-
+    
     <div class="grid md:grid-cols-3 gap-10">
         <!-- Left column: Avatar preview -->
         <div class="flex flex-col items-center text-center space-y-4 md:col-span-1">
@@ -66,9 +73,10 @@
                     {% endfor %}
                 </div>
 
-                <div class="flex items-center justify-between pt-4">
+                <!-- Buttons -->
+                <div class="flex items-center justify-between pt-6">
                     <a href="{% url 'dashboard' %}" class="text-sm text-gray-400 hover:text-white transition">← Back to Dashboard</a>
-                    <button type="submit" class="px-5 py-2 bg-[#312fa6] hover:bg-indigo-700 text-white rounded-md transition duration-200">
+                    <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white px-5 py-3 rounded shadow transition-all">
                         Save Changes
                     </button>
                 </div>
