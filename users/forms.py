@@ -49,25 +49,25 @@ class SignUpForm(UserCreationForm):
             'placeholder': 'Confirm password'
         })
 
-from django import forms
-from .models import UserProfile
-
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ['bio', 'github_username', 'experience_level', 'avatar']
         widgets = {
             'bio': forms.Textarea(attrs={
-                'class': 'w-full px-4 py-2 bg-[#121212] text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-[#312fa6]',
-                'rows': 3
+                'class': 'w-full p-3 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500',
+                'rows': 3,
+                'placeholder': 'Tell us about yourself...'
             }),
             'github_username': forms.TextInput(attrs={
-                'class': 'w-full px-4 py-2 bg-[#121212] text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-[#312fa6]'
+                'class': 'w-full p-3 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500',
+                'placeholder': 'Your GitHub username'
             }),
             'experience_level': forms.Select(attrs={
-                'class': 'w-full px-4 py-2 bg-[#121212] text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-[#312fa6]'
+                'class': 'bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 p-2'
             }),
             'avatar': forms.URLInput(attrs={
-                'class': 'w-full px-4 py-2 bg-[#121212] text-white border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-[#312fa6]'
-            }),
+                'class': 'w-full p-3 bg-gray-700 text-white border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500',
+                'placeholder': 'URL to your avatar image'
+            })
         }
