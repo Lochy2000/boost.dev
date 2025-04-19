@@ -6,20 +6,11 @@ from .models import DailyWin
 from .forms import DailyWinForm
 from services.ai_feedback import get_ai_feedback
 
+from .models import DailyWin
+
 @login_required
 def submit_win(request):
     """View for submitting a new daily win"""
-    # Check if user already submitted a win today
-    today = timezone.now().date()
-    existing_win = DailyWin.objects.filter(
-        user=request.user, 
-        created_at__date=today
-    ).first()
-    
-    if existing_win:
-        messages.info(request, "You've already logged a win for today!")
-        return redirect('wins:view_win', win_id=existing_win.id)
-    
     if request.method == 'POST':
         form = DailyWinForm(request.POST)
         if form.is_valid():
@@ -58,18 +49,7 @@ def my_wins(request):
     """View for displaying the user's wins history"""
     wins = DailyWin.objects.filter(user=request.user)
     
-    # Group wins by month for better display
-    wins_by_month = {}
-    for win in wins:
-        month_year = win.created_at.strftime('%B %Y')
-        if month_year not in wins_by_month:
-            wins_by_month[month_year] = []
-        wins_by_month[month_year].append(win)
-    
-    return render(request, 'wins/my_wins.html', {
-        'wins': wins,
-        'wins_by_month': wins_by_month
-    })
+    return render(request, 'wins/view_win.html', {'wins': wins})
 
 @login_required
 def toggle_public(request, win_id):
@@ -87,3 +67,4 @@ def community_wins(request):
     """View for displaying public wins from all users"""
     wins = DailyWin.objects.filter(is_public=True)
     return render(request, 'wins/community_wins.html', {'wins': wins})
+
