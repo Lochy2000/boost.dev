@@ -4,7 +4,6 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from .forms import SignUpForm, UserProfileForm
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.http import require_POST
 
 def register_view(request):
     if request.method == 'POST':
@@ -51,7 +50,6 @@ def login_view(request):
     
     return render(request, 'users/login.html', {'form': form})
 
-@require_POST
 def logout_view(request):
     logout(request)
     messages.success(request, "You have been logged out successfully!")
