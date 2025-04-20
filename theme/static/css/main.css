@@ -364,10 +364,11 @@ footer {
 }
 
 .imposter-syndrome-section h2 {
-    font-size: 2rem; /* Make the heading larger */
-    margin-bottom: 1rem; /* Add spacing below the heading */
-    font-weight: bold; /* Make the heading bold */
-    color: var(--accent, #581CA0); /* Optional: Add a custom color */
+    color: #ffffff; /* Set the text color to white */
+    font-size: 2rem; /* Optional: Adjust the font size */
+    text-align: center; /* Optional: Center the heading */
+    margin-bottom: 1rem; /* Optional: Add spacing below the heading */
+    font-weight: bold; /* Optional: Make the text bold */
 }
 
 .imposter-syndrome-section p {
@@ -402,6 +403,30 @@ footer {
     object-fit: cover; /* Ensure the images maintain their aspect ratio */
     border-radius: 8px; /* Add rounded corners */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+}
+
+.dynamic-color {
+    animation: color-change 3s infinite; /* Apply the animation */
+    font-weight: bold; /* Optional: Make the word bold */
+}
+
+/* Define the animation */
+@keyframes color-change {
+    0% {
+        color: #ff7e5f; /* Start with a warm color */
+    }
+    25% {
+        color: #feb47b; /* Transition to a lighter shade */
+    }
+    50% {
+        color: #0088cc; /* Transition to a cool blue */
+    }
+    75% {
+        color: #581CA0; /* Transition to purple */
+    }
+    100% {
+        color: #ff7e5f; /* Loop back to the starting color */
+    }
 }
 
 /* Media Queries */
