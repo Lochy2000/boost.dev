@@ -71,6 +71,21 @@
             <p class="text-gray-300 text-lg">You haven't recorded any wins yet. Start tracking your achievements today!</p>
         </div>
     {% endif %}
+
+    {% if challenge_submissions %}
+        <h2 class="text-2xl font-bold text-white mb-6">Challenge Submissions</h2>
+        {% for submission in challenge_submissions %}
+            <div class="bg-gray-800 rounded-lg p-6 shadow-lg mb-4">
+                <h3 class="text-xl font-bold text-white">{{ submission.title }}</h3>
+                <p class="text-gray-200">{{ submission.description }}</p>
+                <p class="text-gray-400">Difficulty: {{ submission.get_difficulty_display }}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="bg-gray-800 rounded-lg p-6 shadow-lg mb-4 text-center">
+            <p class="text-gray-300 text-lg">No challenge submissions yet.</p>
+        </div>
+    {% endif %}
     
     <div class="mt-6 flex justify-between">
         <a href="{% url 'dashboard' %}" class="text-indigo-400 hover:text-indigo-300">

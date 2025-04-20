@@ -1,0 +1,36 @@
+{% extends 'dashboard/dash_base.html' %}
+
+{% block dashboard_content %}
+<div class="px-6 py-8 max-w-5xl mx-auto space-y-8">
+    <h1 class="text-3xl font-bold text-indigo-400">Community Wins and Challenges</h1>
+    <p class="mt-2 text-gray-400 text-lg">Celebrate community achievements and challenge solutions!</p>
+
+    <section id="wins">
+        <h2 class="text-2xl font-bold text-white mb-4">Wins</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {% for win in wins %}
+                {% include 'wins/win_card.html' with win=win show_ai_feedback=True %}
+            {% endfor %}
+        </div>
+    </section>
+
+    <section id="challenges">
+        <h2 class="text-2xl font-bold text-white mb-4">Challenge Solutions</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {% for challenge_solution in challenge_solutions %}
+                <div class="bg-[#1e1f23] rounded-lg overflow-hidden shadow-lg">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <h3 class="text-xl font-semibold text-white">{{ challenge_solution.title }}</h3>
+                        </div>
+                        <p class="mt-2 text-gray-400">{{ challenge_solution.description|truncatechars:100 }}</p>
+                        <div class="mt-4 flex justify-between items-center">
+                            <a href="#" class="text-indigo-400 hover:text-indigo-300">View Solution →</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+</div>
+{% endblock %}

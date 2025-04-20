@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'challenges',
     'users',
     'wins',
+    'submissions',
 ]
 
 TAILWIND_APP_NAME = 'theme'

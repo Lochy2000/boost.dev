@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from submissions.models import ChallengeSolution
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils import timezone
@@ -66,6 +67,7 @@ def view_win(request, win_id):
 def my_wins(request):
     """View for displaying the user's wins history"""
     wins = DailyWin.objects.filter(user=request.user).order_by('-created_at')
+    challenge_submissions = ChallengeSolution.objects.filter(user=request.user, is_correct=True).order_by('-submitted_at')
     
     # Check if user has already submitted a win today
     has_win_today = DailyWin.objects.filter(
@@ -75,6 +77,7 @@ def my_wins(request):
     
     return render(request, 'wins/wins_list.html', {
         'wins': wins,
+        'challenge_submissions': challenge_submissions,
         'has_win_today': has_win_today
     })
 

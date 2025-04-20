@@ -315,3 +315,10 @@ def resource_detail(request, slug):
     }
     
     return render(request, 'dashboard/resource_detail.html', context)
+
+def community(request):
+    """View for displaying community wins and challenge solutions"""
+    from wins.models import Win  # Import Win model here to avoid circular import issues
+    wins = Win.objects.filter(is_challenge_solution=False).order_by('-created_at')
+    challenge_solutions = Win.objects.filter(is_challenge_solution=True).order_by('-created_at')
+    return render(request, 'dashboard/community.html', {'wins': wins, 'challenge_solutions': challenge_solutions})
