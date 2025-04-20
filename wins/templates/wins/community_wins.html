@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
-{% block title %}My Wins History - Boost.dev{% endblock %}
+{% block title %}Community Wins - Boost.dev{% endblock %}
 
 {% block content %}
 <div class="container mx-auto px-4 py-8 max-w-3xl">
-    <h1 class="text-3xl font-bold text-white mb-6">My Wins History</h1>
+    <h1 class="text-3xl font-bold text-white mb-6">Community Wins</h1>
     
     {% if wins %}
         {% for win in wins %}
@@ -48,19 +48,6 @@
                                 <i class="fas fa-comment mr-1"></i> Comment
                             </button>
                         </div>
-                        
-                        <div class="flex space-x-3">
-                            <a href="{% url 'wins:toggle_public' win_id=win.id %}" class="text-gray-400 hover:text-white">
-                                {% if win.is_public %}
-                                <i class="fas fa-eye-slash mr-1"></i> Make Private
-                                {% else %}
-                                <i class="fas fa-eye mr-1"></i> Make Public
-                                {% endif %}
-                            </a>
-                            <a href="#" class="text-gray-400 hover:text-red-400">
-                                <i class="fas fa-trash mr-1"></i> Delete
-                            </a>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -68,7 +55,7 @@
         {% endfor %}
     {% else %}
         <div class="bg-gray-800 rounded-lg p-6 shadow-lg mb-4 text-center">
-            <p class="text-gray-300 text-lg">You haven't recorded any wins yet. Start tracking your achievements today!</p>
+            <p class="text-gray-300 text-lg">No community wins yet. Be the first to share your achievement!</p>
         </div>
     {% endif %}
     
@@ -77,10 +64,16 @@
             <i class="fas fa-arrow-left mr-1"></i> Back to Dashboard
         </a>
         
-        {% if not has_win_today %}
-        <a href="{% url 'wins:submit_win' %}" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded">
-            Add Today's Win
-        </a>
+        {% if request.user.is_authenticated %}
+            {% if not has_win_today %}
+            <a href="{% url 'wins:submit_win' %}" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded">
+                Add Today's Win
+            </a>
+            {% endif %}
+        {% else %}
+            <a href="{% url 'login' %}" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded">
+                Login to Share Your Win
+            </a>
         {% endif %}
     </div>
 </div>
