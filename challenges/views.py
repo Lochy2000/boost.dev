@@ -86,6 +86,7 @@ def submit_solution(request, pk):
                 solution = form.save(commit=False)
                 solution.challenge = challenge
                 solution.user = request.user
+                solution.is_correct = True  # Mark all submitted solutions as correct for now
                 
                 # Get AI feedback
                 try:

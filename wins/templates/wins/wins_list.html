@@ -72,18 +72,24 @@
         </div>
     {% endif %}
 
-    {% if challenge_submissions %}
-        <h2 class="text-2xl font-bold text-white mb-6">Challenge Submissions</h2>
-        {% for submission in challenge_submissions %}
+    {% if challenge_solutions %}
+        <h2 class="text-2xl font-bold text-white mb-6">My Challenge Solutions</h2>
+        {% for solution in challenge_solutions %}
             <div class="bg-gray-800 rounded-lg p-6 shadow-lg mb-4">
-                <h3 class="text-xl font-bold text-white">{{ submission.title }}</h3>
-                <p class="text-gray-200">{{ submission.description }}</p>
-                <p class="text-gray-400">Difficulty: {{ submission.get_difficulty_display }}</p>
+                <h3 class="text-xl font-bold text-white">{{ solution.challenge.title }}</h3>
+                <div class="flex justify-between items-start mt-2 mb-3">
+                    <p class="text-gray-200">{{ solution.submitted_at|date:"F j, Y" }}</p>
+                    <span class="text-xs font-medium bg-{% if solution.challenge.difficulty == 'beginner' %}green-600{% elif solution.challenge.difficulty == 'intermediate' %}yellow-600{% else %}red-600{% endif %} text-white px-2 py-1 rounded">{{ solution.challenge.get_difficulty_display }}</span>
+                </div>
+                <div class="bg-gray-700 p-3 rounded mb-3">
+                    <pre class="text-white text-sm whitespace-pre-wrap">{{ solution.solution_text|truncatechars:150 }}</pre>
+                </div>
+                <a href="{% url 'challenge_detail' solution.challenge.id %}" class="text-indigo-400 hover:text-indigo-300 text-sm">View Full Solution →</a>
             </div>
         {% endfor %}
     {% else %}
         <div class="bg-gray-800 rounded-lg p-6 shadow-lg mb-4 text-center">
-            <p class="text-gray-300 text-lg">No challenge submissions yet.</p>
+            <p class="text-gray-300 text-lg">You haven't solved any challenges yet. Try solving some challenges!</p>
         </div>
     {% endif %}
     

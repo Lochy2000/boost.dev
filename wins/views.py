@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from submissions.models import ChallengeSolution
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils import timezone
 from .models import DailyWin
 from .forms import DailyWinForm
 from services.ai_feedback import get_ai_feedback
+from challenges.models import ChallengeSolution
 
 @login_required
 def submit_win(request):
@@ -67,7 +67,8 @@ def view_win(request, win_id):
 def my_wins(request):
     """View for displaying the user's wins history"""
     wins = DailyWin.objects.filter(user=request.user).order_by('-created_at')
-    challenge_submissions = ChallengeSolution.objects.filter(user=request.user, is_correct=True).order_by('-submitted_at')
+    # Get all user's challenge solutions
+    challenge_solutions = ChallengeSolution.objects.filter(user=request.user).order_by('-submitted_at')
     
     # Check if user has already submitted a win today
     has_win_today = DailyWin.objects.filter(
@@ -77,7 +78,7 @@ def my_wins(request):
     
     return render(request, 'wins/wins_list.html', {
         'wins': wins,
-        'challenge_submissions': challenge_submissions,
+        'challenge_solutions': challenge_solutions,
         'has_win_today': has_win_today
     })
 
@@ -96,6 +97,8 @@ def toggle_public(request, win_id):
 def community_wins(request):
     """View for displaying public wins from all users"""
     wins = DailyWin.objects.filter(is_public=True).order_by('-created_at')
+    # Get all challenge solutions, not just the ones marked as correct
+    challenge_solutions = ChallengeSolution.objects.all().order_by('-submitted_at')
     
     # Check if user has already submitted a win today (if authenticated)
     has_win_today = False
@@ -107,5 +110,6 @@ def community_wins(request):
     
     return render(request, 'wins/community_wins.html', {
         'wins': wins,
+        'challenge_solutions': challenge_solutions,
         'has_win_today': has_win_today
     })

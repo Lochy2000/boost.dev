@@ -318,7 +318,16 @@ def resource_detail(request, slug):
 
 def community(request):
     """View for displaying community wins and challenge solutions"""
-    from wins.models import Win  # Import Win model here to avoid circular import issues
-    wins = Win.objects.filter(is_challenge_solution=False).order_by('-created_at')
-    challenge_solutions = Win.objects.filter(is_challenge_solution=True).order_by('-created_at')
-    return render(request, 'dashboard/community.html', {'wins': wins, 'challenge_solutions': challenge_solutions})
+    from wins.models import DailyWin
+    from challenges.models import ChallengeSolution
+    
+    # Get public wins
+    wins = DailyWin.objects.filter(is_public=True).order_by('-created_at')
+    
+    # Get challenge solutions
+    challenge_solutions = ChallengeSolution.objects.filter(is_correct=True).order_by('-submitted_at')
+    
+    return render(request, 'dashboard/community.html', {
+        'wins': wins, 
+        'challenge_solutions': challenge_solutions
+    })

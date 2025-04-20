@@ -43,7 +43,7 @@ class ChallengeSolution(models.Model):
 # Moving the QuoteSubmission model to challenges for now
 # Later we'll move this functionality to integreate with prompts
 class QuoteSubmission(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='challenges_quotes')
     text = models.TextField()
     author = models.CharField(max_length=100)
     is_approved = models.BooleanField(default=False)

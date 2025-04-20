@@ -88,11 +88,18 @@ main {
 }
 
 .content-container h1 {
-    font-size: 3rem; /* Make the text larger */
+    font-size: 3rem; /* Keep the text larger */
     text-align: center; /* Center the text horizontally */
     margin: 1rem 0; /* Add spacing above and below */
-    font-weight: bold; /* Optional: Make the text bold */
-    color: var(--accent, #581CA0); /* Optional: Add a custom color */
+    font-weight: bold; /* Keep the text bold */
+    color: #ffffff; /* Set the text color to white */
+}
+
+.content-container .tagline {
+    font-size: 1.25rem; /* Keep the tagline font size */
+    color: #ffffff; /* Set the text color to white */
+    text-align: center; /* Center-align the tagline */
+    margin-bottom: 3rem; /* Add spacing below the tagline */
 }
 
 h1 {
@@ -315,20 +322,53 @@ footer {
 }
 
 .imposter-syndrome-section {
-    margin-top: 2rem;
-    padding: 1rem;
+    text-align: center; /* Center the heading */
+    padding: 2rem;
+    margin: 2rem auto;
+    max-width: 1200px; /* Optional: Limit the section width */
     background-color: var(--secondary); /* Optional: Add a background color */
     color: var(--text);
     border-radius: 8px; /* Optional: Add rounded corners */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
 }
 
+.imposter-syndrome-content {
+    display: flex;
+    flex-direction: row; /* Align text and image in a row */
+    justify-content: space-between; /* Add space between text and image */
+    align-items: center; /* Align items vertically */
+    gap: 2rem; /* Add spacing between text and image */
+    width: 100%;
+}
+
+.imposter-text {
+    flex: 1; /* Allow the text to take up available space */
+    text-align: justify; /* Justify the text */
+    font-size: 1rem; /* Optional: Adjust the font size */
+    line-height: 1.6; /* Optional: Improve readability with line height */
+    color: var(--text-color, #ffffff); /* Optional: Set a default text color */
+}
+
+.imposter-image {
+    flex: 1; /* Allow the image to take up available space */
+    display: flex;
+    justify-content: center; /* Center the image horizontally */
+    align-items: center; /* Center the image vertically */
+}
+
+.imposter-image img {
+    max-width: 100%; /* Ensure the image is responsive */
+    height: auto; /* Maintain the aspect ratio */
+    border-radius: 8px; /* Optional: Add rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
+}
+
 .imposter-syndrome-section h2 {
-    text-align: center; /* Center the text horizontally */
-    font-size: 2rem; /* Optional: Make the text larger */
+    color: #ffffff; /* Set the text color to white */
+    font-size: 2rem; /* Optional: Adjust the font size */
+    text-align: center; /* Optional: Center the heading */
     margin-bottom: 1rem; /* Optional: Add spacing below the heading */
     font-weight: bold; /* Optional: Make the text bold */
-    color: var(--accent, #581CA0); /* Optional: Add a custom color */
 }
 
 .imposter-syndrome-section p {
@@ -363,6 +403,30 @@ footer {
     object-fit: cover; /* Ensure the images maintain their aspect ratio */
     border-radius: 8px; /* Add rounded corners */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+}
+
+.dynamic-color {
+    animation: color-change 3s infinite; /* Apply the animation */
+    font-weight: bold; /* Optional: Make the word bold */
+}
+
+/* Define the animation */
+@keyframes color-change {
+    0% {
+        color: #ff7e5f; /* Start with a warm color */
+    }
+    25% {
+        color: #feb47b; /* Transition to a lighter shade */
+    }
+    50% {
+        color: #0088cc; /* Transition to a cool blue */
+    }
+    75% {
+        color: #581CA0; /* Transition to purple */
+    }
+    100% {
+        color: #ff7e5f; /* Loop back to the starting color */
+    }
 }
 
 /* Media Queries */
