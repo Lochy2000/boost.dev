@@ -1,10 +1,30 @@
-{% extends 'base_minimal.html' %}
-
+{% extends 'base.html' %}
+{% block auth_nav %}
+<nav class="flex items-center space-x-6 text-sm">
+  {% if user.is_authenticated %}
+  <div class="flex items-center space-x-2">
+    <span>{{ user.username }}</span>
+    {% if user.userprofile.avatar %}
+    <img src="{{ user.userprofile.avatar }}" alt="Profile Image of {{ user.username }}"
+      class="w-10 h-10 rounded-full object-cover border border-gray-700" />
+    {% else %}
+    <img src="https://res.cloudinary.com/dn7aws3wl/image/upload/v1739390582/nobody_pcaqjl.jpg"
+      alt="Default Profile Image" class="w-10 h-10 rounded-full object-cover border border-gray-700" />
+    {% endif %}
+  </div>
+  <form method="post" action="{% url 'logout' %}">
+    {% csrf_token %}
+    <button type="submit"
+      class="bg-indigo-500 hover:bg-indigo-600 text-white px-5 py-3 rounded shadow transition-all">
+      Log Out
+    </button>
+  </form>
+    {% endif %}
+</nav>
+{% endblock %}
 {% block content %}
-
     <!-- Sidebar navigation (secondary navbar) -->
     <aside class="w-64 min-h-screen bg-white/10 backdrop-blur-md border-r border-white/20 text-white p-6 fixed top-0 left-0 z-40">
-      
       <nav class="pt-20 p-6 space-y-4 font-medium">
         <a href="{% url 'dashboard' %}" class="block px-3 py-2 rounded hover:bg-[#312fa6]">Dashboard</a>
         <a href="{% url 'wins:submit_win' %}" class="block px-3 py-2 rounded hover:bg-[#312fa6]">Log a Win</a>
@@ -12,14 +32,11 @@
         <a href="{% url 'wins:community_wins' %}" class="block px-3 py-2 rounded hover:bg-[#312fa6]">Community Wins</a>
         <a href="{% url 'profile' %}" class="block px-3 py-2 rounded hover:bg-[#312fa6]">Profile</a>
       </nav>
-
     </aside>
-  
     <!-- Main dashboard content -->
     <main class="flex-1 p-6 overflow-y-auto">
       {% block dashboard_content %}
       <!-- Page-specific content goes here -->
       {% endblock %}
     </main>
-  
   {% endblock %}
