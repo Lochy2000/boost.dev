@@ -85,6 +85,7 @@ main {
     margin: 0 auto;
     padding: 2rem; /* Add padding for spacing */
     flex-grow: 1; /* Allow the container to grow with the content */
+    padding-top: 0rem; /* Reduce the padding at the top of the container */
 }
 
 .content-container h1 {
@@ -93,6 +94,7 @@ main {
     margin: 1rem 0; /* Add spacing above and below */
     font-weight: bold; /* Keep the text bold */
     color: #ffffff; /* Set the text color to white */
+    margin-top: -92px; /* Remove any default margin above the heading */
 }
 
 .content-container .tagline {

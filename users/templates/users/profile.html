@@ -8,13 +8,13 @@
         <div>
             <h1 class="text-4xl font-extrabold text-white">Edit Your Profile</h1>
             <p class="text-sm text-gray-400 mt-1">Customize your vibe. Show off your dev energy ✨</p>
-        </div>       
-</div>
+        </div>
+    </div>
     
     
     <div class="grid md:grid-cols-3 gap-10">
         <!-- Left column: Avatar preview -->
-        <div class="flex flex-col items-center text-center space-y-4 md:col-span-1">
+        <div class="flex flex-col items-center text-center space-y-6 md:col-span-1">
             <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-[#312fa6] shadow-md">
                 {% if user.userprofile.avatar %}
                     <img src="{{ user.userprofile.avatar }}" alt="Profile Picture" class="w-full h-full object-cover">
@@ -23,6 +23,39 @@
                 {% endif %}
             </div>
             <p class="text-sm text-gray-400">Avatar preview</p>
+
+            <!-- User Level and Progress -->
+            <div class="w-full bg-gray-800 rounded-lg p-4 shadow">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-white font-semibold">Level {{ user.progress.level }}</span>
+                    <span class="text-gray-400 text-sm">{{ user.progress.points }} / {{ user.progress.next_level_threshold }}</span>
+                </div>
+                
+                <!-- Progress Bar -->
+                <div class="w-full bg-gray-700 rounded-full h-4 mb-4">
+                    <div class="bg-{{ user.progress.get_level_color }}-500 h-4 rounded-full" style="width: {{ user.progress.calculate_percentage }}%"></div>
+                </div>
+                
+                <p class="text-gray-400 text-sm">{{ user.progress.calculate_percentage }}% to next level</p>
+            </div>
+            
+            <!-- Achievements -->
+            <div class="w-full bg-gray-800 rounded-lg p-4 shadow">
+                <h3 class="text-white font-semibold mb-4">Achievements</h3>
+                
+                {% if user_achievements %}
+                <div class="grid grid-cols-2 gap-3">
+                    {% for user_achievement in user_achievements %}
+                    <div class="bg-gray-700 rounded p-2 text-center">
+                        <i class="fas fa-{{ user_achievement.achievement.icon }} text-yellow-400 text-xl mb-1"></i>
+                        <p class="text-white text-sm font-medium">{{ user_achievement.achievement.name }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="text-gray-400 text-sm text-center">No achievements yet. Keep going!</p>
+                {% endif %}
+            </div>
         </div>
 
         <!-- Right column: Form -->

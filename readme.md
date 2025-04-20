@@ -85,20 +85,34 @@ The site is designed to be responsive in different screen sizes.
 Our main goal is to let the user know that they are great developers and hopefully to let them improve their confidence with coding and to help others in similar situation, creating a supporting community for developers that have low-confidence.
 
 ## UX - User Experience
+This project was inspired in 2 sites:
 
+  - [daily.dev](https://daily.dev/)
+  - [gamma.app](https://gamma.app/docs/boostdev-Where-Confidence-Grows-ltxw0nuvix1u7ue?mode=doc)
 
+Fiirst site was known to one of the members of the group and the second is a template made by the same member about Imposter Syndrome.
 
+As the look seemed well put and  a great start, the steam thought about taking this idea and changing it with inspiration also on "daily.dev" for the main site after the user registers or logs in the site.
 
+We took the same name, and developed a different landing page and worked on the main site, providing some information for the user even before he registers on the site.
 
+We opted for a simple and minimalistic layout and logo and to focus more on the content to get the attention for the issue that the "Imposter Syndrome" can present to the user and hoepfully make him/her feel encouraged to register, improve his/her confidence, as well as to try to overcome it and help others while also improving his/her skills.
 
+[Back to top](#top)
+
+## Colour Scheme
+Following the initial idea from our colleague, we used similar colours to the ones used on "boost.dev" and adapted as necessary for better contrast, tryin gto keep it simple.
 
 Colours - checked against WCAG for contrast 
 
-#581CA0 - purple (from the canva mind map)
-#312fa6 - indigo 
-#b12e5d - roseberry
-#0088cc - bright blue
-#121212 - dark background
+#581CA0 - Purple (from the canva mind map)<br>
+#312fa6 - Indigo<br>
+#b12e5d - Roseberry<br>
+#0088cc - Bright blue<br>
+#121212 - Dark background<br>
+#ffffff - White<br>
+
+<img src="theme\static\css\images\colour-palette.png" style="width: 90%; height: 60%;"><br>
 
 | Colour      | WCAG Ratio (against #121212) | WCAG Contrast          |
 |-------------|-------------------------------|-------------------------|
@@ -107,8 +121,93 @@ Colours - checked against WCAG for contrast
 | Roseberry   | Pass (6.71:1)                | ✅✅ AAA               |
 | Bright Blue | Pass (6.95:1)                | ✅✅ AAA               |
 
+## Contrast Check
+<img src="theme\static\css\images\contrast-check-1.png"><br>
 
+## Typography
+Fonts used for this website were:
 
+  - [open sans](https://fonts.google.com/specimen/Open+Sans)
+  - [Segoe UI](https://learn.microsoft.com/en-us/typography/font-list/segoe-ui)
+  - [Helvetica-Neue](https://www.cdnfonts.com/helvetica-neue-5.font)
+
+# Project Planning
+
+The main goal for this project was to create a site that feels friendly, invitting and can provide users the feeling that they are good developers, although they might not see themselves in that way.<br>
+
+## Strategy Plan
+
+  - User-friendly platform to post artwork
+  - Appealing and minimalistic layout and colors
+  - Show simple and easy to select menus
+  - Ensure consistent UX thoughout multiple platforms, as mobile devices, tablets, and desktops
+  - Develop a platform that can be improved with new features in the future
+
+## Agile Methodologies
+Boost.dev was the first hackathon with people from different courses for one of our members and a review for the rest of the group, although in the begining we started getting roles, during the project, each one of us got to manage and push the others at different times, with discussions about different features happening throughout the process and all members having the opportunity to express their views.
+
+Issues and features can be seen on [GitHub Project Board](https://github.com/users/Lochy2000/projects/7).
+
+With each iteration of the Agile methogologies, the website was improved and we did our best to improve our skills and knowledge of the project management, which we had used in previous projects, but that can always be improved.
+
+These will also be very important for future projects, either personal or professional, with Hackathons being a great way to also get more practice with Agile methodologies.
+
+[Back to top](#top)
+
+### Users
+User Persona 1: Alice - The Aspiring Developer<br>
+Age: 22<br>
+Occupation: Computer Science Student<br>
+Experience Level: Beginner<br>
+Goals:
+- Learn coding best practices and improve her programming skills.
+- Build confidence in her abilities as a developer.
+Connect with a supportive community of developers.
+
+Challenges:
+- Struggles with imposter syndrome and doubts her skills.
+- Finds it difficult to stay motivated without external encouragement.
+- Overwhelmed by the vast amount of online resources.
+
+How Boost.dev Helps:
+- Provides beginner-friendly coding challenges to help her practice.
+- Offers a supportive community where she can share her progress and seek advice.
+- Features articles and resources to help her overcome imposter syndrome.
+
+User Persona 2: Ben - The Mid-Level Developer<br>
+Age: 30<br>
+Occupation: Frontend Developer at a Startup<br>
+Experience Level: Intermediate<br>
+Goals:
+- Sharpen his coding skills and learn new technologies.
+- Showcase his personal projects to gain recognition.
+- Mentor junior developers and give back to the community.
+
+Challenges:
+- Wants to transition into a full-stack role but lacks backend experience.
+- Feels stuck in his current role and wants to grow professionally.
+- Struggles to find a platform to share his work and get feedback.
+
+How Boost.dev Helps:
+- Provides intermediate-level challenges to expand his skill set.
+- Allows him to showcase his projects and receive constructive feedback.
+- Offers opportunities to help beginners and share his knowledge.
+
+User Persona 3: Clara - The Experienced Mentor<br>
+Age: 40<br>
+Occupation: Senior Software Engineer at a Tech Company<br>
+Experience Level: Advanced<br>
+Goals:
+- Mentor and inspire the next generation of developers.
+
+Challenges:
+- Limited time to contribute to open-source projects or mentor in person.
+- Wants to find a platform where she can make a meaningful impact.
+- Needs a way to share her expertise without overwhelming her schedule.
+
+How Boost.dev Helps:
+- Provides a platform to mentor developers through forums and discussions.
+- Helps her stay connected with the developer community and trends.
 
 ## Technologies Used
 ### Languages and Technologies

@@ -26,12 +26,14 @@ google-generativeai==0.8.5
 googleapis-common-protos==1.70.0
 grpcio==1.72.0rc1
 grpcio-status==1.71.0
+gunicorn==23.0.0
 httplib2==0.22.0
 idna==3.10
 Jinja2==3.1.6
 jinja2-time==0.2.0
 MarkupSafe==3.0.2
 oauthlib==3.2.2
+packaging==25.0
 poyo==0.5.0
 proto-plus==1.26.1
 protobuf==5.29.4
