@@ -6,7 +6,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        
+        <script src="https://cdn.tailwindcss.com"></script>
         {% tailwind_css %}
         <link rel="stylesheet" href="{% static 'css/main.css' %}">
     </head>
@@ -31,12 +31,15 @@
     {% endif %}
     
     <!-- Main Content Section -->
-    <main>
+    <main class="px-4 pt-20 sm:pt-24">
         {% block content %}
         <!-- This base template should be extended by other templates -->
         <!-- Content from child templates will be inserted here -->
         {% endblock %}
     </main>
     
+    <footer class="bg-white/10 text-gray-400 text-sm text-center py-4 mt-8">
+        &copy; {{ current_year }} Boost.dev. All rights reserved.
+    </footer>
 </body>
 </html>
