@@ -102,7 +102,13 @@
             document.getElementById('achievement-toast').style.transform = 'translateY(150%)';
             
             document.addEventListener('DOMContentLoaded', function() {
-                // Level up notification
+                // Check for level-up flag from context processor
+                {% if level_up_flag %}
+                    document.getElementById('new-level').textContent = "{{ level_up_flag }}";
+                    document.getElementById('level-up-notification').classList.remove('hidden');
+                {% endif %}
+                
+                // Level up notification from Django messages
                 const messages = document.querySelectorAll('.fixed.top-16 .mb-4');
                 messages.forEach(function(message) {
                     if (message.textContent.includes('Congratulations! You\'ve reached Level')) {
