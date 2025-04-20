@@ -1,7 +1,7 @@
 {% extends 'dashboard/dash_base.html' %}
 
 {% block dashboard_content %}
-<div class="px-6 py-8 max-w-5xl mx-auto space-y-8">
+<div class="px-8 py-8 max-w-5xl mx-auto space-y-8">
     <!-- Greeting -->
     <div>
         <h1 class="text-3xl font-bold text-indigo-400">Welcome back, {{ user.username }} 👋</h1>
@@ -9,33 +9,67 @@
     </div>
 
     <!-- Daily Prompt -->
-    <div class="bg-gradient-to-r from-purple-600 to-indigo-600 rounded p-6 shadow-lg text-white">
+    <div class="bg-[#1e1f23] rounded p-6 shadow-lg text-white">
         <h2 class="text-xl font-semibold mb-2">💡 Daily Boost</h2>
         <p class="quote mb-4 italic text-gray-700"></p><i class="fas fa-quote-left my-2 me-2"></i>{{ daily_prompt.quote.text }} <i class="fas fa-quote-right me-2"></i></p>
         <p class="text-lg font-light tracking-wide">{{ daily_prompt.quote.author }}</p>
     </div>
 
+    
     <!-- Stats Section -->
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-        <div class="bg-[#1e1f23] rounded p-5 shadow text-center">
-            <h3 class="text-gray-400 uppercase text-sm tracking-wide">Submissions</h3>
-            <p class="text-3xl font-bold text-white mt-2">{{ user.submission_set.count }}</p>
+        <div class="bg-[#1e1f23] rounded p-6 shadow text-white">
+            <h2 class="text-xl font-semibold mb-2">🌟 Featured Submission</h2>
+            <p><strong>{{ featured_submission.title }}</strong> by {{ featured_submission.user.username }}</p>
+            <p>{{ featured_submission.description }}</p>
+            <div class="flex flex-wrap gap-4 justify-start pt-4">
+                <a href="{{ featured_submission.get_absolute_url }}" class="text-indigo-400">View full submission</a>
+                <a href="{% url 'submissions' %}" class="text-indigo-400">My Submissions</a>
+                <a href="{% url 'new_submission' %}" class="text-indigo-400">New Submission</a>
+            </div>
+            
         </div>
-        <div class="bg-[#1e1f23] rounded p-5 shadow text-center">
-            <h3 class="text-gray-400 uppercase text-sm tracking-wide">Wins</h3>
-            <p class="text-3xl font-bold text-white mt-2">{{ user.win_set.count }}</p>
+        <div class="bg-[#1e1f23] rounded p-6 shadow text-white">
+            <h2 class="text-xl font-semibold mb-2">🏆 Wins</h2>
+            <p>You have <strong>{{ user.win_set.count }}</strong> so far! Let's gooo!</p>
         </div>
-        <div class="bg-[#1e1f23] rounded p-5 shadow text-center">
-            <h3 class="text-gray-400 uppercase text-sm tracking-wide">Experience</h3>
-            <p class="text-3xl font-bold text-white mt-2">{{ user.userprofile.experience_level|title }}</p>
+        <div class="bg-[#1e1f23] rounded p-6 shadow-lg text-white">
+            <h2 class="text-xl font-semibold mb-2">🏆 Milestones</h2>
+            <div class="text-lg font-light tracking-wide">You are {{ user.userprofile.experience_level }} level now!</div>
+            <div class="mt-4">
+                <label for="progress" class="block text-sm text-gray-400">Progress</label>
+                <progress id="progress" value="{{ user.submission_set.count }}" max="100" class="w-full mt-2"></progress>
+            </div>
+        </div>
+        <div class="bg-[#1e1f23] rounded p-6 shadow text-white">
+            <h2 class="text-xl font-semibold mb-2">📝 Community Feed</h2>
+            {% for activity in recent_activities %}
+                <div class="flex items-center space-x-4 mb-4">
+                    <img src="{{ activity.user.profile.picture.url }}" alt="User Avatar" class="w-8 h-8 rounded-full">
+                    <div class="text-sm">
+                        <p><strong>{{ activity.user.username }}</strong> {{ activity.action }} on <strong>{{ activity.date }}</strong></p>
+                        <p class="text-gray-400">{{ activity.description }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="bg-[#1e1f23] rounded p-6 shadow-lg text-white">
+            <h2 class="text-xl font-semibold mb-2">🏅 Achievements</h2>
+            <p>Earned <strong>{{ user.badges.count }}</strong> badges so far!</p>
+            <div class="flex flex-wrap gap-2 mt-4">
+                {% for badge in user.badges.all %}
+                    <span class="bg-gray-800 text-white px-4 py-2 rounded-full text-sm">{{ badge.name }}</span>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="bg-[#1e1f23] rounded p-6 shadow-lg text-white">
+            <h2 class="text-xl font-semibold mb-2">👥 Invite a Friend</h2>
+            <p class="text-lg">Share your journey with friends and unlock exciting features!</p>
+            <a href="#" class="text-indigo-400">Invite Now</a>
         </div>
     </div>
 
     <!-- Action Buttons -->
-    <div class="flex flex-wrap gap-4 justify-start pt-4">
-        <a href="{% url 'profile' %}" class="bg-indigo-500 hover:bg-indigo-600 text-white px-5 py-3 rounded shadow transition-all">Edit Profile</a>
-        <a href="{% url 'submissions' %}" class="bg-gray-700 hover:bg-gray-600 text-white px-5 py-3 rounded shadow transition-all">My Submissions</a>
-        <a href="{% url 'new_submission' %}" class="bg-rose-600 hover:bg-rose-700 text-white px-5 py-3 rounded shadow transition-all">New Submission</a>
-    </div>
+    
 </div>
 {% endblock %}
