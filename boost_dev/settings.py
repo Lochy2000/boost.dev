@@ -88,6 +88,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'social_django.context_processors.backends',  # Add for social auth
                 'social_django.context_processors.login_redirect',  # Add for social auth
+                'users.context_processors.user_progress',  # Add for user progress tracking
             ],
         },
     },

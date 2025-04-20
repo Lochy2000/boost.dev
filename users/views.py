@@ -4,6 +4,8 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from .forms import SignUpForm, UserProfileForm
 from django.contrib.auth.decorators import login_required
+from .models import UserProgress, Achievement, UserAchievement
+from .utils import add_user_points, award_level_achievement, award_achievement, get_level_title
 
 def register_view(request):
     if request.method == 'POST':
@@ -20,6 +22,9 @@ def register_view(request):
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=user.username, password=raw_password)
             login(request, user)
+            
+            # Award first level achievement
+            award_level_achievement(user, 1)
             
             messages.success(request, "Registration successful!")
             return redirect('dashboard')
@@ -40,6 +45,18 @@ def login_view(request):
             if user is not None:
                 login(request, user)
                 messages.success(request, f"Welcome back, {username}!")
+                
+                # Hackathon demo - award special achievement when logging in
+                try:
+                    from .utils import award_achievement
+                    award_achievement(user, "Hackathon Hero", request)
+                    
+                    # Add some points for logging in (demo only)
+                    from .utils import add_user_points
+                    add_user_points(user, 10, "Logged in during hackathon")
+                except Exception as e:
+                    print(f"Error awarding hackathon achievement: {e}")
+                    
                 return redirect('dashboard')
             else:
                 messages.error(request, "Invalid username or password.")
@@ -55,18 +72,38 @@ def logout_view(request):
     messages.success(request, "You have been logged out successfully!")
     return redirect('home')
 
+
+
 @login_required
 def profile_view(request):
     if request.method == 'POST':
         form = UserProfileForm(request.POST, instance=request.user.userprofile)
         if form.is_valid():
             form.save()
-            messages.success(request, "Profile updated successfully!")
+            
+            # Add points for updating profile
+            leveled_up, points_message, new_level = add_user_points(request.user, 15, "Profile updated")
+            
+            if leveled_up:
+                # Award achievement for new level
+                award_level_achievement(request.user, new_level, request)
+                messages.success(request, f"Congratulations! You've reached Level {new_level}!")
+            
+            # Hackathon demo - award Early Adopter achievement for profile updates
+            award_achievement(request.user, "Early Adopter", request)
+            
+            messages.success(request, f"Profile updated successfully! {points_message}")
             return redirect('profile')
     else:
         form = UserProfileForm(instance=request.user.userprofile)
     
-    return render(request, 'users/profile.html', {'form': form})
+    # Get user achievements
+    user_achievements = request.user.achievements.all().select_related('achievement')
+    
+    return render(request, 'users/profile.html', {
+        'form': form,
+        'user_achievements': user_achievements
+    })
 
 def social_auth_callback(request):
     """Handle callback from social authentication providers"""
