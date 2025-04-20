@@ -34,9 +34,17 @@ STATICFILES_DIRS = [
 SECRET_KEY = os.environ.get('SECRET_KEY', 'SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', 'True')
+# Convert string 'True'/'False' to boolean
+DEBUG = os.environ.get('DEBUG', 'False').lower() in ('true', 't', '1', 'yes')
 
-ALLOWED_HOSTS = []
+# Configure allowed hosts based on environment
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+# Add Heroku domains
+ALLOWED_HOSTS += ['.herokuapp.com', 'boost-dev-9ed56bf6f182.herokuapp.com']
+# Add any custom domain if you have it
+HEROKU_APP_DOMAIN = os.environ.get('HEROKU_APP_DOMAIN')
+if HEROKU_APP_DOMAIN:
+    ALLOWED_HOSTS.append(HEROKU_APP_DOMAIN)
 
 
 # Application definition
@@ -66,6 +74,7 @@ TAILWIND_APP_NAME = 'theme'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Add whitenoise for static files
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -148,12 +157,19 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# WhiteNoise configuration
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-NPM_BIN_PATH = 'NPM_BIN_PATH', "C:/Program Files/nodejs/npm.cmd"  # for installing tailwindcss
+# NPM path - conditionally set based on environment
+if os.name == 'nt':  # Windows
+    NPM_BIN_PATH = "C:/Program Files/nodejs/npm.cmd"  # for installing tailwindcss
+else:  # Linux/Mac/Heroku
+    NPM_BIN_PATH = os.environ.get('NPM_BIN_PATH', 'npm')  # Use environment variable or default to 'npm'
 
 # Authentication
 AUTHENTICATION_BACKENDS = [
