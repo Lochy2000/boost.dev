@@ -7,6 +7,8 @@ This project was made for the April Hackthon - "Unmask The Coder" by Code Instit
 
 It aims to show users that they have good skills and to help dealing with Imposter Syndrome.
 
+The idea for the project came from one of the members and was consistent with the suggested projects by CI - Hack Team. Incorporating more than one idea of those suggested.
+
 Live site: [Boost.dev]( )
 
 ## Table of Contents
@@ -70,6 +72,20 @@ Live site: [Boost.dev]( )
 [Back to top](#top)
 
 # Overview
+Boost.dev is a simple site with information about Imposter Syndrome that many developers can go through with different symptoms, and it aims to provide information about this subject and also present ideas about how the user can try to overcome this.<br>
+
+It's meant to be an interactive and responsive site.
+
+  - Users have access to posts related to the main subject
+  - Can showcase their apps/sites for others to see
+  - Users can do coding challenges in different levels
+
+The site is designed to be responsive in different screen sizes.
+
+Our main goal is to let the user know that they are great developers and hopefully to let them improve their confidence with coding and to help others in similar situation, creating a supporting community for developers that have low-confidence.
+
+## UX - User Experience
+
 
 
 
