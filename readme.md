@@ -105,12 +105,12 @@ Following the initial idea from our colleague, we used similar colours to the on
 
 Colours - checked against WCAG for contrast 
 
-#581CA0 - Purple (from the canva mind map)
-#312fa6 - Indigo 
-#b12e5d - Roseberry
-#0088cc - Bright blue
-#121212 - Dark background
-#ffffff - White
+#581CA0 - Purple (from the canva mind map)<br>
+#312fa6 - Indigo<br>
+#b12e5d - Roseberry<br>
+#0088cc - Bright blue<br>
+#121212 - Dark background<br>
+#ffffff - White<br>
 
 <img src="theme\static\css\images\colour-palette.png" style="width: 90%; height: 60%;"><br>
 
@@ -121,8 +121,40 @@ Colours - checked against WCAG for contrast
 | Roseberry   | Pass (6.71:1)                | ✅✅ AAA               |
 | Bright Blue | Pass (6.95:1)                | ✅✅ AAA               |
 
+## Contrast Check
+<img src="theme\static\css\images\contrast-check-1.png"><br>
 
+## Typography
+Fonts used for this website were:
 
+  - [open sans](https://fonts.google.com/specimen/Open+Sans)
+  - [Segoe UI](https://learn.microsoft.com/en-us/typography/font-list/segoe-ui)
+  - [Helvetica-Neue](https://www.cdnfonts.com/helvetica-neue-5.font)
+
+# Project Planning
+
+The main goal for this project was to create a site that feels friendly, invitting and can provide users the feeling that they are good developers, although they might not see themselves in that way.<br>
+
+## Strategy Plan
+
+  - User-friendly platform to post artwork
+  - Appealing and minimalistic layout and colors
+  - Show simple and easy to select menus
+  - Ensure consistent UX thoughout multiple platforms, as mobile devices, tablets, and desktops
+  - Develop a platform that can be improved with new features in the future
+
+## Agile Methodologies
+Boost.dev was my third project, and the second individual one, with our facilitator and coaches motivating us to showcase our abilities, from the initial idea, to planning the website, think about the essential features for the MVP and others that could be added later, if not working on time for project submission.
+
+Issues and features can be seen on [GitHub Project Board](https://github.com/users/Lochy2000/projects/7).
+
+With each iteration of the Agile methogologies, the website was improved and we did our best to improve our skills and knowledge of the project management, which we had used in previous projects, but that can always be improved.
+
+These will also be very important for future projects, either personal or professional, with Hackathons being a great way to also get more practice with Agile methodologies.
+
+[Back to top](#top)
+
+### Users
 
 ## Technologies Used
 ### Languages and Technologies
