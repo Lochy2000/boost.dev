@@ -29,13 +29,13 @@ def get_ai_feedback(win_content, username="Developer"):
     
     # Create prompt
     prompt = f"""
-    A developer named {username} has shared this achievement: 
+    A developer named {{ user.username }} has shared this achievement: 
     
     "{win_content}"
     
     As a supportive and uplifting mentor, provide encouraging, personalized feedback (2-3 sentences) 
     that acknowledges their achievement, reinforces their growth mindset, and offers gentle guidance 
-    for continued improvement. Start with "That's fantastic, {username}!" or a similar personalized greeting.
+    for continued improvement. Start with "That's fantastic, {{ user.username }}!" or a similar personalized greeting.
     Focus on building their confidence and helping them overcome impostor syndrome.
     """
     

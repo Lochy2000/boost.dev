@@ -5,7 +5,7 @@
     <!-- Greeting -->
     <div>
         <h1 class="text-3xl font-bold text-indigo-400">Welcome back, {{ user.username }} 👋</h1>
-        <p class="mt-2 text-gray-400 text-lg italic">Let’s keep growing, one tiny win at a time.</p>
+        <p class="mt-2 text-gray-400 text-lg italic">Let's keep growing, one tiny win at a time.</p>
     </div>
 
     <!-- Daily Prompt -->
@@ -15,30 +15,41 @@
         <p class="text-lg font-light tracking-wide">{{ daily_prompt.quote.author }}</p>
     </div>
 
-    
     <!-- Stats Section -->
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
         <div class="bg-[#1e1f23] rounded p-6 shadow text-white">
-            <h2 class="text-xl font-semibold mb-2">🌟 Featured Submission</h2>
-            <p><strong>{{ featured_submission.title }}</strong> by {{ featured_submission.user.username }}</p>
-            <p>{{ featured_submission.description }}</p>
+            <h2 class="text-xl font-semibold mb-2">🌟 Featured Challenge</h2>
+            {% if recommended_challenges.0 %}
+            <p><strong>{{ recommended_challenges.0.title }}</strong> {% if recommended_challenges.0.created_by %}by {{ recommended_challenges.0.created_by.username }}{% endif %}</p>
+            <p>{{ recommended_challenges.0.description|truncatechars:100 }}</p>
             <div class="flex flex-wrap gap-4 justify-start pt-4">
-                <a href="{{ featured_submission.get_absolute_url }}" class="text-indigo-400">View full submission</a>
-                <a href="{% url 'submissions' %}" class="text-indigo-400">My Submissions</a>
-                <a href="{% url 'new_submission' %}" class="text-indigo-400">New Submission</a>
+                <a href="{% url 'challenge_detail' recommended_challenges.0.id %}" class="text-indigo-400">View Challenge</a>
+                <a href="{% url 'challenges' %}" class="text-indigo-400">Browse Challenges</a>
+                <a href="{% url 'new_challenge' %}" class="text-indigo-400">Create Challenge</a>
             </div>
-            
+            {% else %}
+            <p>No challenges available yet. Why not create one?</p>
+            <div class="flex flex-wrap gap-4 justify-start pt-4">
+                <a href="{% url 'challenges' %}" class="text-indigo-400">Browse Challenges</a>
+                <a href="{% url 'new_challenge' %}" class="text-indigo-400">Create Challenge</a>
+            </div>
+            {% endif %}
         </div>
         <div class="bg-[#1e1f23] rounded p-6 shadow text-white">
             <h2 class="text-xl font-semibold mb-2">🏆 Wins</h2>
-            <p>You have <strong>{{ user.win_set.count }}</strong> so far! Let's gooo!</p>
+            <p>You have <strong>{{ user.win_set.count }}</strong> wins so far! Let's gooo!</p>
+            <div class="flex flex-wrap gap-4 justify-start pt-4">
+                <a href="{% url 'wins:submit_win' %}" class="text-indigo-400">Log a Win</a>
+                <a href="{% url 'wins:my_wins' %}" class="text-indigo-400">View My Wins</a>
+                <a href="{% url 'wins:community_wins' %}" class="text-indigo-400">Community Wins</a>
+            </div>
         </div>
         <div class="bg-[#1e1f23] rounded p-6 shadow-lg text-white">
             <h2 class="text-xl font-semibold mb-2">🏆 Milestones</h2>
             <div class="text-lg font-light tracking-wide">You are {{ user.userprofile.experience_level }} level now!</div>
             <div class="mt-4">
                 <label for="progress" class="block text-sm text-gray-400">Progress</label>
-                <progress id="progress" value="{{ user.submission_set.count }}" max="100" class="w-full mt-2"></progress>
+                <progress id="progress" value="{{ user_challenge_count }}" max="100" class="w-full mt-2"></progress>
             </div>
         </div>
         <div class="bg-[#1e1f23] rounded p-6 shadow text-white">
@@ -69,7 +80,34 @@
         </div>
     </div>
 
-    <!-- Action Buttons -->
+    <!-- Recent Challenge Solutions -->
+    {% if user_challenge_solutions %}
+    <div class="mt-8">
+        <h2 class="text-2xl font-bold text-white mb-4">Your Recent Solutions</h2>
+        <div class="space-y-4">
+            {% for solution in user_challenge_solutions %}
+            <div class="bg-[#1e1f23] rounded-lg overflow-hidden shadow-lg p-5">
+                <div class="flex justify-between items-start mb-2">
+                    <h3 class="text-lg font-semibold text-white">{{ solution.challenge.title }}</h3>
+                    <span class="text-xs font-medium bg-{% if solution.challenge.difficulty == 'beginner' %}green-600{% elif solution.challenge.difficulty == 'intermediate' %}yellow-600{% else %}red-600{% endif %} text-white px-2 py-1 rounded">{{ solution.challenge.get_difficulty_display }}</span>
+                </div>
+                <div class="text-gray-500 text-xs mb-3">Submitted on {{ solution.submitted_at|date:"M d, Y" }}</div>
+                <div class="bg-gray-800 p-3 rounded mb-3">
+                    <pre class="text-white text-sm whitespace-pre-wrap">{{ solution.solution_text|truncatechars:150 }}</pre>
+                </div>
+                <a href="{% url 'challenge_detail' solution.challenge.id %}" class="text-indigo-400 hover:text-indigo-300 text-sm">View Full Solution →</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
     
+    <!-- Action Buttons -->
+    <div class="flex flex-wrap gap-4 justify-start">
+        <a href="{% url 'profile' %}" class="bg-indigo-500 hover:bg-indigo-600 text-white px-5 py-3 rounded shadow transition-all">Edit Profile</a>
+        <a href="{% url 'challenges' %}" class="bg-gray-700 hover:bg-gray-600 text-white px-5 py-3 rounded shadow transition-all">Challenges</a>
+        <a href="{% url 'new_challenge' %}" class="bg-rose-600 hover:bg-rose-700 text-white px-5 py-3 rounded shadow transition-all">New Challenge</a>
+        <a href="{% url 'wins:submit_win' %}" class="bg-green-600 hover:bg-green-700 text-white px-5 py-3 rounded shadow transition-all">Log a Win</a>
+    </div>
 </div>
 {% endblock %}

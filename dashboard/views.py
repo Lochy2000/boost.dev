@@ -7,6 +7,7 @@ from django.contrib import messages
 from .models import Article, Project, ProjectFeedback, Resource
 from prompts.models import DailyPrompt
 from wins.models import DailyWin
+from challenges.models import Challenge, ChallengeSolution
 from .forms import ProjectFeedbackForm
 import random
 
@@ -33,6 +34,19 @@ def dashboard(request):
     # Get today's prompt
     daily_prompt = DailyPrompt.get_today()
     
+    # Get user's challenge stats and recent submissions
+    user_challenge_count = 0
+    user_challenge_solutions = []
+    
+    if request.user.is_authenticated:
+        # Count user challenge solutions
+        user_challenge_count = ChallengeSolution.objects.filter(user=request.user).count()
+        
+        # Get recent challenge solutions
+        user_challenge_solutions = ChallengeSolution.objects.filter(
+            user=request.user
+        ).select_related('challenge').order_by('-submitted_at')[:3]
+    
     # Get user's recent wins
     user_wins = []
     has_win_today = False
@@ -50,6 +64,9 @@ def dashboard(request):
     # Get community wins
     community_wins = DailyWin.objects.filter(is_public=True).exclude(user=request.user).order_by('-created_at')[:5]
     
+    # Get recommended challenges
+    recommended_challenges = Challenge.objects.filter(is_approved=True).order_by('?')[:3]
+    
     context = {
         'featured_articles': featured_articles,
         'recent_articles': recent_articles,
@@ -60,8 +77,9 @@ def dashboard(request):
         'user_wins': user_wins,
         'has_win_today': has_win_today,
         'user': request.user,
-        'user_wins': user_wins,
-        'has_win_today': has_win_today,
+        'user_challenge_count': user_challenge_count,
+        'user_challenge_solutions': user_challenge_solutions,
+        'recommended_challenges': recommended_challenges,
     }
     
     return render(request, 'dashboard/dashboard.html', context)

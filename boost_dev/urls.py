@@ -28,6 +28,6 @@ urlpatterns = [
     path('social-auth/', include('social_django.urls', namespace='social')),
     path('grappelli/', include('grappelli.urls')),
     path('admin/', admin.site.urls),
-    path('submissions/', include('submissions.urls')),
+    path('challenges/', include('challenges.urls')),
     path('wins/', include('wins.urls')),
 ]

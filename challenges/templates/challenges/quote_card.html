@@ -1,0 +1,16 @@
+<!-- Quote Card Partial Template -->
+<div class="bg-gradient-to-r from-indigo-900 to-purple-800 rounded-lg shadow-lg overflow-hidden">
+    <div class="p-6">
+        <div class="text-lg text-white font-light leading-relaxed">
+            <i class="fas fa-quote-left text-indigo-300 mr-2 opacity-50"></i>
+            {{ quote.text }}
+            <i class="fas fa-quote-right text-indigo-300 ml-2 opacity-50"></i>
+        </div>
+        <div class="mt-4 flex justify-between items-center">
+            <p class="text-indigo-200 font-medium">{{ quote.author }}</p>
+            {% if quote.user %}
+                <span class="text-xs text-indigo-300">Submitted by: {{ quote.user.username }}</span>
+            {% endif %}
+        </div>
+    </div>
+</div>

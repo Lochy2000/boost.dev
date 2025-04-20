@@ -1,0 +1,107 @@
+{% extends 'dashboard/dash_base.html' %}
+
+{% block dashboard_content %}
+<div class="px-6 py-8 max-w-5xl mx-auto space-y-8">
+    <!-- Back button -->
+    <div>
+        <a href="{% url 'challenges' %}" class="text-indigo-400 hover:text-indigo-300">← Back to Challenges</a>
+    </div>
+
+    <!-- Challenge Header -->
+    <div>
+        <div class="flex flex-wrap justify-between items-start gap-3">
+            <h1 class="text-3xl font-bold text-white">{{ challenge.title }}</h1>
+            <span class="text-sm font-medium bg-{{ challenge.get_difficulty_color }} text-white px-3 py-1 rounded">{{ challenge.get_difficulty_display }}</span>
+        </div>
+        <div class="mt-2 flex items-center gap-3 text-gray-400 text-sm">
+            <span>Created by: {{ challenge.created_by.username }}</span>
+            <span>•</span>
+            <span>{{ challenge.created_at|date:"M d, Y" }}</span>
+        </div>
+    </div>
+
+    <!-- Challenge Description -->
+    <div class="bg-[#1e1f23] p-6 rounded-lg">
+        <h2 class="text-xl font-semibold text-white mb-3">Challenge Description</h2>
+        <div class="prose prose-invert max-w-none">
+            {{ challenge.description|linebreaks }}
+        </div>
+    </div>
+
+    <!-- Hints Section -->
+    <div class="bg-[#1e1f23] p-6 rounded-lg">
+        <h2 class="text-xl font-semibold text-white mb-3">Hints</h2>
+        <div class="space-y-4">
+            {% if challenge.hints %}
+                {% for hint in challenge.hints %}
+                <div>
+                    <button class="text-indigo-400 hover:text-indigo-300 flex items-center gap-2 hint-toggle" data-target="hint-{{ forloop.counter }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9h16.5m-16.5 6.75h16.5" />
+                        </svg>
+                        Hint {{ forloop.counter }}
+                    </button>
+                    <div id="hint-{{ forloop.counter }}" class="{% if forloop.counter > 1 %}hidden {% endif %}mt-2 bg-gray-800 p-3 rounded">
+                        <p>{{ hint }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p class="text-gray-400">No hints available for this challenge.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Solution Submission -->
+    <div class="bg-[#1e1f23] p-6 rounded-lg">
+        <h2 class="text-xl font-semibold text-white mb-3">Your Solution</h2>
+        <form method="post" action="{% url 'submit_solution' challenge.id %}">
+            {% csrf_token %}
+            <div class="mb-4">
+                {{ form.solution_text }}
+            </div>
+            <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded">Submit Solution</button>
+        </form>
+    </div>
+
+    <!-- Previous Solutions (if any) -->
+    {% if user_solution %}
+    <div class="bg-[#1e1f23] p-6 rounded-lg">
+        <h2 class="text-xl font-semibold text-white mb-3">Your Previous Solution</h2>
+        <div class="bg-gray-800 p-4 rounded">
+            <pre class="text-white whitespace-pre-wrap">{{ user_solution.solution_text }}</pre>
+        </div>
+        
+        <!-- AI Feedback -->
+        <div class="mt-4">
+            <h3 class="text-lg font-medium text-white mb-2">AI Feedback</h3>
+            <div class="bg-indigo-900/50 p-4 rounded">
+                <p class="text-white">{{ user_solution.ai_feedback }}</p>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Handle hint toggles
+    const hintToggles = document.querySelectorAll('.hint-toggle');
+    
+    hintToggles.forEach(toggle => {
+      toggle.addEventListener('click', function() {
+        const targetId = this.getAttribute('data-target');
+        const targetElement = document.getElementById(targetId);
+        
+        if (targetElement.classList.contains('hidden')) {
+          targetElement.classList.remove('hidden');
+        } else {
+          targetElement.classList.add('hidden');
+        }
+      });
+    });
+  });
+</script>
+{% endblock %}

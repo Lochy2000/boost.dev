@@ -1,0 +1,93 @@
+{% extends 'dashboard/dash_base.html' %}
+
+{% block dashboard_content %}
+<div class="px-6 py-8 max-w-5xl mx-auto space-y-8">
+    <!-- Back button -->
+    <div>
+        <a href="{% url 'challenges' %}" class="text-indigo-400 hover:text-indigo-300">← Back to Challenges</a>
+    </div>
+
+    <!-- Header -->
+    <div>
+        <h1 class="text-3xl font-bold text-white">Create a New Challenge</h1>
+        <p class="mt-2 text-gray-400">Share your knowledge with the community by creating a challenge</p>
+    </div>
+
+    <!-- Challenge Form -->
+    <div class="bg-[#1e1f23] p-6 rounded-lg">
+        <form method="post" action="">
+            {% csrf_token %}
+            
+            <!-- Title -->
+            <div class="mb-6">
+                <label for="title" class="block text-white font-medium mb-2">Challenge Title</label>
+                <input type="text" name="title" id="title" class="w-full bg-gray-800 border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Enter a title for your challenge" required>
+            </div>
+            
+            <!-- Description -->
+            <div class="mb-6">
+                <label for="description" class="block text-white font-medium mb-2">Challenge Description</label>
+                <textarea name="description" id="description" rows="6" class="w-full bg-gray-800 border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Describe your challenge in detail..." required></textarea>
+                <p class="mt-1 text-sm text-gray-500">Use markdown formatting for code samples and lists</p>
+            </div>
+            
+            <!-- Difficulty -->
+            <div class="mb-6">
+                <label class="block text-white font-medium mb-2">Difficulty Level</label>
+                <div class="flex flex-wrap gap-4">
+                    <label class="inline-flex items-center">
+                        <input type="radio" name="difficulty" value="beginner" class="form-radio text-indigo-600" checked>
+                        <span class="ml-2 text-gray-300">Beginner</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="radio" name="difficulty" value="intermediate" class="form-radio text-indigo-600">
+                        <span class="ml-2 text-gray-300">Intermediate</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="radio" name="difficulty" value="hard" class="form-radio text-indigo-600">
+                        <span class="ml-2 text-gray-300">Hard</span>
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Hints -->
+            <div class="mb-6">
+                <label class="block text-white font-medium mb-2">Hints (Optional)</label>
+                <p class="text-sm text-gray-500 mb-3">Add progressive hints to help users solve the challenge</p>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label for="hint1" class="block text-gray-300 text-sm mb-1">Hint 1 (Subtle)</label>
+                        <input type="text" name="hints" id="hint1" class="w-full bg-gray-800 border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Add a subtle hint...">
+                    </div>
+                    <div>
+                        <label for="hint2" class="block text-gray-300 text-sm mb-1">Hint 2 (More descriptive)</label>
+                        <input type="text" name="hints" id="hint2" class="w-full bg-gray-800 border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Add a more helpful hint...">
+                    </div>
+                    <div>
+                        <label for="hint3" class="block text-gray-300 text-sm mb-1">Hint 3 (Most descriptive)</label>
+                        <input type="text" name="hints" id="hint3" class="w-full bg-gray-800 border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Add a very descriptive hint...">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Imposter Syndrome Connection -->
+            <div class="mb-6 p-4 bg-indigo-900/30 rounded-lg">
+                <h3 class="text-white font-semibold mb-2">Addressing Imposter Syndrome</h3>
+                <p class="text-gray-300 text-sm mb-3">Your challenge will help others overcome imposter syndrome by building confidence through solving problems. Consider:</p>
+                <ul class="text-gray-300 text-sm list-disc pl-5 space-y-1">
+                    <li>Make sure your challenge has clear, achievable goals</li>
+                    <li>Add encouraging hints that guide without giving away the solution</li>
+                    <li>Focus on learning rather than "trick" questions</li>
+                </ul>
+            </div>
+            
+            <!-- Submit Button -->
+            <div class="mt-8">
+                <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded font-medium">Submit Challenge</button>
+                <p class="mt-2 text-sm text-gray-500">Your challenge will be reviewed before being published</p>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
