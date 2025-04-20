@@ -18,8 +18,8 @@
     <!-- Stats Section -->
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
         <div class="bg-[#1e1f23] rounded p-5 shadow text-center">
-            <h3 class="text-gray-400 uppercase text-sm tracking-wide">Submissions</h3>
-            <p class="text-3xl font-bold text-white mt-2">{{ user.submission_set.count }}</p>
+            <h3 class="text-gray-400 uppercase text-sm tracking-wide">Challenges</h3>
+            <p class="text-3xl font-bold text-white mt-2">{{ user_challenge_count }}</p>
         </div>
         <div class="bg-[#1e1f23] rounded p-5 shadow text-center">
             <h3 class="text-gray-400 uppercase text-sm tracking-wide">Wins</h3>
@@ -34,8 +34,49 @@
     <!-- Action Buttons -->
     <div class="flex flex-wrap gap-4 justify-start pt-4">
         <a href="{% url 'profile' %}" class="bg-indigo-500 hover:bg-indigo-600 text-white px-5 py-3 rounded shadow transition-all">Edit Profile</a>
-        <a href="{% url 'submissions' %}" class="bg-gray-700 hover:bg-gray-600 text-white px-5 py-3 rounded shadow transition-all">My Submissions</a>
-        <a href="{% url 'new_submission' %}" class="bg-rose-600 hover:bg-rose-700 text-white px-5 py-3 rounded shadow transition-all">New Submission</a>
+        <a href="{% url 'challenges' %}" class="bg-gray-700 hover:bg-gray-600 text-white px-5 py-3 rounded shadow transition-all">Challenges</a>
+        <a href="{% url 'new_challenge' %}" class="bg-rose-600 hover:bg-rose-700 text-white px-5 py-3 rounded shadow transition-all">New Challenge</a>
     </div>
+
+    <!-- Recommended Challenges -->
+    {% if recommended_challenges %}
+    <div class="mt-8">
+        <h2 class="text-2xl font-bold text-white mb-4">Recommended Challenges</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {% for challenge in recommended_challenges %}
+            <div class="bg-[#1e1f23] rounded-lg overflow-hidden shadow-lg p-5">
+                <div class="flex justify-between items-start mb-3">
+                    <h3 class="text-lg font-semibold text-white">{{ challenge.title }}</h3>
+                    <span class="text-xs font-medium bg-{% if challenge.difficulty == 'beginner' %}green-600{% elif challenge.difficulty == 'intermediate' %}yellow-600{% else %}red-600{% endif %} text-white px-2 py-1 rounded">{{ challenge.get_difficulty_display }}</span>
+                </div>
+                <p class="text-gray-400 text-sm mb-3">{{ challenge.description|truncatechars:100 }}</p>
+                <a href="{% url 'challenge_detail' challenge.id %}" class="text-indigo-400 hover:text-indigo-300 text-sm">View Challenge →</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Recent Challenge Solutions -->
+    {% if user_challenge_solutions %}
+    <div class="mt-8">
+        <h2 class="text-2xl font-bold text-white mb-4">Your Recent Solutions</h2>
+        <div class="space-y-4">
+            {% for solution in user_challenge_solutions %}
+            <div class="bg-[#1e1f23] rounded-lg overflow-hidden shadow-lg p-5">
+                <div class="flex justify-between items-start mb-2">
+                    <h3 class="text-lg font-semibold text-white">{{ solution.challenge.title }}</h3>
+                    <span class="text-xs font-medium bg-{% if solution.challenge.difficulty == 'beginner' %}green-600{% elif solution.challenge.difficulty == 'intermediate' %}yellow-600{% else %}red-600{% endif %} text-white px-2 py-1 rounded">{{ solution.challenge.get_difficulty_display }}</span>
+                </div>
+                <div class="text-gray-500 text-xs mb-3">Submitted on {{ solution.submitted_at|date:"M d, Y" }}</div>
+                <div class="bg-gray-800 p-3 rounded mb-3">
+                    <pre class="text-white text-sm whitespace-pre-wrap">{{ solution.solution_text|truncatechars:150 }}</pre>
+                </div>
+                <a href="{% url 'challenge_detail' solution.challenge.id %}" class="text-indigo-400 hover:text-indigo-300 text-sm">View Full Solution →</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
 </div>
 {% endblock %}

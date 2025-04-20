@@ -57,7 +57,7 @@ INSTALLED_APPS = [
 
     'dashboard',
     'prompts',
-    'submissions',
+    'challenges',
     'users',
     'wins',
 ]

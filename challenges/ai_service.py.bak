@@ -1,0 +1,172 @@
+"""
+AI Service for the Challenges app
+This module handles AI integrations for generating challenges,
+providing feedback, and more.
+"""
+import os
+from typing import Dict, List, Any, Optional
+import json
+
+# For the hackathon, we'll create mock responses
+# In a production app, this would connect to an actual AI service
+
+def generate_ai_feedback(solution_text: str, challenge: Any) -> str:
+    """
+    Generate AI feedback for a challenge solution
+    
+    Args:
+        solution_text: The user's submitted solution text
+        challenge: The challenge object the solution is for
+        
+    Returns:
+        A string containing the AI feedback
+    """
+    # This is a mock response - would be replaced with actual AI API call
+    feedback = f"""
+    I've reviewed your solution to the challenge "{challenge.title}". Here's my feedback:
+    
+    **What you did well:**
+    - Your solution shows a good understanding of the core concepts
+    - Your approach to solving the problem is logical and well-structured
+    
+    **Suggestions for improvement:**
+    - Consider edge cases like empty inputs or very large inputs
+    - You could optimize the time complexity by using a different data structure
+    
+    **Growth mindset perspective:**
+    Remember that every programmer, even the most experienced ones, faced these same challenges when learning. 
+    The fact that you're attempting these challenges shows your commitment to growth. 
+    Your solution demonstrates real problem-solving ability!
+    
+    **Tip for future challenges:**
+    When approaching similar problems, try breaking them down into smaller steps first and testing each part separately.
+    """
+    
+    return feedback.strip()
+
+def generate_challenge_with_ai(difficulty: str, topic: str = "", focus: str = "confidence") -> Dict[str, Any]:
+    """
+    Generate a new challenge using AI
+    
+    Args:
+        difficulty: The difficulty level (beginner, intermediate, hard)
+        topic: Optional topic for the challenge
+        focus: What aspect of imposter syndrome to focus on
+        
+    Returns:
+        A dictionary with challenge data
+    """
+    # This is a mock response - would be replaced with actual AI API call
+    
+    # Different templates based on difficulty
+    if difficulty == "beginner":
+        challenge = {
+            "title": "Reverse a String",
+            "description": """
+            ## The Challenge
+            
+            Write a function that reverses a string. The input string is given as an array of characters.
+            
+            Try to do this without creating a new string in memory.
+            
+            ### Example:
+            
+            Input: ["h","e","l","l","o"]
+            Output: ["o","l","l","e","h"]
+            
+            ## Why This Matters
+            
+            String manipulation is a fundamental programming skill. This challenge helps you practice working with strings and arrays, which are essential data structures in any language.
+            
+            Remember, even senior developers had to start with these basics!
+            """,
+            "hints": [
+                "Try using two pointers - one at the beginning and one at the end of the array.",
+                "Swap characters as you move the pointers towards the middle.",
+                "You can swap without a temporary variable using destructuring in many languages like: [a, b] = [b, a]"
+            ]
+        }
+    elif difficulty == "intermediate":
+        challenge = {
+            "title": "Valid Parentheses",
+            "description": """
+            ## The Challenge
+            
+            Given a string containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+            
+            An input string is valid if:
+            1. Open brackets must be closed by the same type of brackets.
+            2. Open brackets must be closed in the correct order.
+            
+            ### Examples:
+            
+            Input: "()"
+            Output: true
+            
+            Input: "()[]{}"
+            Output: true
+            
+            Input: "(]"
+            Output: false
+            
+            Input: "([)]"
+            Output: false
+            
+            Input: "{[]}"
+            Output: true
+            
+            ## Why This Matters
+            
+            This challenge tests your ability to use stacks, a fundamental data structure used in many algorithms. Many developers who now build complex systems once struggled with this exact problem!
+            """,
+            "hints": [
+                "Consider using a stack data structure to keep track of opening brackets.",
+                "When you encounter a closing bracket, check if it matches the most recent opening bracket.",
+                "If you finish processing the string and the stack is empty, the string is valid."
+            ]
+        }
+    else:  # hard
+        challenge = {
+            "title": "LRU Cache Implementation",
+            "description": """
+            ## The Challenge
+            
+            Design and implement a data structure for Least Recently Used (LRU) cache. It should support the following operations: get and put.
+            
+            - get(key) - Get the value of the key if the key exists in the cache, otherwise return -1.
+            - put(key, value) - Set or insert the value if the key is not already present. When the cache reaches its capacity, it should invalidate the least recently used item before inserting a new item.
+            
+            Both operations should have O(1) time complexity.
+            
+            ### Example:
+            
+            ```
+            LRUCache cache = new LRUCache(2); // 2 is capacity
+            
+            cache.put(1, 1);
+            cache.put(2, 2);
+            cache.get(1);       // returns 1
+            cache.put(3, 3);    // evicts key 2
+            cache.get(2);       // returns -1 (not found)
+            cache.put(4, 4);    // evicts key 1
+            cache.get(1);       // returns -1 (not found)
+            cache.get(3);       // returns 3
+            cache.get(4);       // returns 4
+            ```
+            
+            ## Why This Matters
+            
+            Cache implementations are used in virtually all large-scale systems. Understanding them demonstrates deep knowledge of both data structures and real-world applications. Even experienced engineers may need time to work through this problem!
+            """,
+            "hints": [
+                "Consider using a combination of a hash map and a doubly linked list.",
+                "The hash map provides O(1) lookup, while the doubly linked list helps track the order for O(1) updates.",
+                "When you access an element, you need to move it to the front of the list to mark it as most recently used."
+            ]
+        }
+    
+    # Add topic focus if provided
+    if topic:
+        challenge["description"] = f"# Topic: {topic}\n\n" + challenge["description"]
+        
+    return challenge

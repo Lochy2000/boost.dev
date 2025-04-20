@@ -1,0 +1,79 @@
+{% extends 'dashboard/dash_base.html' %}
+
+{% block dashboard_content %}
+<div class="px-6 py-8 max-w-5xl mx-auto space-y-8">
+    <!-- Back button -->
+    <div>
+        <a href="{% url 'challenges' %}" class="text-indigo-400 hover:text-indigo-300">← Back to Challenges</a>
+    </div>
+
+    <!-- Header -->
+    <div>
+        <h1 class="text-3xl font-bold text-white">Generate an AI Challenge</h1>
+        <p class="mt-2 text-gray-400">Let AI create a personalized challenge to help you grow</p>
+    </div>
+
+    <!-- AI Challenge Generator Form -->
+    <div class="bg-[#1e1f23] p-6 rounded-lg">
+        <form method="post" action="">
+            {% csrf_token %}
+            
+            <!-- Difficulty Selection -->
+            <div class="mb-6">
+                <label class="block text-white font-medium mb-2">Difficulty Level</label>
+                <div class="flex flex-wrap gap-4">
+                    <label class="inline-flex items-center">
+                        <input type="radio" name="difficulty" value="beginner" class="form-radio text-indigo-600" checked>
+                        <span class="ml-2 text-gray-300">Beginner</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="radio" name="difficulty" value="intermediate" class="form-radio text-indigo-600">
+                        <span class="ml-2 text-gray-300">Intermediate</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                        <input type="radio" name="difficulty" value="hard" class="form-radio text-indigo-600">
+                        <span class="ml-2 text-gray-300">Hard</span>
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Topic (Optional) -->
+            <div class="mb-6">
+                <label for="topic" class="block text-white font-medium mb-2">Topic (Optional)</label>
+                <input type="text" name="topic" id="topic" class="w-full bg-gray-800 border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="e.g. arrays, strings, algorithms...">
+                <p class="mt-1 text-sm text-gray-500">Leave blank for a random topic</p>
+            </div>
+            
+            <!-- Imposter Syndrome Focus -->
+            <div class="mb-6">
+                <label class="block text-white font-medium mb-2">Imposter Syndrome Focus</label>
+                <select name="focus" class="w-full bg-gray-800 border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    <option value="confidence">Building Confidence</option>
+                    <option value="skills">Skill Development</option>
+                    <option value="validation">Knowledge Validation</option>
+                    <option value="growth">Growth Mindset</option>
+                </select>
+                <p class="mt-1 text-sm text-gray-500">Select the aspect of imposter syndrome you'd like to focus on</p>
+            </div>
+            
+            <!-- Educational Component -->
+            <div class="mb-6 p-4 bg-indigo-900/30 rounded-lg">
+                <h3 class="text-white font-semibold mb-2">How This Helps with Imposter Syndrome</h3>
+                <p class="text-gray-300 text-sm">AI-generated challenges are tailored to your skill level and come with:</p>
+                <ul class="text-gray-300 text-sm list-disc pl-5 space-y-1 mt-2">
+                    <li>Progressive hints that gently guide you to the solution</li>
+                    <li>Encouraging feedback that focuses on your growth</li>
+                    <li>Clear learning objectives to help you track your progress</li>
+                    <li>Solutions that explain concepts thoroughly</li>
+                </ul>
+            </div>
+            
+            <!-- Submit Button -->
+            <div class="mt-8">
+                <button type="submit" class="bg-rose-600 hover:bg-rose-700 text-white px-6 py-3 rounded font-medium">Generate Challenge</button>
+                <p class="mt-2 text-sm text-gray-500">Your AI challenge will be created instantly and added to your personal challenges</p>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

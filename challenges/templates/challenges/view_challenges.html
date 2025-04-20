@@ -1,0 +1,53 @@
+{% extends 'dashboard/dash_base.html' %}
+
+{% block dashboard_content %}
+<div class="px-6 py-8 max-w-5xl mx-auto space-y-8">
+    <!-- Header -->
+    <div>
+        <h1 class="text-3xl font-bold text-indigo-400">Coding Challenges</h1>
+        <p class="mt-2 text-gray-400 text-lg">Learn and grow by tackling these challenges</p>
+    </div>
+
+    <!-- Filters -->
+    <div class="bg-[#1e1f23] p-4 rounded-lg">
+        <h2 class="text-xl text-white mb-3">Filters</h2>
+        <div class="flex flex-wrap gap-4">
+            <a href="{% url 'challenges' %}" class="px-4 py-2 {% if not difficulty_filter %}bg-indigo-600{% else %}bg-gray-700{% endif %} rounded-full text-white text-sm">All</a>
+            <a href="{% url 'challenges' %}?difficulty=beginner" class="px-4 py-2 {% if difficulty_filter == 'beginner' %}bg-indigo-600{% else %}bg-gray-700{% endif %} rounded-full text-white text-sm">Beginner</a>
+            <a href="{% url 'challenges' %}?difficulty=intermediate" class="px-4 py-2 {% if difficulty_filter == 'intermediate' %}bg-indigo-600{% else %}bg-gray-700{% endif %} rounded-full text-white text-sm">Intermediate</a>
+            <a href="{% url 'challenges' %}?difficulty=hard" class="px-4 py-2 {% if difficulty_filter == 'hard' %}bg-indigo-600{% else %}bg-gray-700{% endif %} rounded-full text-white text-sm">Hard</a>
+        </div>
+    </div>
+
+    <!-- Challenge Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {% if challenges %}
+            {% for challenge in challenges %}
+            <div class="bg-[#1e1f23] rounded-lg overflow-hidden shadow-lg">
+                <div class="p-6">
+                    <div class="flex justify-between items-start">
+                        <h3 class="text-xl font-semibold text-white">{{ challenge.title }}</h3>
+                        <span class="text-xs font-medium bg-{{ challenge.get_difficulty_color }} text-white px-2 py-1 rounded">{{ challenge.get_difficulty_display }}</span>
+                    </div>
+                    <p class="mt-2 text-gray-400">{{ challenge.description|truncatechars:100 }}</p>
+                    <div class="mt-4 flex justify-between items-center">
+                        <a href="{% url 'challenge_detail' challenge.id %}" class="text-indigo-400 hover:text-indigo-300">View Challenge →</a>
+                        <span class="text-xs text-gray-500">Created by: {{ challenge.created_by.username }}</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-span-2 text-center py-8">
+                <p class="text-gray-400">No challenges found. {% if difficulty_filter %}Try a different difficulty filter.{% endif %}</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="flex flex-wrap gap-4 justify-start pt-6">
+        <a href="{% url 'new_challenge' %}" class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-3 rounded shadow transition-all">Create a Challenge</a>
+        <a href="{% url 'generate_challenge' %}" class="bg-rose-600 hover:bg-rose-700 text-white px-5 py-3 rounded shadow transition-all">Generate AI Challenge</a>
+    </div>
+</div>
+{% endblock %}
