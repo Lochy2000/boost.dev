@@ -87,6 +87,14 @@ main {
     flex-grow: 1; /* Allow the container to grow with the content */
 }
 
+.content-container h1 {
+    font-size: 3rem; /* Make the text larger */
+    text-align: center; /* Center the text horizontally */
+    margin: 1rem 0; /* Add spacing above and below */
+    font-weight: bold; /* Optional: Make the text bold */
+    color: var(--accent, #581CA0); /* Optional: Add a custom color */
+}
+
 h1 {
     font-size: 3rem;
     margin-bottom: 1.5rem;
@@ -316,9 +324,11 @@ footer {
 }
 
 .imposter-syndrome-section h2 {
-    font-size: 1.5rem;
-    color: var(--accent);
-    margin-bottom: 1rem;
+    text-align: center; /* Center the text horizontally */
+    font-size: 2rem; /* Optional: Make the text larger */
+    margin-bottom: 1rem; /* Optional: Add spacing below the heading */
+    font-weight: bold; /* Optional: Make the text bold */
+    color: var(--accent, #581CA0); /* Optional: Add a custom color */
 }
 
 .imposter-syndrome-section p {
