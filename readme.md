@@ -85,20 +85,34 @@ The site is designed to be responsive in different screen sizes.
 Our main goal is to let the user know that they are great developers and hopefully to let them improve their confidence with coding and to help others in similar situation, creating a supporting community for developers that have low-confidence.
 
 ## UX - User Experience
+This project was inspired in 2 sites:
 
+  - [daily.dev](https://daily.dev/)
+  - [gamma.app](https://gamma.app/docs/boostdev-Where-Confidence-Grows-ltxw0nuvix1u7ue?mode=doc)
 
+Fiirst site was known to one of the members of the group and the second is a template made by the same member about Imposter Syndrome.
 
+As the look seemed well put and  a great start, the steam thought about taking this idea and changing it with inspiration also on "daily.dev" for the main site after the user registers or logs in the site.
 
+We took the same name, and developed a different landing page and worked on the main site, providing some information for the user even before he registers on the site.
 
+We opted for a simple and minimalistic layout and logo and to focus more on the content to get the attention for the issue that the "Imposter Syndrome" can present to the user and hoepfully make him/her feel encouraged to register, improve his/her confidence, as well as to try to overcome it and help others while also improving his/her skills.
 
+[Back to top](#top)
+
+## Colour Scheme
+Following the initial idea from our colleague, we used similar colours to the ones used on "boost.dev" and adapted as necessary for better contrast, tryin gto keep it simple.
 
 Colours - checked against WCAG for contrast 
 
-#581CA0 - purple (from the canva mind map)
-#312fa6 - indigo 
-#b12e5d - roseberry
-#0088cc - bright blue
-#121212 - dark background
+#581CA0 - Purple (from the canva mind map)
+#312fa6 - Indigo 
+#b12e5d - Roseberry
+#0088cc - Bright blue
+#121212 - Dark background
+#ffffff - White
+
+<img src="theme\static\css\images\colour-palette.png" style="width: 90%; height: 60%;"><br>
 
 | Colour      | WCAG Ratio (against #121212) | WCAG Contrast          |
 |-------------|-------------------------------|-------------------------|
