@@ -19,7 +19,8 @@
     </head>
 
     <body>
-        <!-- Level Up Notification -->
+
+       <!-- Level Up Notification -->
         <div id="level-up-notification" class="fixed inset-0 flex items-center justify-center z-50 hidden">
             <div class="absolute inset-0 bg-black opacity-50"></div>
             <div class="bg-gray-800 rounded-lg p-8 max-w-md mx-auto relative z-10 border-4 border-yellow-400 text-center">
@@ -36,14 +37,18 @@
                 </div>
             </div>
         </div>
-        <header
-        class="text-white px-6 py-4 flex justify-between items-center sticky top-0 z-50">
-        <a href="/" class="logo">
-            <span class="logo-icon">B</span>
-            Boost.dev
-        </a>
-        {% block auth_nav %}{% endblock %}
-        </header>
+      
+        <header class="{% block header_class %}default-header-class{% endblock %}">
+            <a href="/" class="logo">
+              <span class="logo-icon">B</span>
+              Boost.dev
+            </a>
+          
+            {% block auth_nav %}
+            <!-- Default Auth Nav (if any) -->
+            {% endblock %}
+         </header>
+
         
         <!-- Messages Section -->
         {% if messages %}
