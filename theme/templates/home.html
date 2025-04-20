@@ -2,7 +2,6 @@
 
 {% load static %}
 
-
 {% block content %}
 <!-- Landing page for non-authenticated users -->
 <div class="content-container">
@@ -69,36 +68,34 @@
 
     <!-- New Section: Imposter Syndrome -->
     <div class="imposter-syndrome-section">
-        <h2>Imposter Syndrome</h2> <!-- Keep the heading above the content -->
+        <h2>Imposter Syndrome</h2>
         <div class="imposter-syndrome-content">
-            <!-- Text on the left -->
             <div class="imposter-text">
                 <p>
                     Many developers struggle with imposter syndrome, doubting their skills and feeling like they don't belong. 
                     At Boost.dev, we provide resources and a supportive community to help you overcome these feelings and thrive in your career.
                 </p>
             </div>
-
-            <!-- Image on the right -->
             <div class="imposter-image">
-                <img src="{% static 'css/pics/imposter-syndrome-cats.jpg' %}" alt="Imposter Syndrome">
+                <img src="{% static 'css\images\imposter-syndrome-cats.jpg' %}" alt="Imposter Syndrome">
             </div>
         </div>
     </div>
 
-    <!-- Image Gallery - Imposter Syndrome-->
+    <!-- Image Gallery - Imposter Syndrome -->
     <div class="image-gallery-section">
         <div class="image-gallery">
-            <img src="{% static 'css/pics/suffering-from-imposter-syndrome.jpg' %}" alt="Image 1">
-            <img src="{% static 'css/pics/display.png' %}" alt="Image 2">
-            <img src="{% static 'css/pics/syndrome.jpg' %}" alt="Image 3">
+            <img src="{% static 'css\images\suffering-from-imposter-syndrome.jpg' %}" alt="Image 1">
+            <img src="{% static 'css\images\inline-imposter-syndrome-1-2x.png' %}" alt="Image 2">
+            <img src="{% static 'css\images\syndrome.jpg' %}" alt="Image 3">
         </div>
     </div>
 
     <!-- Overcome IS -->
     <div class="image-gallery-section">
-        <div class="image-gallery">
-            <img src="{% static 'css/pics/3-Cs-Image-1200x675.jpg' %}" alt="Image 1">
+        <h2>Dealing with Imposter Syndrome</h2>
+        <div class="image-gallery" style="width: 100%; max-width: 1200px; margin: 0 auto;">
+            <img src="{% static 'css\images\3-Cs-Image.jpg' %}" alt="Image 1" style="width: 80%; height: 80%;">
         </div>
     </div>
 </div>

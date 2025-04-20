@@ -387,20 +387,20 @@ footer {
 
 .image-gallery-section h2 {
     font-size: 1.5rem;
-    color: var(--accent);
+    color: white;
     margin-bottom: 1rem;
 }
 
 .image-gallery {
     display: flex;
     justify-content: center;
-    gap: 1rem; /* Space between images */
+    gap: 1.5rem; /* Space between images */
 }
 
 .image-gallery img {
-    width: 200px; /* Set a fixed width for all images */
-    height: 200px; /* Set a fixed height for all images */
-    object-fit: cover; /* Ensure the images maintain their aspect ratio */
+    width: 350px; /* Set a fixed width for all images */
+    height: 350px; /* Set a fixed height for all images */
+    object-fit: fill; /* Ensure the images maintain their aspect ratio */
     border-radius: 8px; /* Add rounded corners */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
 }
