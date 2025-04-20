@@ -13,12 +13,13 @@
 </head>
 
 <body>
-    <!-- Logo header -->
-    <header class="fixed top-0 left-0 w-full z-50">
+    <header class="{% block header_class %}default-header-class{% endblock %}">
         <a href="/" class="logo">
-            <span class="logo-icon">B</span>
-            Boost.dev
+          <span class="logo-icon">B</span>
+          Boost.dev
         </a>
+
+        {% block auth_nav %}{% endblock %}
     </header>
 
     <!-- Messages -->
