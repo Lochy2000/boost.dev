@@ -1,10 +1,11 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth.models import User
+from django.utils import timezone
 from wins.models import DailyWin
 from challenges.models import Challenge, ChallengeSolution
-from .models import UserProgress, Achievement, UserAchievement
-from .utils import add_user_points, award_level_achievement, award_achievement
+from .models import UserProgress, Achievement, UserAchievement, UserFlag
+from .utils import add_user_points, award_level_achievement, award_achievement, get_level_title
 
 # User registration signal already in models.py
 
@@ -24,6 +25,14 @@ def update_progress_on_win(sender, instance, created, **kwargs):
         if leveled_up:
             # Award level achievement
             award_level_achievement(instance.user, level)
+            
+            # Create level-up flag for notification
+            UserFlag.objects.create(
+                user=instance.user,
+                flag_type='level_up',
+                value=str(level),
+                expires_at=timezone.now() + timezone.timedelta(minutes=5)
+            )
 
 @receiver(post_save, sender=ChallengeSolution)
 def update_progress_on_challenge_complete(sender, instance, created, **kwargs):
@@ -66,3 +75,11 @@ def update_progress_on_challenge_creation(sender, instance, created, **kwargs):
         if leveled_up:
             # Award level achievement
             award_level_achievement(instance.created_by, level)
+            
+            # Create level-up flag for notification
+            UserFlag.objects.create(
+                user=instance.created_by,
+                flag_type='level_up',
+                value=str(level),
+                expires_at=timezone.now() + timezone.timedelta(minutes=5)
+            )

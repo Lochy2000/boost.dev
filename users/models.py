@@ -130,3 +130,16 @@ class UserAchievement(models.Model):
         
     def __str__(self):
         return f"{self.user.username} earned {self.achievement.name}"
+
+
+class UserFlag(models.Model):
+    """Temporary flags for user events that need to be displayed"""
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='flags')
+    flag_type = models.CharField(max_length=50)  # e.g., 'level_up', 'achievement'
+    value = models.TextField(blank=True)  # Level number or achievement data
+    created_at = models.DateTimeField(auto_now_add=True)
+    expires_at = models.DateTimeField(null=True, blank=True)
+    is_read = models.BooleanField(default=False)
+    
+    def __str__(self):
+        return f"{self.user.username} - {self.flag_type} - {self.value}"

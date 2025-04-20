@@ -27,9 +27,14 @@
                 <div class="p-6">
                     <div class="flex justify-between items-start">
                         <h3 class="text-xl font-semibold text-white">{{ challenge.title }}</h3>
-                        <span class="text-xs font-medium bg-{{ challenge.get_difficulty_color }} text-white px-2 py-1 rounded">{{ challenge.get_difficulty_display }}</span>
+                        <div class="flex items-center gap-2">
+                            {% if challenge.is_ai_generated %}
+                            <span class="text-xs font-medium bg-purple-600 text-white px-2 py-1 rounded">AI</span>
+                            {% endif %}
+                            <span class="text-xs font-medium bg-{{ challenge.get_difficulty_color }} text-white px-2 py-1 rounded">{{ challenge.get_difficulty_display }}</span>
+                        </div>
                     </div>
-                    <p class="mt-2 text-gray-400">{{ challenge.description|truncatechars:100 }}</p>
+                    <p class="mt-2 text-gray-400">{{ challenge.description|striptags|truncatechars:120 }}</p>
                     <div class="mt-4 flex justify-between items-center">
                         <a href="{% url 'challenge_detail' challenge.id %}" class="text-indigo-400 hover:text-indigo-300">View Challenge →</a>
                         <span class="text-xs text-gray-500">Created by: {{ challenge.created_by.username }}</span>
