@@ -2,15 +2,27 @@
 {% block auth_nav %}
 <nav class="flex items-center space-x-6 text-sm">
   {% if user.is_authenticated %}
-  <div class="flex items-center space-x-2">
-    <span>{{ user.username }}</span>
-    {% if user.userprofile.avatar %}
-    <img src="{{ user.userprofile.avatar }}" alt="Profile Image of {{ user.username }}"
-      class="w-10 h-10 rounded-full object-cover border border-gray-700" />
-    {% else %}
-    <img src="https://res.cloudinary.com/dn7aws3wl/image/upload/v1739390582/nobody_pcaqjl.jpg"
-      alt="Default Profile Image" class="w-10 h-10 rounded-full object-cover border border-gray-700" />
-    {% endif %}
+  <div class="flex flex-col items-center">
+    <div class="flex items-center space-x-2 mb-1">
+      <span>{{ user.username }}</span>
+      {% if user.userprofile.avatar %}
+      <img src="{{ user.userprofile.avatar }}" alt="Profile Image of {{ user.username }}"
+        class="w-10 h-10 rounded-full object-cover border border-gray-700" />
+      {% else %}
+      <img src="https://res.cloudinary.com/dn7aws3wl/image/upload/v1739390582/nobody_pcaqjl.jpg"
+        alt="Default Profile Image" class="w-10 h-10 rounded-full object-cover border border-gray-700" />
+      {% endif %}
+    </div>
+    <!-- Progress Bar -->
+    <div class="w-full">
+      <div class="flex justify-between items-center text-xs mb-1">
+        <span>Level {{ user.progress.level }}</span>
+        <span>{{ user.progress.points }}/{{ user.progress.next_level_threshold }}</span>
+      </div>
+      <div class="w-full bg-gray-700 rounded-full h-2">
+        <div class="bg-{{ user.progress.get_level_color }}-500 h-2 rounded-full" style="width: {{ user.progress.calculate_percentage }}%"></div>
+      </div>
+    </div>
   </div>
   <form method="post" action="{% url 'logout' %}">
     {% csrf_token %}
