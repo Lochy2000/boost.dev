@@ -14,16 +14,40 @@
 }
 
 body {
-    background-color: var(--primary);
-    color: var(--text);
-    line-height: 1.6;
+    background: url('../css/images/boost-dev-bkgd.png') no-repeat center center fixed;
+    background-size: cover;
+    position: relative;
     height: 100vh;
+    margin: 0;
     display: flex;
     flex-direction: column;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    overflow: hidden;
+    color: var(--text);
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Dark overlay with 60% opacity */
+    z-index: -1; /* Ensure it stays behind the content */
+    pointer-events: none;
 }
 
 header {
+    position: absolute; /* Position the header at the top-left corner */
+    top: 0;
+    left: 0;
+    width: 100%; /* Optional: Make the header span the full width */
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Align the logo to the left */
     padding: 1.5rem 2rem;
+    z-index: 10; /* Ensure the header stays above other content */
 }
 
 .logo {
@@ -121,6 +145,14 @@ h1 {
     border-color: var(--text);
 }
 
+.btn-half {
+    font-size: 0.75rem; /* Smaller font size */
+    padding: 0.25rem 0.5rem; /* Smaller padding */
+    width: 50%; /* Make the button half the size */
+    text-align: center; /* Center the text inside the button */
+    display: inline-block; /* Ensure proper alignment */
+}
+
 .divider {
     display: flex;
     align-items: center;
@@ -145,18 +177,28 @@ h1 {
 }
 
 .social-login {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two columns */
+    gap: 1rem; /* Space between buttons */
+    justify-items: center; /* Center items horizontally */
+    margin-top: 1rem;
+}
+
+.social-login a {
     display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    max-width: 320px;
-    margin: 0 auto;
-    width: 100%;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    width: 100%; /* Ensure buttons are consistent in size */
+    max-width: 200px; /* Optional: Limit button width */
 }
 
 .btn-social {
-    background-color: transparent;
-    border: 1px solid var(--text-secondary);
-    color: var(--text);
+    background-color: #4267B2; /* Default for Facebook/LinkedIn */
 }
 
 .btn-social:hover {
@@ -164,8 +206,7 @@ h1 {
 }
 
 .btn-github {
-    background-color: #24292e;
-    border: none;
+    background-color: #333;
 }
 
 .btn-github:hover {
@@ -173,9 +214,7 @@ h1 {
 }
 
 .btn-google {
-    background-color: white;
-    color: #333;
-    border: none;
+    background-color: #db4437;
 }
 
 .btn-google:hover {
@@ -263,6 +302,55 @@ footer {
     background-color: rgba(239, 68, 68, 0.1);
     border: 1px solid rgba(239, 68, 68, 0.2);
     color: #ef4444;
+}
+
+.imposter-syndrome-section {
+    margin-top: 2rem;
+    padding: 1rem;
+    background-color: var(--secondary); /* Optional: Add a background color */
+    color: var(--text);
+    border-radius: 8px; /* Optional: Add rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
+}
+
+.imposter-syndrome-section h2 {
+    font-size: 1.5rem;
+    color: var(--accent);
+    margin-bottom: 1rem;
+}
+
+.imposter-syndrome-section p {
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.image-gallery-section {
+    margin-top: 2rem;
+    padding: 1rem;
+    text-align: center;
+    background-color: var(--secondary); /* Optional: Add a background color */
+    border-radius: 8px; /* Optional: Add rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
+}
+
+.image-gallery-section h2 {
+    font-size: 1.5rem;
+    color: var(--accent);
+    margin-bottom: 1rem;
+}
+
+.image-gallery {
+    display: flex;
+    justify-content: center;
+    gap: 1rem; /* Space between images */
+}
+
+.image-gallery img {
+    width: 200px; /* Set a fixed width for all images */
+    height: 200px; /* Set a fixed height for all images */
+    object-fit: cover; /* Ensure the images maintain their aspect ratio */
+    border-radius: 8px; /* Add rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
 }
 
 /* Media Queries */

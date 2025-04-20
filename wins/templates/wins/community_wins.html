@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block title %}Community Wins - Boost.dev{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8 max-w-3xl">
+    <h1 class="text-3xl font-bold text-white mb-6">Community Wins</h1>
+    
+    {% if wins %}
+        {% for win in wins %}
+        <div class="bg-gray-800 rounded-lg p-6 shadow-lg mb-4">
+            <div class="flex items-start">
+                <img src="{{ win.user.userprofile.avatar|default:'https://via.placeholder.com/48' }}"
+                     alt="{{ win.user.username }}"
+                     class="w-12 h-12 rounded-full mr-4">
+                <div class="flex-1">
+                    <div class="flex flex-wrap items-center justify-between">
+                        <h2 class="text-2xl font-bold text-white">{{ win.user.username }}'s Win</h2>
+                        <span class="text-gray-400 text-sm">{{ win.created_at|date:"F j, Y" }}</span>
+                    </div>
+                    
+                    <div class="mt-4 mb-6">
+                        <p class="text-gray-200 text-lg">{{ win.content }}</p>
+                    </div>
+                    
+                    {% if win.ai_feedback %}
+                    <div class="bg-indigo-900 bg-opacity-50 rounded-lg p-4 mb-6">
+                        <div class="flex">
+                            <div class="flex-shrink-0 mr-3">
+                                <div class="w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center">
+                                    <i class="fas fa-robot text-white"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="text-indigo-300 font-medium mb-2">AI Coach Feedback:</h3>
+                                <p class="text-gray-200">{{ win.ai_feedback }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="flex items-center justify-between border-t border-gray-700 pt-4">
+                        <div class="flex space-x-4">
+                            <button class="text-gray-400 hover:text-indigo-400 transition-colors">
+                                <i class="fas fa-thumbs-up mr-1"></i> Celebrate
+                            </button>
+                            <button class="text-gray-400 hover:text-indigo-400 transition-colors">
+                                <i class="fas fa-comment mr-1"></i> Comment
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="bg-gray-800 rounded-lg p-6 shadow-lg mb-4 text-center">
+            <p class="text-gray-300 text-lg">No community wins yet. Be the first to share your achievement!</p>
+        </div>
+    {% endif %}
+    
+    <div class="mt-6 flex justify-between">
+        <a href="{% url 'dashboard' %}" class="text-indigo-400 hover:text-indigo-300">
+            <i class="fas fa-arrow-left mr-1"></i> Back to Dashboard
+        </a>
+        
+        {% if request.user.is_authenticated %}
+            {% if not has_win_today %}
+            <a href="{% url 'wins:submit_win' %}" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded">
+                Add Today's Win
+            </a>
+            {% endif %}
+        {% else %}
+            <a href="{% url 'login' %}" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded">
+                Login to Share Your Win
+            </a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

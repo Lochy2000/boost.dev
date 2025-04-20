@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.db.models import Q
+from django.utils import timezone
 from django.contrib import messages
 from .models import Article, Project, ProjectFeedback, Resource
 from prompts.models import DailyPrompt
@@ -32,8 +33,22 @@ def dashboard(request):
     # Get today's prompt
     daily_prompt = DailyPrompt.get_today()
     
+    # Get user's recent wins
+    user_wins = []
+    has_win_today = False
+    
+    if request.user.is_authenticated:
+        user_wins = DailyWin.objects.filter(user=request.user).order_by('-created_at')[:3]
+        
+        # Check if user has a win for today
+        today = timezone.now().date()
+        has_win_today = DailyWin.objects.filter(
+            user=request.user, 
+            created_at__date=today
+        ).exists()
+    
     # Get community wins
-    community_wins = DailyWin.objects.filter(is_public=True)[:5]
+    community_wins = DailyWin.objects.filter(is_public=True).exclude(user=request.user).order_by('-created_at')[:5]
     
     context = {
         'featured_articles': featured_articles,
@@ -42,7 +57,11 @@ def dashboard(request):
         'featured_resources': featured_resources,
         'daily_prompt': daily_prompt,
         'community_wins': community_wins,
-        'user': request.user
+        'user_wins': user_wins,
+        'has_win_today': has_win_today,
+        'user': request.user,
+        'user_wins': user_wins,
+        'has_win_today': has_win_today,
     }
     
     return render(request, 'dashboard/dashboard.html', context)

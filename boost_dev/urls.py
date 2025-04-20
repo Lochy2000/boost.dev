@@ -29,4 +29,5 @@ urlpatterns = [
     path('grappelli/', include('grappelli.urls')),
     path('admin/', admin.site.urls),
     path('submissions/', include('submissions.urls')),
+    path('wins/', include('wins.urls')),
 ]
