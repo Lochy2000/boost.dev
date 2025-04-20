@@ -8,14 +8,8 @@
         <div>
             <h1 class="text-4xl font-extrabold text-white">Edit Your Profile</h1>
             <p class="text-sm text-gray-400 mt-1">Customize your vibe. Show off your dev energy ✨</p>
-        </div>
-        <form method="post" action="{% url 'logout' %}">
-            {% csrf_token %}
-            <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white px-5 py-3 rounded shadow transition-all">
-                Log Out
-            </button>
-        </form>
-    </div>
+        </div>       
+</div>
     
     
     <div class="grid md:grid-cols-3 gap-10">
@@ -74,7 +68,7 @@
 
                 <!-- Buttons -->
                 <div class="flex items-center justify-between pt-6">
-                    <a href="{% url 'dashboard' %}" class="text-sm text-gray-400 hover:text-white transition">← Back to Dashboard</a>
+                    
                     <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white px-5 py-3 rounded shadow transition-all">
                         Save Changes
                     </button>

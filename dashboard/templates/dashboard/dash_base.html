@@ -1,10 +1,24 @@
 {% extends 'base_minimal.html' %}
 
 {% block content %}
-<!-- Dashboard content for logged-in users -->
-<div class="dashboard-container">
-    {% block dashboard_content %}
-    <!-- Dashboard specific content goes here -->
-    {% endblock %}
-</div>
-{% endblock %}
+
+    <!-- Sidebar navigation (secondary navbar) -->
+    <aside class="w-64 min-h-screen bg-white/10 backdrop-blur-md border-r border-white/20 text-white p-6 fixed top-0 left-0 z-40">
+      
+      <nav class="pt-20 p-6 space-y-4 font-medium">
+        <a href="{% url 'dashboard' %}" class="block px-3 py-2 rounded hover:bg-[#312fa6]">Dashboard</a>
+        <a href="#" class="block px-3 py-2 rounded hover:bg-[#312fa6]">Log a Win</a>
+        <a href="#" class="block px-3 py-2 rounded hover:bg-[#312fa6]">Community</a>
+        <a href="{% url 'profile' %}" class="block px-3 py-2 rounded hover:bg-[#312fa6]">Profile</a>
+      </nav>
+
+    </aside>
+  
+    <!-- Main dashboard content -->
+    <main class="flex-1 p-6 overflow-y-auto">
+      {% block dashboard_content %}
+      <!-- Page-specific content goes here -->
+      {% endblock %}
+    </main>
+  
+  {% endblock %}
