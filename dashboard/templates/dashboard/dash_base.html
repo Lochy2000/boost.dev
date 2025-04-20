@@ -1,4 +1,9 @@
 {% extends 'base.html' %}
+
+{% block header_class %}
+bg-gray-900/80 backdrop-blur-md border-b border-gray-700 text-white px-6 py-4 flex justify-between items-center sticky top-0 z-50
+{% endblock %}
+
 {% block auth_nav %}
 <nav class="flex items-center space-x-6 text-sm">
   {% if user.is_authenticated %}
@@ -19,12 +24,13 @@
       Log Out
     </button>
   </form>
-    {% endif %}
+  {% endif %}
 </nav>
 {% endblock %}
+
 {% block content %}
     <!-- Sidebar navigation (secondary navbar) -->
-    <aside class="w-64 min-h-screen bg-white/10 backdrop-blur-md border-r border-white/20 text-white p-6 fixed top-0 left-0 z-40">
+    <aside class="w-54 min-h-screen bg-gray-900/80 backdrop-blur-md border-r border-gray-700 text-white p-6 fixed top-0 left-0 z-40">
       <nav class="pt-20 p-6 space-y-4 font-medium">
         <a href="{% url 'dashboard' %}" class="block px-3 py-2 rounded hover:bg-[#312fa6]">Dashboard</a>
         <a href="{% url 'wins:submit_win' %}" class="block px-3 py-2 rounded hover:bg-[#312fa6]">Log a Win</a>

@@ -19,14 +19,16 @@
     </head>
 
     <body>
-        <header
-        class="text-white px-6 py-4 flex justify-between items-center sticky top-0 z-50">
-        <a href="/" class="logo">
-            <span class="logo-icon">B</span>
-            Boost.dev
-        </a>
-        {% block auth_nav %}{% endblock %}
-        </header>
+        <header class="{% block header_class %}default-header-class{% endblock %}">
+            <a href="/" class="logo">
+              <span class="logo-icon">B</span>
+              Boost.dev
+            </a>
+          
+            {% block auth_nav %}
+            <!-- Default Auth Nav (if any) -->
+            {% endblock %}
+          </header>
         
         <!-- Messages Section -->
         {% if messages %}
