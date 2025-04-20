@@ -144,7 +144,7 @@ The main goal for this project was to create a site that feels friendly, invitti
   - Develop a platform that can be improved with new features in the future
 
 ## Agile Methodologies
-Boost.dev was my third project, and the second individual one, with our facilitator and coaches motivating us to showcase our abilities, from the initial idea, to planning the website, think about the essential features for the MVP and others that could be added later, if not working on time for project submission.
+Boost.dev was the first hackathon with people from different courses for one of our members and a review for the rest of the group, although in the begining we started getting roles, during the project, each one of us got to manage and push the others at different times, with discussions about different features happening throughout the process and all members having the opportunity to express their views.
 
 Issues and features can be seen on [GitHub Project Board](https://github.com/users/Lochy2000/projects/7).
 
@@ -155,6 +155,59 @@ These will also be very important for future projects, either personal or profes
 [Back to top](#top)
 
 ### Users
+User Persona 1: Alice - The Aspiring Developer<br>
+Age: 22<br>
+Occupation: Computer Science Student<br>
+Experience Level: Beginner<br>
+Goals:
+- Learn coding best practices and improve her programming skills.
+- Build confidence in her abilities as a developer.
+Connect with a supportive community of developers.
+
+Challenges:
+- Struggles with imposter syndrome and doubts her skills.
+- Finds it difficult to stay motivated without external encouragement.
+- Overwhelmed by the vast amount of online resources.
+
+How Boost.dev Helps:
+- Provides beginner-friendly coding challenges to help her practice.
+- Offers a supportive community where she can share her progress and seek advice.
+- Features articles and resources to help her overcome imposter syndrome.
+
+User Persona 2: Ben - The Mid-Level Developer<br>
+Age: 30<br>
+Occupation: Frontend Developer at a Startup<br>
+Experience Level: Intermediate<br>
+Goals:
+- Sharpen his coding skills and learn new technologies.
+- Showcase his personal projects to gain recognition.
+- Mentor junior developers and give back to the community.
+
+Challenges:
+- Wants to transition into a full-stack role but lacks backend experience.
+- Feels stuck in his current role and wants to grow professionally.
+- Struggles to find a platform to share his work and get feedback.
+
+How Boost.dev Helps:
+- Provides intermediate-level challenges to expand his skill set.
+- Allows him to showcase his projects and receive constructive feedback.
+- Offers opportunities to help beginners and share his knowledge.
+
+User Persona 3: Clara - The Experienced Mentor<br>
+Age: 40<br>
+Occupation: Senior Software Engineer at a Tech Company<br>
+Experience Level: Advanced<br>
+Goals:
+- Mentor and inspire the next generation of developers.
+
+Challenges:
+- Limited time to contribute to open-source projects or mentor in person.
+- Wants to find a platform where she can make a meaningful impact.
+- Needs a way to share her expertise without overwhelming her schedule.
+
+How Boost.dev Helps:
+- Provides a platform to mentor developers through forums and discussions.
+- Helps her stay connected with the developer community and trends.
 
 ## Technologies Used
 ### Languages and Technologies
