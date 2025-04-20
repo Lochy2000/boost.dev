@@ -37,7 +37,12 @@
         </div>
         <div class="bg-[#1e1f23] rounded p-6 shadow text-white">
             <h2 class="text-xl font-semibold mb-2">🏆 Wins</h2>
-            <p>You have <strong>{{ user.win_set.count }}</strong> so far! Let's gooo!</p>
+            <p>You have <strong>{{ user.win_set.count }}</strong> wins so far! Let's gooo!</p>
+            <div class="flex flex-wrap gap-4 justify-start pt-4">
+                <a href="{% url 'wins:submit_win' %}" class="text-indigo-400">Log a Win</a>
+                <a href="{% url 'wins:my_wins' %}" class="text-indigo-400">View My Wins</a>
+                <a href="{% url 'wins:community_wins' %}" class="text-indigo-400">Community Wins</a>
+            </div>
         </div>
         <div class="bg-[#1e1f23] rounded p-6 shadow-lg text-white">
             <h2 class="text-xl font-semibold mb-2">🏆 Milestones</h2>
@@ -102,6 +107,7 @@
         <a href="{% url 'profile' %}" class="bg-indigo-500 hover:bg-indigo-600 text-white px-5 py-3 rounded shadow transition-all">Edit Profile</a>
         <a href="{% url 'challenges' %}" class="bg-gray-700 hover:bg-gray-600 text-white px-5 py-3 rounded shadow transition-all">Challenges</a>
         <a href="{% url 'new_challenge' %}" class="bg-rose-600 hover:bg-rose-700 text-white px-5 py-3 rounded shadow transition-all">New Challenge</a>
+        <a href="{% url 'wins:submit_win' %}" class="bg-green-600 hover:bg-green-700 text-white px-5 py-3 rounded shadow transition-all">Log a Win</a>
     </div>
 </div>
 {% endblock %}
