@@ -14,12 +14,12 @@ class Command(BaseCommand):
             },
             {
                 'name': 'Level 2 Explorer',
-                'description': 'You\'ve reached level 2! You\'re making progress.',
+                'description': "You've reached level 2! You're making progress.",
                 'icon': 'compass',
             },
             {
                 'name': 'Level 3 Hacker',
-                'description': 'Level 3 achieved! You\'re getting serious.',
+                'description': "Level 3 achieved! You're getting serious.",
                 'icon': 'code',
             },
             {
@@ -29,7 +29,7 @@ class Command(BaseCommand):
             },
             {
                 'name': 'Level 5 Master',
-                'description': 'You\'ve reached the highest level! True mastery achieved.',
+                'description': "You've reached the highest level! True mastery achieved.",
                 'icon': 'crown',
             },
         ]
