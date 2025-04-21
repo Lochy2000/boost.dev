@@ -35,7 +35,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # Convert string 'True'/'False' to boolean
-DEBUG =True
+DEBUG = os.environ.get('DEBUG', 'False').lower() in ('true', '1', 't')
 
 # Configure allowed hosts based on environment
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
