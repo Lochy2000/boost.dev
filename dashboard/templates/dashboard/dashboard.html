@@ -102,6 +102,48 @@
     </div>
     {% endif %}
     
+    <!-- Tech News Section -->
+    {% if tech_news_items %}
+    <div class="mt-8">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-2xl font-bold text-white">Latest Tech News</h2>
+            <a href="{% url 'dashboard:tech_news' %}" class="text-indigo-400 hover:text-indigo-300">View All →</a>
+        </div>
+        
+        <!-- Horizontal scrolling news cards -->
+        <div class="overflow-x-auto pb-6">
+            <div class="flex space-x-6" style="min-width: min-content">
+                {% for article in tech_news_items %}
+                <div class="bg-[#1e1f23] rounded-lg overflow-hidden shadow-lg flex flex-col w-80 flex-shrink-0">
+                    {% if article.urlToImage %}
+                    <img src="{{ article.urlToImage }}" alt="{{ article.title }}" class="w-full h-40 object-cover">
+                    {% else %}
+                    <div class="w-full h-40 bg-gray-800 flex items-center justify-center">
+                        <span class="text-gray-500">No image available</span>
+                    </div>
+                    {% endif %}
+                    <div class="p-4 flex-grow">
+                        <h3 class="text-lg font-semibold text-white mb-2">{{ article.title|truncatechars:60 }}</h3>
+                        <p class="text-gray-400 mb-3 text-sm">{{ article.description|truncatechars:80 }}</p>
+                        <div class="flex justify-between items-center text-xs text-gray-500">
+                            <span>{{ article.source.name }}</span>
+                            {% if article.publishedAt %}
+                            <span>{{ article.publishedAt|slice:":10" }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="px-4 py-3 bg-gray-900/50">
+                        <a href="{{ article.url }}" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:text-indigo-300 text-sm">
+                            Read More →
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    
     <!-- Action Buttons -->
     <div class="flex flex-wrap gap-4 justify-start">
         <a href="{% url 'profile' %}" class="bg-indigo-500 hover:bg-indigo-600 text-white px-5 py-3 rounded shadow transition-all">Edit Profile</a>

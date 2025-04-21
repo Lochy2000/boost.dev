@@ -9,12 +9,13 @@ from prompts.models import DailyPrompt
 from wins.models import DailyWin
 from challenges.models import Challenge, ChallengeSolution
 from .forms import ProjectFeedbackForm
+from services.news import get_news_service
 import random
 
 def home(request):
     """Home page view"""
     if request.user.is_authenticated:
-        return dashboard(request)
+        return redirect('dashboard:dashboard')
     return render(request, 'home.html')
 
 def dashboard(request):
@@ -24,6 +25,18 @@ def dashboard(request):
     
     # Get recent articles
     recent_articles = Article.objects.filter(is_featured=False)[:4]
+    
+    # Get latest tech news from API for dashboard display
+    tech_news_items = []
+    try:
+        news_service = get_news_service()
+        news_data = news_service.get_tech_news(page=1, page_size=4)
+        tech_news_items = news_data.get('articles', [])
+    except Exception as e:
+        # Log error but continue loading the page
+        import logging
+        logging.error(f"Error fetching tech news for dashboard: {str(e)}")
+    
     
     # Get popular projects
     popular_projects = Project.objects.order_by('-stars')[:4]
@@ -80,6 +93,7 @@ def dashboard(request):
         'user_challenge_count': user_challenge_count,
         'user_challenge_solutions': user_challenge_solutions,
         'recommended_challenges': recommended_challenges,
+        'tech_news_items': tech_news_items,
     }
     
     return render(request, 'dashboard/dashboard.html', context)
@@ -331,3 +345,48 @@ def community(request):
         'wins': wins, 
         'challenge_solutions': challenge_solutions
     })
+
+def tech_news(request):
+    """View for displaying technology news articles"""
+    # Get query parameters
+    query = request.GET.get('q', '')
+    page = int(request.GET.get('page', 1))
+    page_size = int(request.GET.get('page_size', 12))
+    
+    # Initialize news service
+    news_service = get_news_service()
+    
+    # Fetch articles based on search query
+    if query:
+        news_data = news_service.search_tech_news(query, page=page, page_size=page_size)
+    else:
+        news_data = news_service.get_tech_news(page=page, page_size=page_size)
+    
+    # Process response
+    articles = news_data.get('articles', [])
+    total_results = news_data.get('totalResults', 0)
+    status = news_data.get('status', 'error')
+    error_message = news_data.get('message', None) if status == 'error' else None
+    
+    # Calculate pagination information
+    total_pages = (total_results + page_size - 1) // page_size if total_results > 0 else 1
+    has_next = page < total_pages
+    has_prev = page > 1
+    
+    # Add featured articles from our database
+    featured_articles = Article.objects.filter(is_featured=True, tags__icontains='technology')[:3]
+    
+    context = {
+        'articles': articles,
+        'featured_articles': featured_articles,
+        'total_results': total_results,
+        'page': page,
+        'page_size': page_size,
+        'total_pages': total_pages,
+        'has_next': has_next,
+        'has_prev': has_prev,
+        'query': query,
+        'error_message': error_message,
+    }
+    
+    return render(request, 'dashboard/tech_news.html', context)
