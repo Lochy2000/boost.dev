@@ -2,66 +2,65 @@
 {% load static %}
 
 {% block content %}
-<div class="px-8 py-8 max-w-5xl mx-auto space-y-8">
+<div class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
     <!-- Greeting and Action Buttons -->
-    <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-        <div>
-            <h1 class="text-3xl font-bold text-sky-500">Welcome back, {{ user.username }} 👋</h1>
-            <p class="mt-2 text-gray-400 text-lg italic">Let's keep growing, one tiny win at a time.</p>
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+        <div class="w-full sm:w-auto">
+            <h1 class="text-2xl sm:text-3xl font-bold text-sky-500">Welcome back, {{ user.username }} 👋</h1>
+            <p class="mt-2 text-gray-400 text-base sm:text-lg italic">Let's keep growing, one tiny win at a time.</p>
         </div>
         
-        <!-- Action Buttons - Moved to top -->
-        <div class="flex flex-wrap gap-2">
+        <!-- Action Buttons -->
+        <div class="flex flex-wrap gap-2 w-full sm:w-auto">
             <button
               onclick="window.location.href='{% url 'challenges' %}'"
-              class="bg-gradient-to-r from-gray-700 to-gray-900 hover:from-gray-800 hover:to-gray-950 text-white px-4 py-2 rounded-md shadow-lg hover:shadow-gray-700/25 text-center transition-all duration-300 flex items-center justify-center group">
+              class="flex-1 sm:flex-none bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-md shadow-lg hover:shadow-indigo-500/50 text-center transition-all duration-300 flex items-center justify-center group">
               <i class="fas fa-trophy mr-2"></i> Challenges
             </button>
             <button
               onclick="window.location.href='{% url 'new_challenge' %}'"
-              class="bg-gradient-to-r from-rose-600 to-rose-800 hover:from-rose-700 hover:to-rose-900 text-white px-4 py-2 rounded-md shadow-lg hover:shadow-rose-500/25 text-center transition-all duration-300 flex items-center justify-center group">
+              class="flex-1 sm:flex-none bg-rose-600 hover:bg-rose-700 text-white px-6 py-2 rounded-md shadow-lg hover:shadow-rose-500/50 text-center transition-all duration-300 flex items-center justify-center group">
               <i class="fas fa-plus-circle mr-2"></i> New Challenge
             </button>
             <button
               onclick="window.location.href='{% url 'wins:submit_win' %}'"
-              class="bg-gradient-to-r from-sky-500 to-sky-700 hover:from-sky-600 hover:to-sky-800 text-white px-4 py-2 rounded-md shadow-lg hover:shadow-sky-500/25 text-center transition-all duration-300 flex items-center justify-center group">
+              class="flex-1 sm:flex-none bg-sky-500 hover:bg-sky-600 text-white px-6 py-2 rounded-md shadow-lg hover:shadow-sky-500/50 text-center transition-all duration-300 flex items-center justify-center group">
               <i class="fas fa-flag-checkered mr-2"></i> Log Win
             </button>
         </div>
     </div>
 
-    <!-- Daily Boost Section with Background Image -->
-    <div class="bg-indigo-900 rounded-lg overflow-hidden shadow-2xl text-white hover:shadow-indigo-700/20 hover:shadow-2xl transition-all duration-300">
-        <div class="flex flex-col md:flex-row">
-            <div class="p-6 md:w-2/3">
-                <h2 class="text-2xl font-bold mb-4">💡 Daily Boost</h2>
-                <div class="flex items-start text-gray-200 mb-4">
+    <!-- Daily Boost Section -->
+    <div class="bg-indigo-900 rounded-lg overflow-hidden shadow-2xl text-white hover:shadow-indigo-700/20 hover:shadow-2xl transition-all duration-300 mb-4">
+        <div class="flex flex-col md:flex-row items-center">
+            <div class="p-3 md:p-4 md:w-2/3">
+                <h2 class="text-lg font-bold mb-2">💡 Daily Boost</h2>
+                <div class="flex items-start text-gray-200 mb-2">
                     <i class="fas fa-quote-left text-indigo-400 mr-2 mt-1"></i>
-                    <p class="quote italic text-xl">{{ daily_prompt.quote.text }}</p>
+                    <p class="quote italic text-base">{{ daily_prompt.quote.text }}</p>
                     <i class="fas fa-quote-right text-indigo-400 ml-2 mt-auto"></i>
                 </div>
-                <p class="text-lg font-light text-indigo-300">{{ daily_prompt.quote.author }}</p>
+                <p class="text-sm font-light text-indigo-300">{{ daily_prompt.quote.author }}</p>
             </div>
-            <div class="md:w-1/3 relative h-40 md:h-auto overflow-hidden">
-                <!-- If image doesn't display, try using absolute URL: /static/sunrise.png -->
+            <div class="md:w-1/3 h-24 md:h-32 relative overflow-hidden">
                 <img src="{% static 'sunrise.png' %}" alt="Daily Inspiration" class="w-full h-full object-cover opacity-80">
                 <div class="absolute inset-0 bg-gradient-to-r from-indigo-900 to-transparent"></div>
             </div>
         </div>
     </div>
 
-    <!-- Cards Grid Section - Improved with shadows, hover effects, and images -->
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-8">
+    <!-- Cards Grid Section -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <!-- Featured Challenge Card -->
         <div class="bg-gray-800/60 backdrop-blur-sm rounded-lg overflow-hidden shadow-lg text-white group hover:shadow-xl hover:shadow-indigo-500/10 transition-all duration-300 relative">
             <div class="absolute inset-0 bg-gradient-to-b from-indigo-600/20 to-indigo-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <div class="relative p-6">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-xl font-bold text-indigo-400">⭐ Featured Challenge</h2>
+            <div class="relative p-4">
+                <div class="flex justify-between items-center mb-3">
+                    <h2 class="text-lg font-bold text-indigo-400">⭐ Featured Challenge</h2>
                 </div>
                 
-                <div class="mb-4 overflow-hidden rounded-lg">
-                    <img src="{% static 'cats/challenge.png' %}" alt="Challenge" class="w-full h-36 object-cover group-hover:scale-105 transition-transform duration-500">
+                <div class="mb-3 overflow-hidden rounded-lg h-32">
+                    <img src="{% static 'cats/challenge.png' %}" alt="Challenge" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500">
                 </div>
                 
                 {% if recommended_challenges.0 %}
@@ -79,15 +78,15 @@
         <!-- Wins Card -->
         <div class="bg-gray-800/60 backdrop-blur-sm rounded-lg overflow-hidden shadow-lg text-white group hover:shadow-xl hover:shadow-yellow-500/10 transition-all duration-300 relative">
             <div class="absolute inset-0 bg-gradient-to-b from-yellow-600/20 to-yellow-800/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <div class="relative p-6">
-                <div class="mb-4">
+            <div class="relative p-4">
+                <div class="mb-3">
                     <div class="flex justify-between items-center">
-                        <h2 class="text-xl font-bold text-yellow-400">🏆 Wins</h2>
+                        <h2 class="text-lg font-bold text-yellow-400">🏆 Wins</h2>
                     </div>
                 </div>
                 
-                <div class="mb-4 overflow-hidden rounded-lg">
-                    <img src="{% static 'cats/wins.png' %}" alt="Your wins" class="w-full h-36 object-cover group-hover:scale-105 transition-transform duration-500">
+                <div class="mb-3 overflow-hidden rounded-lg h-32">
+                    <img src="{% static 'cats/wins.png' %}" alt="Your wins" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500">
                 </div>
                 
                 <p class="mb-2">You completed your first challenge!</p>
@@ -100,15 +99,15 @@
         <!-- Community Feed Card -->
         <div class="bg-gray-800/60 backdrop-blur-sm rounded-lg overflow-hidden shadow-lg text-white group hover:shadow-xl hover:shadow-rose-500/10 transition-all duration-300 relative">
             <div class="absolute inset-0 bg-gradient-to-b from-rose-600/20 to-rose-800/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <div class="relative p-6">
-                <div class="mb-4">
+            <div class="relative p-4">
+                <div class="mb-3">
                     <div class="flex justify-between items-center">
-                        <h2 class="text-xl font-bold text-rose-400">👥 Community Feed</h2>
+                        <h2 class="text-lg font-bold text-rose-400">👥 Community Feed</h2>
                     </div>
                 </div>
                 
-                <div class="mb-4 overflow-hidden rounded-lg">
-                    <img src="{% static 'cats/community.png' %}" alt="Community" class="w-full h-36 object-cover group-hover:scale-105 transition-transform duration-500">
+                <div class="mb-3 overflow-hidden rounded-lg h-32">
+                    <img src="{% static 'cats/community.png' %}" alt="Community" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500">
                 </div>
                 
                 {% if community_wins and community_wins.0 %}
@@ -133,71 +132,74 @@
         </div>
     </div>
 
-<!-- Recent Challenge Solutions - For All Users -->
-<div class="mt-10">
-    <h2 class="text-2xl font-bold text-white mb-6 flex items-center"><i class="fas fa-code mr-3 text-cyan-500"></i>Recent Challenge Solutions</h2>
-    {% if all_challenge_solutions %}
-    <div class="overflow-x-auto pb-4">
-        <div class="flex space-x-6" style="min-width: min-content">
-            {% for solution in all_challenge_solutions %}
-            <div class="bg-gray-800/60 backdrop-blur-sm rounded-lg overflow-hidden shadow-lg w-80 flex-shrink-0 group hover:shadow-xl hover:shadow-cyan-500/10 transition-all duration-300">
-                <div class="p-5 relative">
-                    <div class="absolute inset-0 bg-gradient-to-b from-cyan-600/10 to-cyan-900/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div class="relative">
-                        <div class="flex justify-between items-start mb-3">
-                            <h3 class="text-lg font-semibold text-white">{{ solution.challenge.title }}</h3>
-                            <div class="flex gap-2">
-                                <span class="text-xs font-medium bg-{{ solution.get_correctness_color }} text-white px-2 py-1 rounded-full">
-                                    {% with correctness=solution.correctness_level %}
-                                        {% if correctness == 'correct' %}Correct{% elif correctness == 'almost' %}Almost Correct{% elif correctness == 'partial' %}Partially Correct{% else %}Not Quite Right{% endif %}
-                                    {% endwith %}
-                                </span>
-                                <span class="text-xs font-medium bg-{% if solution.challenge.difficulty == 'beginner' %}green-600{% elif solution.challenge.difficulty == 'intermediate' %}yellow-600{% else %}red-600{% endif %} text-white px-2 py-1 rounded">{{ solution.challenge.get_difficulty_display }}</span>
+    <!-- Recent Challenge Solutions -->
+    <div class="mt-8 sm:mt-10">
+        <h2 class="text-xl sm:text-2xl font-bold text-white mb-4 sm:mb-6 flex items-center">
+            <i class="fas fa-code mr-3 text-cyan-500"></i>Recent Challenge Solutions
+        </h2>
+        {% if all_challenge_solutions %}
+        <div class="overflow-x-auto -mx-4 sm:mx-0 pb-4">
+            <div class="flex space-x-4 sm:space-x-6 px-4 sm:px-0" style="min-width: min-content">
+                {% for solution in all_challenge_solutions %}
+                <div class="bg-gray-800/60 backdrop-blur-sm rounded-lg overflow-hidden shadow-lg w-80 flex-shrink-0 group hover:shadow-xl hover:shadow-cyan-500/10 transition-all duration-300">
+                    <div class="p-5 relative">
+                        <div class="absolute inset-0 bg-gradient-to-b from-cyan-600/10 to-cyan-900/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="relative">
+                            <div class="flex justify-between items-start mb-3">
+                                <h3 class="text-lg font-semibold text-white">{{ solution.challenge.title }}</h3>
+                                <div class="flex gap-2">
+                                    <span class="text-xs font-medium bg-{{ solution.get_correctness_color }} text-white px-2 py-1 rounded-full">
+                                        {% with correctness=solution.correctness_level %}
+                                            {% if correctness == 'correct' %}Correct{% elif correctness == 'almost' %}Almost Correct{% elif correctness == 'partial' %}Partially Correct{% else %}Not Quite Right{% endif %}
+                                        {% endwith %}
+                                    </span>
+                                    <span class="text-xs font-medium bg-{% if solution.challenge.difficulty == 'beginner' %}green-600{% elif solution.challenge.difficulty == 'intermediate' %}yellow-600{% else %}red-600{% endif %} text-white px-2 py-1 rounded">{{ solution.challenge.get_difficulty_display }}</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="flex justify-between text-gray-500 text-xs mb-3">
-                            <div class="flex items-center">
-                                <i class="far fa-user mr-1"></i> {{ solution.user.username }}
+                            <div class="flex justify-between text-gray-500 text-xs mb-3">
+                                <div class="flex items-center">
+                                    <i class="far fa-user mr-1"></i> {{ solution.user.username }}
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="far fa-calendar-alt mr-1"></i> {{ solution.submitted_at|date:"M d, Y" }}
+                                </div>
                             </div>
-                            <div class="flex items-center">
-                                <i class="far fa-calendar-alt mr-1"></i> {{ solution.submitted_at|date:"M d, Y" }}
+                            <div class="bg-gray-900/70 p-3 rounded-lg mb-3 border border-gray-700/50">
+                                <pre class="text-cyan-300 text-sm whitespace-pre-wrap overflow-hidden" style="max-height: 100px">{{ solution.solution_text|truncatechars:100 }}</pre>
                             </div>
+                            <a href="{% url 'challenge_detail' solution.challenge.id %}"
+                                class="text-cyan-400 hover:text-cyan-300 text-sm inline-flex items-center group-hover:underline">
+                                View Full Solution <i class="fas fa-arrow-right ml-1 group-hover:translate-x-1 transition-transform"></i>
+                            </a>
                         </div>
-                        <div class="bg-gray-900/70 p-3 rounded-lg mb-3 border border-gray-700/50">
-                            <pre class="text-cyan-300 text-sm whitespace-pre-wrap overflow-hidden" style="max-height: 100px">{{ solution.solution_text|truncatechars:100 }}</pre>
-                        </div>
-                        <a href="{% url 'challenge_detail' solution.challenge.id %}"
-                            class="text-cyan-400 hover:text-cyan-300 text-sm inline-flex items-center group-hover:underline">
-                            View Full Solution <i class="fas fa-arrow-right ml-1 group-hover:translate-x-1 transition-transform"></i>
-                        </a>
                     </div>
                 </div>
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
+        {% else %}
+        <div class="bg-gray-800/40 rounded-lg p-6 text-center">
+            <p class="text-gray-300 text-lg">No challenge solutions yet.</p>
+            <p class="text-gray-400">Be the first to solve a challenge and share your solution!</p>
+            <a href="{% url 'challenges' %}" class="mt-4 inline-block text-cyan-400 hover:text-cyan-300">Browse Challenges →</a>
+        </div>
+        {% endif %}
     </div>
-    {% else %}
-    <div class="bg-gray-800/40 rounded-lg p-6 text-center">
-        <p class="text-gray-300 text-lg">No challenge solutions yet.</p>
-        <p class="text-gray-400">Be the first to solve a challenge and share your solution!</p>
-        <a href="{% url 'challenges' %}" class="mt-4 inline-block text-cyan-400 hover:text-cyan-300">Browse Challenges →</a>
-    </div>
-    {% endif %}
-</div>
-    
+
     <!-- Tech News Section -->
     {% if tech_news_items %}
-    <div class="mt-10">
-        <div class="flex justify-between items-center mb-6">
-            <h2 class="text-2xl font-bold text-white flex items-center"><i class="fas fa-newspaper mr-3 text-green-500"></i>Latest Tech News</h2>
+    <div class="mt-8 sm:mt-10">
+        <div class="flex justify-between items-center mb-4 sm:mb-6">
+            <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center">
+                <i class="fas fa-newspaper mr-3 text-green-500"></i>Latest Tech News
+            </h2>
             <a href="{% url 'dashboard:tech_news' %}" class="text-green-400 hover:text-green-300 inline-flex items-center group">
                 View All <i class="fas fa-arrow-right ml-1 group-hover:translate-x-1 transition-transform"></i>
             </a>
         </div>
         
-        <!-- Horizontal scrolling news cards -->
-        <div class="overflow-x-auto pb-6">
-            <div class="flex space-x-6" style="min-width: min-content">
+        <div class="overflow-x-auto -mx-4 sm:mx-0 pb-4">
+            <div class="flex space-x-4 sm:space-x-6 px-4 sm:px-0" style="min-width: min-content">
                 {% for article in tech_news_items %}
                 <div class="bg-gray-800/60 backdrop-blur-sm rounded-lg overflow-hidden shadow-lg flex flex-col w-80 flex-shrink-0 group hover:shadow-xl hover:shadow-green-500/10 transition-all duration-300">
                     <div class="relative h-40 overflow-hidden">
@@ -231,8 +233,6 @@
             </div>
         </div>
     </div>
-{% endif %}
-
-
-    </div>
-    {% endblock %}
+    {% endif %}
+</div>
+{% endblock %}

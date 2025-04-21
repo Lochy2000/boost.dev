@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils import timezone
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
 from .models import DailyWin
 from .forms import DailyWinForm
 from services.ai_feedback import get_ai_feedback
@@ -20,7 +22,9 @@ def submit_win(request):
                 # Get AI feedback with username
                 try:
                     print(f"Getting AI feedback for: {win.content}")
-                    win.ai_feedback = get_ai_feedback(win.content, request.user.username)
+                    feedback = get_ai_feedback(win.content, request.user.username)
+                    # Replace the template placeholder with actual username
+                    win.ai_feedback = feedback.replace("{user.username}", request.user.username)
                     print(f"Received AI feedback: {win.ai_feedback}")
                 except Exception as e:
                     print(f"Error getting AI feedback: {e}")
@@ -94,9 +98,41 @@ def toggle_public(request, win_id):
     
     return redirect('wins:view_win', win_id=win.id)
 
+@require_POST
+@login_required
+def toggle_celebration(request, win_id):
+    """Toggle celebration for a win"""
+    win = get_object_or_404(DailyWin, id=win_id)
+    
+    # Toggle the celebration
+    was_added = win.toggle_celebration(request.user)
+    
+    # Create notification for the win owner if celebration was added
+    if was_added and win.user != request.user:
+        from users.models import Notification
+        Notification.objects.create(
+            user=win.user,
+            notification_type='celebration',
+            content=f"{request.user.username} celebrated your win!",
+            link=f'/wins/view/{win.id}/'
+        )
+    
+    return JsonResponse({
+        'success': True,
+        'celebration_count': win.celebration_count(),
+        'is_celebrated': was_added
+    })
+
 def community_wins(request):
     """View for displaying public wins from all users"""
     wins = DailyWin.objects.filter(is_public=True).order_by('-created_at')
+    
+    # Add celebration info for each win
+    for win in wins:
+        win.celebration_count = win.celebration_count()
+        if request.user.is_authenticated:
+            win.is_celebrated_by_user = win.is_celebrated_by(request.user)
+    
     # Get all challenge solutions, not just the ones marked as correct
     challenge_solutions = ChallengeSolution.objects.all().order_by('-submitted_at')
     
