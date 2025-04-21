@@ -27,7 +27,7 @@ def register_view(request):
             award_level_achievement(user, 1)
             
             messages.success(request, "Registration successful!")
-            return redirect('dashboard')
+            return redirect('dashboard:dashboard')
         else:
             messages.error(request, "Registration failed. Please correct the errors.")
     else:
@@ -57,7 +57,7 @@ def login_view(request):
                 except Exception as e:
                     print(f"Error awarding hackathon achievement: {e}")
                     
-                return redirect('dashboard')
+                return redirect('dashboard:dashboard')
             else:
                 messages.error(request, "Invalid username or password.")
         else:
@@ -108,4 +108,4 @@ def profile_view(request):
 def social_auth_callback(request):
     """Handle callback from social authentication providers"""
     # This would be implemented based on the social auth library being used
-    return redirect('dashboard')
+    return redirect('dashboard:dashboard')

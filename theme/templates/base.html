@@ -19,10 +19,10 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 
-<body class="bg-gray-100">
+<body>
 
   <!-- Navbar -->
-  <header class="bg-gray-900 shadow-lg sticky top-0 z-50">
+  <header class="shadow-lg sticky top-0 z-50">
     <nav class="container mx-auto flex items-center justify-between p-4">
       <!-- Logo -->
       <a href="/"
@@ -40,7 +40,7 @@
       <!-- Desktop Links - Updated for better mid-size handling -->
       <ul id="desktop-menu" class="hidden md:flex items-center space-x-1 lg:space-x-2 xl:space-x-4">
         <li>
-          <a href="{% url 'dashboard' %}"
+          <a href="{% url 'dashboard:dashboard' %}"
             class="px-2 py-1 lg:px-3 lg:py-2 rounded text-sm lg:text-base hover:bg-gray-700 hover:text-indigo-300 text-white transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-gray-900">
             Dashboard
           </a>
@@ -69,7 +69,19 @@
             Community
           </a>
         </li>
-        <li>
+        <li class="flex flex-col items-end">
+          <!-- Progress Bar Above Profile -->          
+          <div class="w-32 mb-1">
+            <div class="flex justify-between items-center text-xs mb-1">
+              <span class="text-white">Lvl {{ user.progress.level }}</span>
+              <span class="text-white">{{ user.progress.points }}/{{ user.progress.next_level_threshold }}</span>
+            </div>
+            <div class="w-full bg-gray-700 rounded-full h-1.5">
+              <div class="bg-{{ user.progress.get_level_color }}-500 h-1.5 rounded-full"
+                style="width: {{ user.progress.calculate_percentage }}%"></div>
+            </div>
+          </div>
+          <!-- Profile Image -->
           <!-- Replace your current avatar block with this -->
 {% if user.is_authenticated %}
 <div class="relative group text-center">
@@ -104,7 +116,7 @@
         <i class="fas fa-times"></i>
       </button>
 
-      <a href="{% url 'dashboard' %}"
+      <a href="{% url 'dashboard:dashboard' %}"
         class="text-white text-xl font-medium w-full text-center py-3 hover:text-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">
         Dashboard
       </a>
@@ -160,16 +172,6 @@
     </div>
   </div>
 
-  <!-- Progress Bar (Always Visible) -->
-  <div class="fixed pt-32 md:pt-40 left-0 w-full z-40 bg-gray-900 p-4 border-t border-gray-800">
-    <div class="flex justify-between items-center text-xs mb-1">
-      <span>Level {{ user.progress.level }}</span>
-      <span>{{ user.progress.points }}/{{ user.progress.next_level_threshold }}</span>
-    </div>
-    <div class="w-full bg-gray-700 rounded-full h-2">
-      <div class="bg-{{ user.progress.get_level_color }}-500 h-2 rounded-full"
-        style="width: {{ user.progress.calculate_percentage }}%"></div>
-  </div>
 
   <!-- Messages Section -->
   <!-- Flash Messages: rendered above content -->
@@ -192,7 +194,7 @@
   {% endif %}
 
   <!-- Main Content Section -->
-  <main class="pt-16 p-4">
+  <main class="pt-8 p-4">
     {% block content %}
     <!-- Content from child templates will be inserted here -->
     {% endblock %}
@@ -220,55 +222,63 @@
   <!-- JavaScript for Notifications & Mobile Menu -->
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      // Level Up Notification Logic
-      document.getElementById('level-up-notification').classList.add('hidden');
-      const messages = document.querySelectorAll('.fixed.top-16 .mb-4');
-      messages.forEach(function (message) {
-        if (message.textContent.includes("Congratulations! You've reached Level")) {
-          const levelMatch = message.textContent.match(/Level (\d+)/);
-          if (levelMatch && levelMatch[1]) {
-            document.getElementById('new-level').textContent = levelMatch[1];
-            document.getElementById('level-up-notification').classList.remove('hidden');
-            message.style.display = 'none';
-          }
-        }
-        if (message.textContent.includes('Achievement Unlocked:')) {
-          const regex = /Achievement Unlocked: (.*?) - (.*)/;
-          const match = message.textContent.match(regex);
-          if (match) {
-            showAchievementToast(match[1], match[2]);
-            message.style.display = 'none';
-          }
-        }
-      });
-
-      // Close Level-Up Notification
-      document.getElementById('close-notification').addEventListener('click', function () {
+      try {
+        // Level Up Notification Logic
         document.getElementById('level-up-notification').classList.add('hidden');
-      });
+        const messages = document.querySelectorAll('.fixed.top-16 .mb-4');
+        messages.forEach(function (message) {
+          if (message.textContent.includes("Congratulations! You've reached Level")) {
+            const levelMatch = message.textContent.match(/Level (\d+)/);
+            if (levelMatch && levelMatch[1]) {
+              document.getElementById('new-level').textContent = levelMatch[1];
+              document.getElementById('level-up-notification').classList.remove('hidden');
+              message.style.display = 'none';
+            }
+          }
+          if (message.textContent.includes('Achievement Unlocked:')) {
+            const regex = /Achievement Unlocked: (.*?) - (.*)/;
+            const match = message.textContent.match(regex);
+            if (match) {
+              showAchievementToast(match[1], match[2]);
+              message.style.display = 'none';
+            }
+          }
+        });
 
-      // Close Achievement Toast
-      document.getElementById('close-achievement-toast').addEventListener('click', function () {
-        document.getElementById('achievement-toast').style.transform = 'translateY(150%)';
-      });
+        // Close Level-Up Notification
+        document.getElementById('close-notification').addEventListener('click', function () {
+          document.getElementById('level-up-notification').classList.add('hidden');
+        });
 
-      // Mobile Menu Toggle
-      const toggleBtn = document.getElementById('menu-toggle');
-      const closeBtn = document.getElementById('mobile-menu-close');
-      const mobileMenu = document.getElementById('mobile-menu');
+        // Close Achievement Toast
+        document.getElementById('close-achievement-toast').addEventListener('click', function () {
+          document.getElementById('achievement-toast').style.transform = 'translateY(150%)';
+        });
 
-      toggleBtn.addEventListener('click', () => {
-        mobileMenu.classList.toggle('hidden');
-        const expanded = toggleBtn.getAttribute('aria-expanded') === 'true';
-        toggleBtn.setAttribute('aria-expanded', String(!expanded));
-        mobileMenu.setAttribute('aria-hidden', String(expanded));
-      });
+        // Mobile Menu Toggle
+        const toggleBtn = document.getElementById('menu-toggle');
+        const closeBtn = document.getElementById('mobile-menu-close');
+        const mobileMenu = document.getElementById('mobile-menu');
 
-      closeBtn.addEventListener('click', () => {
-        mobileMenu.classList.add('hidden');
-        toggleBtn.setAttribute('aria-expanded', 'false');
-        mobileMenu.setAttribute('aria-hidden', 'true');
-      });
+        toggleBtn.addEventListener('click', () => {
+          console.log('Mobile menu toggle clicked');
+          mobileMenu.classList.toggle('hidden');
+          const expanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+          toggleBtn.setAttribute('aria-expanded', String(!expanded));
+          mobileMenu.setAttribute('aria-hidden', String(expanded));
+          console.log('Mobile menu state:', mobileMenu.classList.contains('hidden') ? 'hidden' : 'visible');
+        });
+
+        closeBtn.addEventListener('click', () => {
+          console.log('Mobile menu close clicked');
+          mobileMenu.classList.add('hidden');
+          toggleBtn.setAttribute('aria-expanded', 'false');
+          mobileMenu.setAttribute('aria-hidden', 'true');
+          console.log('Mobile menu state:', mobileMenu.classList.contains('hidden') ? 'hidden' : 'visible');
+        });
+      } catch (error) {
+        console.error('Error in DOMContentLoaded event listener:', error);
+      }
     });
 
     function showAchievementToast(name, description) {

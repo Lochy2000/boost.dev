@@ -165,6 +165,9 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# News API Key
+NEWS_API_KEY = os.environ.get('NEWS_API_KEY')
+
 # NPM path - conditionally set based on environment
 if os.name == 'nt':  # Windows
     NPM_BIN_PATH = "C:/Program Files/nodejs/npm.cmd"  # for installing tailwindcss
