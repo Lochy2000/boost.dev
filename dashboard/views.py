@@ -341,15 +341,21 @@ def tech_news(request):
     """View for displaying technology news articles"""
     # Get query parameters
     query = request.GET.get('q', '')
+    category = request.GET.get('category', '')
     page = int(request.GET.get('page', 1))
     page_size = int(request.GET.get('page_size', 12))
     
     # Initialize news service
     news_service = get_news_service()
     
-    # Fetch articles based on search query
+    # Fetch articles based on search query and category
     if query:
-        news_data = news_service.search_tech_news(query, page=page, page_size=page_size)
+        search_term = query
+        if category:
+            search_term = f"{category} {query}"
+        news_data = news_service.search_tech_news(search_term, page=page, page_size=page_size)
+    elif category:
+        news_data = news_service.search_tech_news(category, page=page, page_size=page_size)
     else:
         news_data = news_service.get_tech_news(page=page, page_size=page_size)
     
@@ -377,7 +383,8 @@ def tech_news(request):
         'has_next': has_next,
         'has_prev': has_prev,
         'query': query,
+        'category': category,
         'error_message': error_message,
     }
     
-    return render(request, 'dashboard/tech_news.html', context)
+    return render(request, 'dashboard/tech_news_no_sidebar.html', context)
