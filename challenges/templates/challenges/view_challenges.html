@@ -37,7 +37,10 @@
                     </div>
                     <p class="mt-2 text-gray-400">{{ challenge.description|striptags|truncatechars:120 }}</p>
                     <div class="mt-4 flex justify-between items-center">
-                        <a href="{% url 'challenge_detail' challenge.id %}" class="text-indigo-400 hover:text-indigo-300">View Challenge →</a>
+                        <div>
+                            <a href="{% url 'challenge_detail' challenge.id %}" class="text-indigo-400 hover:text-indigo-300">View Challenge →</a>
+                            <a href="{% url 'challenge_solutions' challenge.id %}" class="text-cyan-400 hover:text-cyan-300 ml-4">View Solutions</a>
+                        </div>
                         <span class="text-xs text-gray-500">Created by: {{ challenge.created_by.username }}</span>
                     </div>
                 </div>
