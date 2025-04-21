@@ -1,5 +1,5 @@
 # Boost.dev  <a id="top"/>
-<img src=""> 
+<img src="theme\static\css\images\responsiveness.png"> 
 
 ## Introduction
 
@@ -26,7 +26,7 @@ Live site: [Boost.dev](https://boost-dev-9ed56bf6f182.herokuapp.com/)
     - [Users](#users)
     - [Profile](#profile)
     - [Wireframes](#wireframes)
-     - [Imagery](#imagery)
+    - [Imagery](#imagery)
 - [Technologies Used](#technologies-used)
     - [Languages and Technologies](#languages-and-technologies)
     - [Libraries](#libraries)
