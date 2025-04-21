@@ -47,7 +47,6 @@ Live site: [Boost.dev]( )
     - [Heroku Deployment](#heroku-deployment)
     - [Clone Project](#clone-project)
     - [Fork Project](#fork-project)
-- [ERD](#erd)
 - [Bugs to fix](#bugs-to-fix)
 - [AI Implementation and Orchestration](#ai-implementaion-and-orchestration)
     - [Code Generation](#code-generation)
@@ -59,7 +58,6 @@ Live site: [Boost.dev]( )
     - [CSS Validation](#css-validation)
     - [Lighthouse Audit](#lighthouse-audit)
     - [Python Tests & Check](#python-tests--check)
-    - [JavaScript Check](#javascript-check)
     - [Manual Testing](#manual-testing)
 - [Future Features](#future-features)
 - [Credits](#credits)
@@ -554,4 +552,106 @@ These instructions will guide you through setting up Tailwind CSS in your Django
     ```bash
     python manage.py tailwind install
     ```
+
+### Bugs to fix
+- 
+
+[Back to top](#top)
+
+## AI Implementaion and Orchestration
+### Code Generation
+The GitHub Copilot extension was installed in our local versions of Visual Studio Code. <br>
+We were able to write prompts or highlight functions in pseudocode and ask Copilot to suggest code snippets. <br>
+We had to review suggestions before they were included, as AI can generate code that can refer to different features than the ones intended.<br>
+We also used [deepseek](https://www.deepseek.com/en), [Gemini](https://gemini.google.com/) and [Claude](https://claude.ai/new) to help with code generation.
+
+### Debugging
+Regularly used the AI sites and tools mentioned above for debugging code using the inline editor and also prompting to on VS-Code side chat to request changes to the site and content for the site. 
+
+### Code Optimisation
+When needing to make more complicated changes to code or part of a page, the different AI sites were used to help fixing them and these were generally tested before pushing to repo, making it most of the times quicker to fix the code or create new code.<br>
+
+AI was also 
+
+### Impact on Workflow
+Overall It was useful to work with Copilot and have help to build many parts of the site.<br>
+AI was also a good help to debug and test the code.<br>
+Copilot and other AI as Claude in different ways, have explained the different steps involved in the coding, why some code is better than another.<br>
+Sometimes it can be furstrating to get some suggestions with ghost code that is not needed for the page to work well or changing different pages/files instead of only 1 ir 2 lines of code to fix a bug, but with testing, errors can be fixed.<br>
+Generally, adapting the prompts to make the request specific and concise can help Copilot to give better suggestions to get new features and to improve the site.
+
+[Back to top](#top)
+
+## Testing
+Validation of HTML/CSS, Lighthouse Audits, Bugs
+
+### HTML Validation
+Used [W3C Markup Validation Service](https://validator.w3.org/#validate_by_input) to test the HTML on all webpages and updated as needed. No errors found after fixing as can be seen on the examples bellow.
+<details>
+  <img src="theme\static\css\images\html-check\html-check-landing.png">
+  <img src="theme\static\css\images\html-check\html-check-login.png">
+  <img src="theme\static\css\images\html-check\html-check-register.png">
+</details>
+
+### CSS Validation
+
+Used [W3C CSS Validation Service](https://jigsaw.w3.org/css-validator/#validate_by_input) to test CSS style and no errors found.
+
+  <img src="theme\static\css\images\css-validation.png">
+
+### Lighthouse Audit
+
+Used Chrome Dev Tools Lighthouse to audit the site for response time and accessibility, as you can see onm the examples bellow.<br>
+<details>
+  <img src="theme\static\css\images\lighthouse\lighthouse-challenges.png">
+  <img src="theme\static\css\images\lighthouse\lighthouse-dashboard.png">
+  <img src="theme\static\css\images\lighthouse\lighthouse-landing.png">
+  <img src="theme\static\css\images\lighthouse\lighthouse-log-a-win.png">
+  <img src="theme\static\css\images\lighthouse\lighthouse-login.png">
+  <img src="theme\static\css\images\lighthouse\lighthouse-profile.png">
+  <img src="theme\static\css\images\lighthouse\lighthouse-register.png">
+  <img src="theme\static\css\images\lighthouse\lighthouse-wins-history.png">
+</details>
+
+
+### Manual Testing
+Website manually tested on the following devices/browsers for responsiveness:
+  - Google Chrome
+  - Mozilla Firefox
+  - Opera
+  - Vivaldi
+  - Samsung Galaxy A40
+  - Google Pixel 8
+  - iPhone 16
+  - iPad
+  - Samsung Galaxy
+
+[Back to top](#top)
+
+## Future Features
+- User projects showcase
+- Making the challenges more interactive
+- Adding a small IDE on the site to run the code created by the user
+
+## Credits
+### Code References
+Website was inspired on the "Blog" walkthrough project by [Code Institute Bootcamp LMS](https://learn.codeinstitute.net/dashboard) using HTML, CSS, Javascript, Django, Python and other extra tools to allow the user to be able to login into the page without having to use the admin panel.
+<br>
+
+### Media References
+
+
+### Acknowledgements
+This was a tough hackathon as 2-3 members of the initial group left in the begining or did not contribute for the project, with the Hack Team being aware of this, and the 3 remaining members had to push hard and motivate each other to continue the project.<br>
+
+It was a fun experience, with everyone learning something new in different ways, great communication and motivation.
+
+### Owner Details
+This website was created by Geraldine, Locky and Carlos. Students of Code Institute.<br>
+
+  - [Geraldine](https://github.com/Gerbil1511)
+  - [Locky](https://github.com/Lochy2000)
+  - [Carlos](https://github.com/Carlos-n21)
+
+[Back to top](#top)
 
