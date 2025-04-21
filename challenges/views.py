@@ -6,24 +6,6 @@ from .forms import ChallengeForm, ChallengeSolutionForm
 from services.ai_challenge import get_challenge_feedback, generate_new_challenge
 
 @login_required
-def view_challenge_solutions(request, pk):
-    """View for displaying all solutions for a specific challenge"""
-    challenge = get_object_or_404(Challenge, pk=pk, is_approved=True)
-    
-    # Get all solutions for this challenge
-    solutions = ChallengeSolution.objects.filter(
-        challenge=challenge,
-        is_correct=True
-    ).select_related('user', 'user__userprofile').order_by('-submitted_at')
-    
-    context = {
-        'challenge': challenge,
-        'solutions': solutions,
-    }
-    
-    return render(request, 'challenges/challenge_solutions.html', context)
-
-@login_required
 def challenge_list(request):
     """View for listing all challenges"""
     # Get filter parameters
@@ -56,21 +38,12 @@ def challenge_detail(request, pk):
             user=request.user
         ).order_by('-submitted_at').first()
     
-    # Get solutions from other users
-    other_solutions = ChallengeSolution.objects.filter(
-        challenge=challenge,
-        is_correct=True
-    ).exclude(
-        user=request.user
-    ).select_related('user', 'user__userprofile').order_by('-submitted_at')[:5]
-    
     # Create solution form
     form = ChallengeSolutionForm()
     
     context = {
         'challenge': challenge,
         'user_solution': user_solution,
-        'other_solutions': other_solutions,
         'form': form,
     }
     
@@ -109,30 +82,11 @@ def submit_solution(request, pk):
         form = ChallengeSolutionForm(request.POST)
         if form.is_valid():
             try:
-                # Check if update or create new solution
-                update_existing = request.POST.get('update_existing') == 'true'
-                
-                # If updating existing solution, get the most recent one
-                if update_existing:
-                    solution = ChallengeSolution.objects.filter(
-                        challenge=challenge,
-                        user=request.user
-                    ).order_by('-submitted_at').first()
-                    
-                    # If somehow we don't find one (shouldn't happen), create new
-                    if not solution:
-                        solution = ChallengeSolution()
-                        solution.challenge = challenge
-                        solution.user = request.user
-                else:
-                    # Create a new solution
-                    solution = ChallengeSolution()
-                    solution.challenge = challenge
-                    solution.user = request.user
-                
-                # Update the solution text from the form
-                solution.solution_text = form.cleaned_data['solution_text']
-                solution.is_correct = True  # Default to marking as correct
+                # Create the solution object
+                solution = form.save(commit=False)
+                solution.challenge = challenge
+                solution.user = request.user
+                solution.is_correct = True  # Mark all submitted solutions as correct for now
                 
                 # Get AI feedback
                 try:
@@ -143,31 +97,12 @@ def submit_solution(request, pk):
                         request.user.username
                     )
                     print(f"Received AI feedback: {solution.ai_feedback[:100]}...")
-                    
-                    # Determine correctness level based on the AI feedback
-                    feedback_lower = solution.ai_feedback.lower()
-                    if any(phrase in feedback_lower for phrase in ['perfect', 'excellent', 'great job', 'fantastic']):
-                        solution.correctness_level = 'correct'
-                    elif any(phrase in feedback_lower for phrase in ['almost there', 'very close', 'nearly']):
-                        solution.correctness_level = 'almost'
-                    elif any(phrase in feedback_lower for phrase in ['good attempt', 'on the right track', 'making progress']):
-                        solution.correctness_level = 'partial'
-                    elif any(phrase in feedback_lower for phrase in ['consider trying', 'you might want to', 'not quite']):
-                        solution.correctness_level = 'incorrect'
-                    else:
-                        solution.correctness_level = 'correct'  # Default if we can't determine
-                        
                 except Exception as e:
                     print(f"Error getting AI feedback: {e}")
                     solution.ai_feedback = f"Our AI assistant is taking a break, but your solution shows real effort, {request.user.username}! Keep exploring different approaches and don't give up."
-                    solution.correctness_level = 'partial'  # Default when AI feedback fails
                 
                 solution.save()
-                
-                if update_existing:
-                    messages.success(request, "Your solution has been updated! Check out the new AI feedback.")
-                else:
-                    messages.success(request, "Your solution has been submitted! Check out the AI feedback.")
+                messages.success(request, "Your solution has been submitted! Check out the AI feedback.")
             except Exception as e:
                 print(f"Error saving solution: {e}")
                 messages.error(request, "There was an error saving your solution. Please try again.")

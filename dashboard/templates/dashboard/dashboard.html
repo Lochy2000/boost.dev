@@ -146,14 +146,8 @@
                     <div class="relative">
                         <div class="flex justify-between items-start mb-3">
                             <h3 class="text-lg font-semibold text-white">{{ solution.challenge.title }}</h3>
-                            <div class="flex gap-2">
-                                <span class="text-xs font-medium bg-{{ solution.get_correctness_color }} text-white px-2 py-1 rounded-full">
-                                    {% with correctness=solution.correctness_level %}
-                                        {% if correctness == 'correct' %}Correct{% elif correctness == 'almost' %}Almost Correct{% elif correctness == 'partial' %}Partially Correct{% else %}Not Quite Right{% endif %}
-                                    {% endwith %}
-                                </span>
-                                <span class="text-xs font-medium bg-{% if solution.challenge.difficulty == 'beginner' %}green-600{% elif solution.challenge.difficulty == 'intermediate' %}yellow-600{% else %}red-600{% endif %} text-white px-2 py-1 rounded">{{ solution.challenge.get_difficulty_display }}</span>
-                            </div>
+                            <span
+                                class="text-xs font-medium bg-{% if solution.challenge.difficulty == 'beginner' %}green-600{% elif solution.challenge.difficulty == 'intermediate' %}yellow-600{% else %}red-600{% endif %} text-white px-2 py-1 rounded">{{ solution.challenge.get_difficulty_display }}</span>
                         </div>
                         <div class="flex justify-between text-gray-500 text-xs mb-3">
                             <div class="flex items-center">

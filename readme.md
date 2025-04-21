@@ -24,7 +24,6 @@ Live site: [Boost.dev](https://boost-dev-9ed56bf6f182.herokuapp.com/)
     - [Strategy](#strategy)
     - [Agile Methodologies](#agile-methodologies)
     - [Users](#users)
-    - [Profile](#profile)
     - [Wireframes](#wireframes)
     - [Imagery](#imagery)
 - [Technologies Used](#technologies-used)
@@ -119,6 +118,8 @@ Fonts used for this website were:
   - [Segoe UI](https://learn.microsoft.com/en-us/typography/font-list/segoe-ui)
   - [Helvetica-Neue](https://www.cdnfonts.com/helvetica-neue-5.font)
 
+[Back to top](#top)
+
 # Project Planning
 
 The main goal for this project was to create a site that feels friendly, invitting and can provide users the feeling that they are good developers, although they might not see themselves in that way.<br>
@@ -197,6 +198,8 @@ How Boost.dev Helps:
 - Provides a platform to mentor developers through forums and discussions.
 - Helps her stay connected with the developer community and trends.
 
+[Back to top](#top)
+
 ### Wireframes
 Initial wireframes for desktop view as follows:
 
@@ -210,6 +213,8 @@ The initial concept was based on:
 
 After the initial concept was drawn, the team decided to use a navbar on the top that changes to a "hamburger" dorpdown menu on smaller screens.<br>
 
+[Back to top](#top)
+
 ### Imagery
 Background image is an edited version of Ubuntu OS background page
 
@@ -222,6 +227,8 @@ Other images searched on Google and adapted to use on the webiste, include:
   - [Female IS](https://images.herzindagi.info/image/2022/Oct/syndrome.jpg)
   - [Male IS](https://www.the-dentist.co.uk/media/ucnbkru2/suffering-from-imposter-syndrome.jpg)
 
+[Back to top](#top)
+
 ## Features
 Some of the features that can be seen on the website are:
 
@@ -232,6 +239,8 @@ An area where the user can do challenges created by AI and APIs with different l
 
 A space to engage with the community:<br>
 <img src="theme\static\css\images\features\community-hub.png">
+
+[Back to top](#top)
 
 Landing page with information about Imposter Syndrome and Strategies to try to overcome it, also hopping the user will want to register on the site and get support and improve himself and maybe help other developers in a similar situation:<br>
 <img src="theme\static\css\images\features\hackpage.png">
@@ -248,6 +257,8 @@ An intuitive navbar with the main areas that the user can access:
 
 Area with different resources related to Tech:<br>
 <img src="theme\static\css\images\features\resources.png">
+
+[Back to top](#top)
 
 ## Technologies Used
 ### Languages and Technologies
@@ -292,6 +303,8 @@ To begin this project from scratch, you must first create a new GitHub repositor
   - Choose a new repository name and click 'Create repository from template'.<br>
   - In your new repository space, click the purple CodeAnywhere (if this is your IDE of choice) button to generate a new workspace.<br>
 
+[Back to top](#top)
+
 ### Django Project Setup<br>
 Install Django and supporting libraries:<br>
   - pip3 install 'django<4' gunicorn<br>
@@ -364,140 +377,7 @@ Set up a new account at Cloudinary and add your Cloudinary API environment varia
   MEDIA_URL = '/media/'<br>  
   DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'<br>
 
-### Heroku deployment
-To start the deployment process , please follow the below steps:
-
-  - Log in to Heroku or create an account if you are a new user.
-
-  - Once logged in, in the Heroku Dashboard, navigate to the 'New' button in the top, right corner, and select 'Create New App'.
-
-  - Enter an app name and choose your region. Click 'Create App'.
-
-  - In the Deploy tab, click on the 'Settings', reach the 'Config Vars' section and click on 'Reveal Config Vars'. Here you will enter KEY:VALUE pairs for the app to run successfully. The KEY:VALUE pairs that you will need are your:<br>
-CLOUDINARY_URL: cloudinary://....<br>
-DATABASE_URL:postgres://...<br>
-DISABLE_COLLECTSTATIC of value '1' (N.B Remove this Config Var before deployment),<br>
-PORT:8000<br>
-SECRET_KEY and value<br>
-
-  - Add the Heroku host name into ALLOWED_HOSTS in your projects settings.py file ->  ['800-nielmc-django-project-lxqprmm3qz.us2.codeanyapp.com', '.herokuapp.com', 'localhost', '127.0.0.1'].
-
-  - Once you are sure that you have set up the required files including your requirements.txt and Procfile, you have ensured that DEBUG=False, save your project, add the files, commit for initial deployment and push the data to GitHub.
-
-  - Go to the 'Deploy' tab and choose GitHub as the Deployment method.
-
-  - Search for the repository name, select the branch that you would like to build from, and connect it via the 'Connect' button.
-
-  - Choose from 'Automatic' or 'Manual' deployment options, I chose the 'Manual' deployment method. Click 'Deploy Branch'.
-
-  - Once the waiting period for the app to build has finished, click the 'View' link to bring you to your newly deployed site. If you receive any errors, Heroku will display a reason in the app build log for you to investigate. DISABLE_COLLECTSTATIC may be removed from the Config Vars once you have saved and pushed an image within your project, as can PORT:8000.
-
 [Back to top](#top)
-
-### Clone project
-A local clone of this repository can be made on GitHub. Please follow the below steps:
-
-  - Navigate to GitHub and log in.
-  - Kids Art Repository can be found at this location.
-  - Above the repository file section, locate the 'Code' button.
-  - Click on this button and choose your clone method from HTTPS, SSH or GitHub CLI, copy the URL to your clipboard by clicking the 'Copy' button.
-  - Open your Git Bash Terminal.
-  - Change the current working directory to the location you want the cloned directory to be made.
-  - Type git clone and paste in the copied URL from step 4.
-  - Press 'Enter' for the local clone to be created.
-  - Using the pip3 install -r requirements.txt command, the dependencies and libraries needed for FreeFido will be installed.
-  - Set up your env.py file and from the above steps for Cloudinary and NeonSQL, gather the Cloudinary API key and the Neon SQL url for additon to your code.
-  - Ensure that your env.py file is placed in your .gitignore file and follow the remaining steps in the above Django Project Setup section before pushing your code to GitHub.
-
-### Fork Project
-A copy of the original repository can be made through GitHub. Please follow the below steps to fork this repository:
-
-  - Navigate to GitHub and log in.
-  - Once logged in, navigate to this repository using this link Eventia Repository.
-  - Above the repository file section and to the top, right of the page is the 'Fork' button, click on this to make a fork of this repository.
-  - You should now have access to a forked copy of this repository in your Github account.
-  - Follow the above Django Project Steps if you wish to work on the project.
-
-### Connecting to GitHub
-To begin this project from scratch, you must first create a new GitHub repository using the Code Institute's Template. This template provides the relevant tools to get you started. To use this template:
-
-  - Log in to GitHub or create a new account.<br>
-  - Navigate to the above CI Full Template.<br>
-  - Click 'Use this template' -> 'Create a new repository'.<br>
-  - Choose a new repository name and click 'Create repository from template'.<br>
-  - In your new repository space, click the purple CodeAnywhere (if this is your IDE of choice) button to generate a new workspace.<br>
-
-### Django Project Setup<br>
-Install Django and supporting libraries:<br>
-  - pip3 install 'django<4' gunicorn<br>
-  - pip3 install dj_database_url psycopg2<br>
-  - pip3 install dj3-cloudinary-storage<br>
-
-Once you have installed any relevant dependencies or libraries, such as the ones listed above, it is important to create a requirements.txt file and add all installed libraries to it with the pip3 freeze --local > requirements.txt command in the terminal.
-
-Create a new Django project in the terminal django-admin startproject ems .
-
-Create a new app eg. python3 mangage.py startapp events
-
-Add this to list of INSTALLED_APPS in settings.py - 'booking',
-
-Create a superuser for the project to allow Admin access and enter credentials: python3 manage.py createsuperuser
-
-Migrate the changes with commands: python3 manage.py migrate
-
-An env.py file must be created to store all protected data such as the 
-DATABASE_URL and SECRET_KEY. These may be called upon in your project's settings.py file along with your Database configurations. The env.py file must be added to your gitignore file so that your important, protected information is not pushed to public viewing on GitHub. For adding to env.py:
-
-  - import os
-  - os.environ["DATABASE_URL"]="<copiedURLfrom postgresql://neondb_owner>"
-  - os.environ["SECRET_KEY"]="my_super^secret@key"
-
-For adding to settings.py:
-
-  - import os
-  - import dj_database_url
-  - if os.path.exists("env.py"):
-  - import env
-  - SECRET_KEY = os.environ.get('SECRET_KEY') (actual key hidden within env.py)
-
-Replace DATABASES with:
-
-DATABASES = {<br>
-    'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))<br>
-  }
-
-Set up the templates directory in settings.py:
-  - Under BASE_DIR enter TEMPLATES_DIR = os.path.join(BASE_DIR, ‘templates’)
-  - Update TEMPLATES = 'DIRS': [TEMPLATES_DIR] with:<br>
-  os.path.join(BASE_DIR, 'templates'),<br>
-  os.path.join(BASE_DIR, 'templates', 'allauth')<br>
-  - Create the media, static and templates directories in top level of project file in IDE workspace.<br>
-  
-A Procfile must be created within the project repo for Heroku deployment with the following placed within it: web: gunicorn ems.wsgi
-
-Make the necessary migrations again.
-
-[Back to top](#top)
-
-### Cloudinary API
-Cloudinary provides a cloud hosting solution for media storage. All users uploaded images in the FreeFid project are hosted here.
-
-Set up a new account at Cloudinary and add your Cloudinary API environment variable to your env.py and Heroku Config Vars. In your project workspace:
-
-  - Add Cloudinary libraries to INSTALLED_APPS in settings.py
-  - In the order:<br>
-   'cloudinary_storage',<br>
-   'django.contrib.staticfiles',  <br>
-   'cloudinary',<br>
-
-  - Add to env.py and link up with settings.py: os.environ["CLOUDINARY_URL"]="cloudinary://...."
-  - Set Cloudinary as storage for media and static files in settings.py:
-  - STATIC_URL = '/static/'<br>
-  STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'<br>  
-  STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static'), ]<br>
-  STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')‌<br>  
-  MEDIA_URL = '/media/'<br>  
-  DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'<br>
 
 ### Heroku deployment
 To start the deployment process , please follow the below steps:
@@ -595,10 +475,10 @@ These instructions will guide you through setting up Tailwind CSS in your Django
     python manage.py tailwind install
     ```
 
+[Back to top](#top)
+
 ### Bugs to fix
 - 
-
-[Back to top](#top)
 
 ## AI Implementaion and Orchestration
 ### Code Generation
@@ -612,8 +492,6 @@ Regularly used the AI sites and tools mentioned above for debugging code using t
 
 ### Code Optimisation
 When needing to make more complicated changes to code or part of a page, the different AI sites were used to help fixing them and these were generally tested before pushing to repo, making it most of the times quicker to fix the code or create new code.<br>
-
-AI was also 
 
 ### Impact on Workflow
 Overall It was useful to work with Copilot and have help to build many parts of the site.<br>
@@ -635,6 +513,8 @@ Used [W3C Markup Validation Service](https://validator.w3.org/#validate_by_input
   <img src="theme\static\css\images\html-check\html-check-register.png">
 </details>
 
+[Back to top](#top)
+
 ### CSS Validation
 
 Used [W3C CSS Validation Service](https://jigsaw.w3.org/css-validator/#validate_by_input) to test CSS style and no errors found.
@@ -655,6 +535,7 @@ Used Chrome Dev Tools Lighthouse to audit the site for response time and accessi
   <img src="theme\static\css\images\lighthouse\lighthouse-wins-history.png">
 </details>
 
+[Back to top](#top)
 
 ### Manual Testing
 Website manually tested on the following devices/browsers for responsiveness:
@@ -679,9 +560,6 @@ Website manually tested on the following devices/browsers for responsiveness:
 ### Code References
 Website was inspired on the "Blog" walkthrough project by [Code Institute Bootcamp LMS](https://learn.codeinstitute.net/dashboard) using HTML, CSS, Javascript, Django, Python and other extra tools to allow the user to be able to login into the page without having to use the admin panel.
 <br>
-
-### Media References
-
 
 ### Acknowledgements
 This was a tough hackathon as 2-3 members of the initial group left in the begining or did not contribute for the project, with the Hack Team being aware of this, and the 3 remaining members had to push hard and motivate each other to continue the project.<br>
