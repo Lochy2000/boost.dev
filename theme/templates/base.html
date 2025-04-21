@@ -1,173 +1,286 @@
 {% load static tailwind_tags %}
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>{% block title %}Boost.dev - Accelerate Your Development Journey{% endblock %}</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        
-        <!-- Tailwind CSS -->
-        <script src="https://cdn.tailwindcss.com"></script>
-        {% tailwind_css %}
-        
-        <!-- Custom CSS -->
-        <link rel="stylesheet" href="{% static 'css/main.css' %}">
-        
-        <!-- FontAwesome -->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    </head>
 
-    <body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>{% block title %}Boost.dev - Accelerate Your Development Journey{% endblock %}</title>
 
-       <!-- Level Up Notification -->
-        <div id="level-up-notification" class="fixed inset-0 flex items-center justify-center z-50 hidden">
-            <div class="absolute inset-0 bg-black opacity-50"></div>
-            <div class="bg-gray-800 rounded-lg p-8 max-w-md mx-auto relative z-10 border-4 border-yellow-400 text-center">
-                <div class="mb-4 relative">
-                    <i class="fas fa-level-up-alt text-yellow-400 text-5xl absolute -top-6 -right-6 transform rotate-12 animate-pulse"></i>
-                    <i class="fas fa-level-up-alt text-yellow-400 text-6xl mb-2 animate-bounce"></i>
-                </div>
-                <h2 class="text-3xl font-bold text-white mb-2">Level Up!</h2>
-                <p id="level-up-message" class="text-gray-300 mb-6 text-xl">Congratulations! You've reached <span class="text-yellow-400 font-bold">Level <span id="new-level">2</span></span>!</p>
-                <div class="flex justify-center">
-                    <button id="close-notification" class="bg-indigo-500 hover:bg-indigo-600 text-white px-5 py-3 rounded shadow transition-all">
-                        Continue
-                    </button>
-                </div>
-            </div>
-        </div>
-      
-        <header class="{% block header_class %}default-header-class{% endblock %}">
-            <a href="/" class="logo">
-              <span class="logo-icon">B</span>
-              Boost.dev
-            </a>
-          
-            {% block auth_nav %}
-            <!-- Default Auth Nav (if any) -->
-            {% endblock %}
-         </header>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  {% tailwind_css %}
 
-        
-        <!-- Messages Section -->
-        {% if messages %}
-        <div class="fixed top-16 left-1/2 transform -translate-x-1/2 z-40 w-full max-w-md px-4">
-            {% for message in messages %}
-            <div class="mb-4 p-4 rounded-lg shadow-md border
-                {% if message.tags == 'success' %}
-                  bg-green-100 text-green-800 border-green-300
-                {% elif message.tags == 'error' %}
-                  bg-red-100 text-red-800 border-red-300
-                {% elif message.tags == 'warning' %}
-                  bg-yellow-100 text-yellow-800 border-yellow-300
-                {% elif message.tags == 'info' %}
-                  bg-blue-100 text-blue-800 border-blue-300
-                {% else %}
-                  bg-gray-100 text-gray-800 border-gray-300
-                {% endif %}">
-                {{ message }}
-            </div>
-            {% endfor %}
-        </div>
-        {% endif %}
-        
-        <!-- Main Content Section -->
-        <main class="px-4 pt-20 sm:pt-24">
-            {% block content %}
-            <!-- Content from child templates will be inserted here -->
-            {% endblock %}
-        </main>
-        
-        <!-- Achievement Toast Notification - Initially hidden with inline style -->
-        <div id="achievement-toast" class="fixed right-5 bottom-5 bg-gray-800 border-2 border-yellow-400 rounded-lg shadow-lg p-4 max-w-sm transform transition-transform duration-500 z-50" style="transform: translateY(150%);">
-          <div class="flex items-start gap-3">
-            <div class="bg-yellow-400 rounded-full p-3 flex-shrink-0">
-              <i id="achievement-icon" class="fas fa-trophy text-gray-800 text-xl animate-pulse"></i>
-            </div>
-            <div>
-              <h3 class="text-white font-bold text-lg mb-1">Achievement Unlocked!</h3>
-              <p id="achievement-name" class="text-yellow-400 font-medium mb-1">Achievement Name</p>
-              <p id="achievement-desc" class="text-gray-300 text-sm">Achievement description goes here</p>
-            </div>
-            <button id="close-achievement-toast" class="text-gray-400 hover:text-white ml-auto">
-              <i class="fas fa-times"></i>
-            </button>
-          </div>
-        </div>
-        
-        <!-- JavaScript for Level Up and Achievement Notifications -->
-        <script>
-            // Immediately hide the achievement toast on page load
-            document.getElementById('achievement-toast').style.transform = 'translateY(150%)';
-            
-            document.addEventListener('DOMContentLoaded', function() {
-                // Level up notification
-                const messages = document.querySelectorAll('.fixed.top-16 .mb-4');
-                messages.forEach(function(message) {
-                    if (message.textContent.includes('Congratulations! You\'ve reached Level')) {
-                        // Extract the level number from the message
-                        const levelMatch = message.textContent.match(/Level (\d+)/);
-                        if (levelMatch && levelMatch[1]) {
-                            // Show level up notification
-                            const levelNumber = levelMatch[1];
-                            document.getElementById('new-level').textContent = levelNumber;
-                            document.getElementById('level-up-notification').classList.remove('hidden');
-                            
-                            // Hide the django message
-                            message.style.display = 'none';
-                        }
-                    }
-                    
-                    // Achievement notification
-                    if (message.textContent.includes('Achievement Unlocked:')) {
-                      // Extract achievement data
-                      const regex = /Achievement Unlocked: (.*?) - (.*)/;
-                      const match = message.textContent.match(regex);
-                      
-                      if (match && match.length >= 3) {
-                        const achievementName = match[1];
-                        const achievementDesc = match[2];
-                        
-                        // Show achievement toast
-                        showAchievementToast(achievementName, achievementDesc);
-                        
-                        // Hide the django message
-                        message.style.display = 'none';
-                      }
-                    }
-                });
-                
-                // Close notification on button click
-                document.getElementById('close-notification').addEventListener('click', function() {
-                    document.getElementById('level-up-notification').classList.add('hidden');
-                });
-                
-                // Close achievement toast on button click
-                document.getElementById('close-achievement-toast').addEventListener('click', function() {
-                    document.getElementById('achievement-toast').style.transform = 'translateY(150%)';
-                });
-            });
-            
-            function showAchievementToast(name, description, icon) {
-              // Set achievement content
-              document.getElementById('achievement-name').textContent = name;
-              document.getElementById('achievement-desc').textContent = description;
-              
-              // Set icon if provided
-              if (icon) {
-                document.getElementById('achievement-icon').className = `fas fa-${icon} text-gray-800 text-xl`;
-              }
-              
-              // Show the toast
-              const toast = document.getElementById('achievement-toast');
-              toast.style.transform = 'translateY(0)';
-              
-              // Hide after 5 seconds
-              setTimeout(() => {
-                toast.style.transform = 'translateY(150%)';
-              }, 5000);
-            }
-        </script>
-    </body>
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+  <!-- FontAwesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100">
+
+  <!-- Navbar -->
+  <header class="bg-gray-900 shadow-lg sticky top-0 z-50">
+    <nav class="container mx-auto flex items-center justify-between p-4">
+      <!-- Logo -->
+      <a href="/"
+        class="text-2xl font-bold text-white flex items-center gap-2 hover:text-indigo-300 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">
+        <span class="logo-icon">B</span>
+        Boost.dev
+      </a>
+
+      <!-- Hamburger (shown on mobile) -->
+      <button id="menu-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Toggle menu"
+        class="md:hidden text-white focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded p-1">
+        <i class="fas fa-bars fa-lg"></i>
+      </button>
+     
+      <!-- Desktop Links - Updated for better mid-size handling -->
+      <ul id="desktop-menu" class="hidden md:flex items-center space-x-1 lg:space-x-2 xl:space-x-4">
+        <li>
+          <a href="{% url 'dashboard' %}"
+            class="px-2 py-1 lg:px-3 lg:py-2 rounded text-sm lg:text-base hover:bg-gray-700 hover:text-indigo-300 text-white transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-gray-900">
+            Dashboard
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'wins:submit_win' %}"
+            class="px-2 py-1 lg:px-3 lg:py-2 rounded text-sm lg:text-base hover:bg-gray-700 hover:text-indigo-300 text-white transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-gray-900">
+            Log a Win
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'wins:my_wins' %}"
+            class="px-2 py-1 lg:px-3 lg:py-2 rounded text-sm lg:text-base hover:bg-gray-700 hover:text-indigo-300 text-white transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-gray-900">
+            My Wins
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'challenges' %}"
+            class="px-2 py-1 lg:px-3 lg:py-2 rounded text-sm lg:text-base hover:bg-gray-700 hover:text-indigo-300 text-white transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-gray-900">
+            Challenges
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'wins:community_wins' %}"
+            class="px-2 py-1 lg:px-3 lg:py-2 rounded text-sm lg:text-base hover:bg-gray-700 hover:text-indigo-300 text-white transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-gray-900">
+            Community
+          </a>
+        </li>
+        <li>
+          <!-- Replace your current avatar block with this -->
+{% if user.is_authenticated %}
+<div class="relative group text-center">
+  <img src="{{ user.userprofile.avatar|default:'https://res.cloudinary.com/dn7aws3wl/image/upload/v1739390582/nobody_pcaqjl.jpg' }}"
+    alt="{{ user.username }}'s Profile"
+    class="w-10 h-10 rounded-full object-cover border border-gray-700 cursor-pointer" />
+    <i class="fas fa-chevron-down text-sm text-white group-hover:text-indigo-300 transition-transform duration-300"></i>
+  
+  <!-- Dropdown on hover -->
+  <div class="absolute right-0 mt-2 w-48 bg-gray-800 text-white rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-50">
+    <div class="p-2 border-b border-gray-700 text-sm text-center">{{ user.username }}</div>
+    <a href="{% url 'profile' %}" class="block px-4 py-2 hover:bg-gray-700">My Profile</a>
+    <form method="post" action="{% url 'logout' %}">
+      {% csrf_token %}
+      <button type="submit" class="w-full text-center px-4 py-2 hover:bg-gray-700">Log Out</button>
+    </form>
+  </div>
+</div>
+{% endif %}
+        </li>
+      </ul>
+
+    </nav>
+
+    <!-- Mobile Menu Overlay - Improved for accessibility -->
+    <div id="mobile-menu"
+      class="fixed inset-0 z-50 hidden bg-gray-900 bg-opacity-95 flex flex-col items-center justify-center space-y-4 p-6 transition-opacity duration-300"
+      aria-hidden="true">
+      <button id="mobile-menu-close"
+        class="absolute top-4 right-4 text-white text-3xl focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded p-1"
+        aria-label="Close menu">
+        <i class="fas fa-times"></i>
+      </button>
+
+      <a href="{% url 'dashboard' %}"
+        class="text-white text-xl font-medium w-full text-center py-3 hover:text-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">
+        Dashboard
+      </a>
+      <a href="{% url 'wins:submit_win' %}"
+        class="text-white text-xl font-medium w-full text-center py-3 hover:text-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">
+        Log a Win
+      </a>
+      <a href="{% url 'wins:my_wins' %}"
+        class="text-white text-xl font-medium w-full text-center py-3 hover:text-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">
+        My Wins
+      </a>
+      <a href="{% url 'challenges' %}"
+        class="text-white text-xl font-medium w-full text-center py-3 hover:text-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">
+        Challenges
+      </a>
+      <a href="{% url 'wins:community_wins' %}"
+        class="text-white text-xl font-medium w-full text-center py-3 hover:text-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">
+        Community
+      </a>
+      <a href="{% url 'profile' %}"
+        class="text-white text-xl font-medium w-full text-center py-3 hover:text-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">
+        My Profile
+      </a>
+      <form method="post" action="{% url 'logout' %}" class="w-full">
+        {% csrf_token %}
+        <button type="submit"
+          class="text-white text-xl font-medium w-full text-center py-3 hover:text-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">
+          Log Out
+        </button>
+      </form>
+    </div>
+
+  </header>
+
+  <!-- Level Up Notification -->
+  <div id="level-up-notification" class="fixed inset-0 flex items-center justify-center z-50 hidden">
+    <div class="absolute inset-0 bg-black opacity-50"></div>
+    <div class="bg-gray-800 rounded-lg p-8 max-w-md mx-auto relative z-10 border-4 border-yellow-400 text-center">
+      <div class="mb-4 relative">
+        <i
+          class="fas fa-level-up-alt text-yellow-400 text-5xl absolute -top-6 -right-6 transform rotate-12 animate-pulse"></i>
+        <i class="fas fa-level-up-alt text-yellow-400 text-6xl mb-2 animate-bounce"></i>
+      </div>
+      <h2 class="text-3xl font-bold text-white mb-2">Level Up!</h2>
+      <p id="level-up-message" class="text-gray-300 mb-6 text-xl">Congratulations! You've reached <span
+          class="text-yellow-400 font-bold">Level <span id="new-level">2</span></span>!</p>
+      <div class="flex justify-center">
+        <button id="close-notification"
+          class="bg-indigo-500 hover:bg-indigo-600 text-white px-5 py-3 rounded shadow transition-all">
+          Continue
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Progress Bar (Always Visible) -->
+  <div class="fixed pt-32 md:pt-40 left-0 w-full z-40 bg-gray-900 p-4 border-t border-gray-800">
+    <div class="flex justify-between items-center text-xs mb-1">
+      <span>Level {{ user.progress.level }}</span>
+      <span>{{ user.progress.points }}/{{ user.progress.next_level_threshold }}</span>
+    </div>
+    <div class="w-full bg-gray-700 rounded-full h-2">
+      <div class="bg-{{ user.progress.get_level_color }}-500 h-2 rounded-full"
+        style="width: {{ user.progress.calculate_percentage }}"></div>
+    </div>
+  </div>
+
+  <!-- Messages Section -->
+  <!-- Flash Messages: rendered above content -->
+  {% if messages %}
+  <div class="container mx-auto px-4 py-4 pt-20 md:pt-20">
+    <div class="space-y-3">
+      {% for message in messages %}
+      <div class="p-3 text-sm rounded-md shadow-sm border
+        {% if message.tags == 'success' %} bg-green-50 text-green-700 border-green-200
+        {% elif message.tags == 'error' %}   bg-red-50   text-red-700   border-red-200
+        {% elif message.tags == 'warning' %} bg-yellow-50 text-yellow-700 border-yellow-200
+        {% elif message.tags == 'info' %}    bg-blue-50  text-blue-700  border-blue-200
+        {% else %}                            bg-gray-50  text-gray-700  border-gray-200
+        {% endif %}">
+        {{ message }}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Main Content Section -->
+  <main class="pt-16 p-4">
+    {% block content %}
+    <!-- Content from child templates will be inserted here -->
+    {% endblock %}
+  </main>
+
+  <!-- Achievement Toast Notification -->
+  <div id="achievement-toast"
+    class="fixed right-5 bottom-5 bg-gray-800 border-2 border-yellow-400 rounded-lg shadow-lg p-4 max-w-sm transform transition-transform duration-500 z-50"
+    style="transform: translateY(150%);">
+    <div class="flex items-start gap-3">
+      <div class="bg-yellow-400 rounded-full p-3 flex-shrink-0">
+        <i id="achievement-icon" class="fas fa-trophy text-gray-800 text-xl animate-pulse"></i>
+      </div>
+      <div>
+        <h3 class="text-white font-bold text-lg mb-1">Achievement Unlocked!</h3>
+        <p id="achievement-name" class="text-yellow-400 font-medium mb-1">Achievement Name</p>
+        <p id="achievement-desc" class="text-gray-300 text-sm">Achievement description goes here</p>
+      </div>
+      <button id="close-achievement-toast" class="text-gray-400 hover:text-white ml-auto">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- JavaScript for Notifications & Mobile Menu -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Level Up Notification Logic
+      document.getElementById('level-up-notification').classList.add('hidden');
+      const messages = document.querySelectorAll('.fixed.top-16 .mb-4');
+      messages.forEach(function (message) {
+        if (message.textContent.includes("Congratulations! You've reached Level")) {
+          const levelMatch = message.textContent.match(/Level (\d+)/);
+          if (levelMatch && levelMatch[1]) {
+            document.getElementById('new-level').textContent = levelMatch[1];
+            document.getElementById('level-up-notification').classList.remove('hidden');
+            message.style.display = 'none';
+          }
+        }
+        if (message.textContent.includes('Achievement Unlocked:')) {
+          const regex = /Achievement Unlocked: (.*?) - (.*)/;
+          const match = message.textContent.match(regex);
+          if (match) {
+            showAchievementToast(match[1], match[2]);
+            message.style.display = 'none';
+          }
+        }
+      });
+
+      // Close Level-Up Notification
+      document.getElementById('close-notification').addEventListener('click', function () {
+        document.getElementById('level-up-notification').classList.add('hidden');
+      });
+
+      // Close Achievement Toast
+      document.getElementById('close-achievement-toast').addEventListener('click', function () {
+        document.getElementById('achievement-toast').style.transform = 'translateY(150%)';
+      });
+
+      // Mobile Menu Toggle
+      const toggleBtn = document.getElementById('menu-toggle');
+      const closeBtn = document.getElementById('mobile-menu-close');
+      const mobileMenu = document.getElementById('mobile-menu');
+
+      toggleBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+        const expanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+        toggleBtn.setAttribute('aria-expanded', String(!expanded));
+        mobileMenu.setAttribute('aria-hidden', String(expanded));
+      });
+
+      closeBtn.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+        mobileMenu.setAttribute('aria-hidden', 'true');
+      });
+    });
+
+    function showAchievementToast(name, description) {
+      document.getElementById('achievement-name').textContent = name;
+      document.getElementById('achievement-desc').textContent = description;
+      document.getElementById('achievement-toast').style.transform = 'translateY(0)';
+      setTimeout(() => {
+        document.getElementById('achievement-toast').style.transform = 'translateY(150%)';
+      }, 5000);
+    }
+  </script>
+</body>
+
 </html>

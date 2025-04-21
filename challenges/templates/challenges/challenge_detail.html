@@ -1,6 +1,6 @@
-{% extends 'dashboard/dash_base.html' %}
+{% extends 'base.html' %}
 
-{% block dashboard_content %}
+{% block content %}
 <div class="px-6 py-8 max-w-5xl mx-auto space-y-8">
     <!-- Back button -->
     <div>
@@ -21,7 +21,7 @@
     </div>
 
     <!-- Challenge Description -->
-    <div class="bg-[#1e1f23] p-6 rounded-lg">
+    <div class="bg-[#1e1f23] p-6 rounded">
         <h2 class="text-xl font-semibold text-white mb-3">Challenge Description</h2>
         <div class="prose prose-invert max-w-none">
             {{ challenge.description|linebreaks }}
@@ -29,7 +29,7 @@
     </div>
 
     <!-- Hints Section -->
-    <div class="bg-[#1e1f23] p-6 rounded-lg">
+    <div class="bg-[#1e1f23] p-6 rounded">
         <h2 class="text-xl font-semibold text-white mb-3">Hints</h2>
         <div class="space-y-4">
             {% if challenge.hints %}
@@ -53,7 +53,7 @@
     </div>
 
     <!-- Solution Submission -->
-    <div class="bg-[#1e1f23] p-6 rounded-lg">
+    <div class="bg-[#1e1f23] p-6 rounded">
         <h2 class="text-xl font-semibold text-white mb-3">Your Solution</h2>
         <form method="post" action="{% url 'submit_solution' challenge.id %}">
             {% csrf_token %}
@@ -66,7 +66,7 @@
 
     <!-- Previous Solutions (if any) -->
     {% if user_solution %}
-    <div class="bg-[#1e1f23] p-6 rounded-lg">
+    <div class="bg-[#1e1f23] p-6 rounded">
         <h2 class="text-xl font-semibold text-white mb-3">Your Previous Solution</h2>
         <div class="bg-gray-800 p-4 rounded">
             <pre class="text-white whitespace-pre-wrap">{{ user_solution.solution_text }}</pre>

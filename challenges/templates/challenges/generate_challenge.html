@@ -1,6 +1,6 @@
-{% extends 'dashboard/dash_base.html' %}
+{% extends 'base.html' %}
 
-{% block dashboard_content %}
+{% block content %}
 <div class="px-6 py-8 max-w-5xl mx-auto space-y-8">
     <!-- Back button -->
     <div>
@@ -14,7 +14,7 @@
     </div>
 
     <!-- AI Challenge Generator Form -->
-    <div class="bg-[#1e1f23] p-6 rounded-lg">
+    <div class="bg-[#1e1f23] p-6 rounded">
         <form method="post" action="">
             {% csrf_token %}
             
