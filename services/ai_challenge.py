@@ -97,15 +97,27 @@ def generate_new_challenge(difficulty, topic="programming", username="Developer"
     1. Be appropriate for their skill level ({difficulty})
     2. Focus on building confidence and overcoming self-doubt
     3. Include clear, achievable goals with a definite solution
-    4. Provide 3 progressive hints that help guide without giving away the answer
+    4. Provide EXACTLY 3 progressive hints that help guide without giving away the answer
     
-    Format your response with these headers:
+    You MUST format your response EXACTLY as follows with these precise headers and no deviations:
+    
     TITLE: (concise, engaging title)
-    DESCRIPTION: (clear problem statement and requirements)
-    HINTS: (3 progressive hints, from subtle to more direct)
     
-    For DESCRIPTION, include any necessary examples, input/output format, and constraints.
-    Make the challenge supportive and encouraging - our goal is to help developers build confidence.
+    DESCRIPTION:
+    (Clear problem statement including any examples, input/output format, and constraints)
+    
+    HINT 1: (First subtle hint that gives general direction)
+    
+    HINT 2: (Medium hint that provides more specific guidance)
+    
+    HINT 3: (More direct hint that helps them solve the problem without giving away the full solution)
+    
+    IMPORTANT:
+    - Each section MUST be preceded by its exact header (TITLE:, DESCRIPTION:, HINT 1:, etc.)
+    - Do not add any additional sections or headers
+    - Do not number the hints beyond the headers (don't add "1." after "HINT 1:")
+    - Include line breaks in the description for readability
+    - Make the challenge supportive and encouraging to help build confidence
     """
     
     # Try each model name until one works

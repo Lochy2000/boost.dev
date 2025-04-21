@@ -24,7 +24,12 @@
     <div class="bg-[#1e1f23] p-6 rounded">
         <h2 class="text-xl font-semibold text-white mb-3">Challenge Description</h2>
         <div class="prose prose-invert max-w-none">
-            {{ challenge.description|linebreaks }}
+            {% if challenge.is_ai_generated %}
+                {# Handle AI-generated descriptions with proper formatting #}
+                <div class="whitespace-pre-wrap text-gray-200">{{ challenge.description }}</div>
+            {% else %}
+                {{ challenge.description|linebreaks }}
+            {% endif %}
         </div>
     </div>
 
@@ -39,10 +44,19 @@
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9h16.5m-16.5 6.75h16.5" />
                         </svg>
-                        Hint {{ forloop.counter }}
+                        <span class="font-medium">Hint {{ forloop.counter }}</span>
+                        <span class="text-xs ml-2 text-gray-400 font-normal">
+                            {% if forloop.counter == 1 %}
+                                (subtle guidance)
+                            {% elif forloop.counter == 2 %}
+                                (more specific)
+                            {% elif forloop.counter == 3 %}
+                                (most helpful)
+                            {% endif %}
+                        </span>
                     </button>
                     <div id="hint-{{ forloop.counter }}" class="{% if forloop.counter > 1 %}hidden {% endif %}mt-2 bg-gray-800 p-3 rounded">
-                        <p>{{ hint }}</p>
+                        <p class="text-gray-200">{{ hint }}</p>
                     </div>
                 </div>
                 {% endfor %}
@@ -50,6 +64,15 @@
                 <p class="text-gray-400">No hints available for this challenge.</p>
             {% endif %}
         </div>
+        
+        {% if challenge.is_ai_generated %}
+        <div class="mt-4 pt-4 border-t border-gray-700">
+            <p class="text-sm text-gray-400">
+                This challenge was AI-generated to help you build skills and confidence. 
+                Each hint reveals progressively more information - try solving with minimal hints!
+            </p>
+        </div>
+        {% endif %}
     </div>
 
     <!-- Solution Submission -->
@@ -87,21 +110,61 @@
 {% block extra_js %}
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    // Handle hint toggles
+    // Enhanced hint toggles with tracking
     const hintToggles = document.querySelectorAll('.hint-toggle');
+    const hintRevealedCount = {};
     
     hintToggles.forEach(toggle => {
+      const targetId = toggle.getAttribute('data-target');
+      const hintNumber = parseInt(targetId.split('-')[1]);
+      hintRevealedCount[hintNumber] = 0;
+      
       toggle.addEventListener('click', function() {
-        const targetId = this.getAttribute('data-target');
         const targetElement = document.getElementById(targetId);
         
         if (targetElement.classList.contains('hidden')) {
+          // Reveal hint
           targetElement.classList.remove('hidden');
+          hintRevealedCount[hintNumber]++;
+          
+          // First time revealing this hint
+          if (hintRevealedCount[hintNumber] === 1) {
+            // Visual feedback for using a hint
+            toggle.classList.add('text-green-400');
+            setTimeout(() => {
+              toggle.classList.remove('text-green-400');
+              toggle.classList.add('text-indigo-400');
+            }, 1000);
+            
+            // If this is a higher-level hint, reveal previous hints too
+            if (hintNumber > 1) {
+              for (let i = 1; i < hintNumber; i++) {
+                const prevHint = document.getElementById(`hint-${i}`);
+                if (prevHint && prevHint.classList.contains('hidden')) {
+                  prevHint.classList.remove('hidden');
+                  const prevToggle = document.querySelector(`[data-target="hint-${i}"]`);
+                  if (prevToggle) {
+                    prevToggle.classList.add('text-indigo-300');
+                  }
+                }
+              }
+            }
+          }
         } else {
+          // Hide hint
           targetElement.classList.add('hidden');
         }
       });
     });
+    
+    // Initialize hint status
+    const firstHint = document.getElementById('hint-1');
+    if (firstHint && !firstHint.classList.contains('hidden')) {
+      const firstToggle = document.querySelector('[data-target="hint-1"]');
+      if (firstToggle) {
+        hintRevealedCount[1] = 1;
+      }
+    }
   });
 </script>
 {% endblock %}

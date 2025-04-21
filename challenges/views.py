@@ -122,7 +122,7 @@ def generate_ai_challenge(request):
             # Get AI-generated challenge
             challenge_text = generate_new_challenge(difficulty, topic, request.user.username)
             
-            # Parse the response (assuming it follows the format in our prompt)
+            # Parse the response with improved structured parsing
             lines = challenge_text.strip().split('\n')
             
             title = ""
@@ -131,19 +131,65 @@ def generate_ai_challenge(request):
             
             current_section = None
             
+            # Improved parsing with specific hint headers
             for line in lines:
+                line = line.strip()
+                if not line:  # Skip empty lines
+                    continue
+                    
                 if line.startswith("TITLE:"):
                     title = line.replace("TITLE:", "").strip()
                     current_section = "title"
                 elif line.startswith("DESCRIPTION:"):
                     current_section = "description"
+                elif line.startswith("HINT 1:"):
+                    hint = line.replace("HINT 1:", "").strip()
+                    if hint:  # Only add non-empty hints
+                        hints.append(hint)
+                    current_section = "hint1"
+                elif line.startswith("HINT 2:"):
+                    hint = line.replace("HINT 2:", "").strip()
+                    if hint:  # Only add non-empty hints
+                        hints.append(hint)
+                    current_section = "hint2"
+                elif line.startswith("HINT 3:"):
+                    hint = line.replace("HINT 3:", "").strip()
+                    if hint:  # Only add non-empty hints
+                        hints.append(hint)
+                    current_section = "hint3"
+                # Legacy support for old format
                 elif line.startswith("HINTS:"):
-                    current_section = "hints"
-                elif current_section == "description" and line:
+                    current_section = "hints"  
+                elif current_section == "description":
                     description += line + "\n"
-                elif current_section == "hints" and line and not line.startswith("HINT"):
+                elif current_section == "hint1" and not line.startswith("HINT"):
+                    # Append to existing hint if it's a continuation
+                    if hints and len(hints) >= 1:
+                        hints[0] += " " + line
+                elif current_section == "hint2" and not line.startswith("HINT"):
+                    if hints and len(hints) >= 2:
+                        hints[1] += " " + line
+                elif current_section == "hint3" and not line.startswith("HINT"):
+                    if hints and len(hints) >= 3:
+                        hints[2] += " " + line
+                # Legacy support for old format
+                elif current_section == "hints" and not line.startswith("HINT"):
                     if line.strip() and not line.startswith("-"):
                         hints.append(line.strip())
+                        
+            # Ensure we have exactly 3 hints with quality fallbacks
+            default_hints = [
+                "Start by breaking down the problem into smaller parts. What's the first step you would take?",
+                "Consider edge cases and how your solution handles different inputs. What assumptions are you making?",
+                "Look at your algorithm's efficiency. Can you optimize it further? Remember to test your solution with various inputs."
+            ]
+            
+            # Add quality default hints if we don't have enough
+            while len(hints) < 3:
+                hints.append(default_hints[len(hints)])
+                
+            # Limit to 3 hints if we somehow got more
+            hints = hints[:3]
             
             # Create the challenge
             challenge = Challenge(
