@@ -1,105 +1,144 @@
-{% extends 'dashboard/dash_base.html' %}
+{% extends 'base.html' %}
 
-{% block dashboard_content %}
+{% block content %}
 <div class="px-8 py-8 max-w-5xl mx-auto space-y-8">
     <!-- Greeting -->
     <div>
-        <h1 class="text-3xl font-bold text-indigo-400">Welcome back, {{ user.username }} 👋</h1>
+        <h1 class="text-3xl font-bold text-sky-500">Welcome back, {{ user.username }} 👋</h1>
         <p class="mt-2 text-gray-400 text-lg italic">Let's keep growing, one tiny win at a time.</p>
     </div>
 
     <!-- Daily Prompt -->
-    <div class="bg-[#1e1f23] rounded p-6 shadow-lg text-white">
-        <h2 class="text-xl font-semibold mb-2">💡 Daily Boost</h2>
-        <p class="quote mb-4 italic text-gray-700"></p><i class="fas fa-quote-left my-2 me-2"></i>{{ daily_prompt.quote.text }} <i class="fas fa-quote-right me-2"></i></p>
-        <p class="text-lg font-light tracking-wide">{{ daily_prompt.quote.author }}</p>
+    <!-- Daily Boost Section -->
+<div class="bg-gradient-to-r from-indigo-600 to-indigo-900 rounded p-6 shadow-2xl text-white">
+    <h2 class="text-2xl font-semibold mb-4">💡 Daily Boost</h2>
+    <div class="flex items-center text-gray-300 mb-4">
+        <i class="fas fa-quote-left mr-2"></i>
+        <p class="quote italic text-gray-200">{{ daily_prompt.quote.text }}</p>
+        <i class="fas fa-quote-right ml-2"></i>
+    </div>
+    <p class="text-lg font-light text-gray-300">{{ daily_prompt.quote.author }}</p>
+</div>
+
+<!-- Stats Section -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-8 mt-8">
+    <!-- Featured Challenge -->
+    <div class="bg-[#1e1f23] rounded p-6 shadow-lg text-white hover:shadow-xl transition-shadow">
+        <h2 class="text-xl font-semibold mb-4 text-indigo-400">🌟 Featured Challenge</h2>
+        {% if recommended_challenges.0 %}
+        <p><strong>{{ recommended_challenges.0.title }}</strong> {% if recommended_challenges.0.created_by %}by 
+            {{recommended_challenges.0.created_by.username }}{% endif %}</p>
+        <p class="text-gray-400">{{ recommended_challenges.0.description|truncatechars:100 }}</p>
+        <div class="flex flex-wrap gap-4 justify-start pt-4">
+            <a href="{% url 'challenge_detail' recommended_challenges.0.id %}" class="text-indigo-300 hover:text-indigo-500">View Challenge</a>
+            <a href="{% url 'challenges' %}" class="text-indigo-300 hover:text-indigo-500">Browse Challenges</a>
+            <a href="{% url 'new_challenge' %}" class="text-indigo-300 hover:text-indigo-500">Create Challenge</a>
+        </div>
+        {% else %}
+        <p>No challenges available yet. Why not create one?</p>
+        <div class="flex flex-wrap gap-4 justify-start pt-4">
+            <a href="{% url 'challenges' %}" class="text-indigo-300 hover:text-indigo-500">Browse Challenges</a>
+            <a href="{% url 'new_challenge' %}" class="text-indigo-300 hover:text-indigo-500">Create Challenge</a>
+        </div>
+        {% endif %}
     </div>
 
-    <!-- Stats Section -->
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-        <div class="bg-[#1e1f23] rounded p-6 shadow text-white">
-            <h2 class="text-xl font-semibold mb-2">🌟 Featured Challenge</h2>
-            {% if recommended_challenges.0 %}
-            <p><strong>{{ recommended_challenges.0.title }}</strong> {% if recommended_challenges.0.created_by %}by {{ recommended_challenges.0.created_by.username }}{% endif %}</p>
-            <p>{{ recommended_challenges.0.description|truncatechars:100 }}</p>
-            <div class="flex flex-wrap gap-4 justify-start pt-4">
-                <a href="{% url 'challenge_detail' recommended_challenges.0.id %}" class="text-indigo-400">View Challenge</a>
-                <a href="{% url 'challenges' %}" class="text-indigo-400">Browse Challenges</a>
-                <a href="{% url 'new_challenge' %}" class="text-indigo-400">Create Challenge</a>
-            </div>
-            {% else %}
-            <p>No challenges available yet. Why not create one?</p>
-            <div class="flex flex-wrap gap-4 justify-start pt-4">
-                <a href="{% url 'challenges' %}" class="text-indigo-400">Browse Challenges</a>
-                <a href="{% url 'new_challenge' %}" class="text-indigo-400">Create Challenge</a>
-            </div>
-            {% endif %}
+    <!-- Wins -->
+    <div class="bg-[#1e1f23] rounded p-6 shadow-lg text-white hover:shadow-xl transition-shadow">
+        <h2 class="text-xl font-semibold mb-4 text-sky-500">🏆 Wins</h2>
+        <p>You have <strong>{{ user.win_set.count }}</strong> wins so far! Let's gooo!</p>
+        <div class="flex flex-wrap gap-4 justify-start pt-4">
+            <a href="{% url 'wins:submit_win' %}" class="text-sky-300 hover:text-sky-500">Log a Win</a>
+            <a href="{% url 'wins:my_wins' %}" class="text-sky-300 hover:text-sky-500">View My Wins</a>
+            <a href="{% url 'wins:community_wins' %}" class="text-sky-300 hover:text-sky-500">Community Wins</a>
         </div>
-        <div class="bg-[#1e1f23] rounded p-6 shadow text-white">
-            <h2 class="text-xl font-semibold mb-2">🏆 Wins</h2>
-            <p>You have <strong>{{ user.win_set.count }}</strong> wins so far! Let's gooo!</p>
-            <div class="flex flex-wrap gap-4 justify-start pt-4">
-                <a href="{% url 'wins:submit_win' %}" class="text-indigo-400">Log a Win</a>
-                <a href="{% url 'wins:my_wins' %}" class="text-indigo-400">View My Wins</a>
-                <a href="{% url 'wins:community_wins' %}" class="text-indigo-400">Community Wins</a>
-            </div>
-        </div>
-        <div class="bg-[#1e1f23] rounded p-6 shadow-lg text-white">
-            <h2 class="text-xl font-semibold mb-2">🏆 Milestones</h2>
-            <div class="text-lg font-light tracking-wide">You are {{ user.userprofile.experience_level }} level now!</div>
-            <div class="mt-4">
-                <label for="progress" class="block text-sm text-gray-400">Progress</label>
-                <progress id="progress" value="{{ user_challenge_count }}" max="100" class="w-full mt-2"></progress>
-            </div>
-        </div>
-        <div class="bg-[#1e1f23] rounded p-6 shadow text-white">
-            <h2 class="text-xl font-semibold mb-2">📝 Community Feed</h2>
-            {% for activity in recent_activities %}
-                <div class="flex items-center space-x-4 mb-4">
-                    <img src="{{ activity.user.profile.picture.url }}" alt="User Avatar" class="w-8 h-8 rounded-full">
-                    <div class="text-sm">
-                        <p><strong>{{ activity.user.username }}</strong> {{ activity.action }} on <strong>{{ activity.date }}</strong></p>
-                        <p class="text-gray-400">{{ activity.description }}</p>
+    </div>
+
+    <!-- Community Feed -->
+    <div class="bg-[#1e1f23] rounded p-6 shadow-lg text-white hover:shadow-xl transition-shadow">
+        <h2 class="text-xl font-semibold mb-4 text-rose-400">📝 Community Feed</h2>
+        {% if wins %}
+        <div class="overflow-x-auto pb-4">
+            <div class="flex space-x-6 min-w-max">
+                {% for win in wins %}
+                <div class="bg-gray-800 rounded p-6 shadow-lg w-96 flex-shrink-0">
+                    <div class="flex items-start">
+                        <img src="{{ win.user.userprofile.avatar|default:'https://via.placeholder.com/48' }}"
+                            alt="{{ win.user.username }}" class="w-12 h-12 rounded-full mr-4">
+                        <div class="flex-1">
+                            <div class="flex flex-wrap items-center justify-between">
+                                <h2 class="text-xl font-bold text-white">{{ win.user.username }}'s Win</h2>
+                                <span class="text-gray-400 text-sm">{{ win.created_at|date:"F j, Y" }}</span>
+                            </div>
+
+                            <div class="mt-4 mb-6">
+                                <p class="text-gray-200">{{ win.content }}</p>
+                            </div>
+
+                            {% if win.ai_feedback %}
+                            <div class="bg-indigo-900 bg-opacity-50 rounded-lg p-4 mb-6">
+                                <div class="flex">
+                                    <div class="flex-shrink-0 mr-3">
+                                        <div class="w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center">
+                                            <i class="fas fa-robot text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-indigo-300 font-medium mb-2">AI Coach Feedback:</h3>
+                                        <p class="text-gray-200">{{ win.ai_feedback|truncatechars:150 }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+
+                            <div class="flex items-center justify-between border-t border-gray-700 pt-4">
+                                <div class="flex space-x-4">
+                                    <button class="text-gray-400 hover:text-indigo-400 transition-colors">
+                                        <i class="fas fa-thumbs-up mr-1"></i> Celebrate
+                                    </button>
+                                    <button class="text-gray-400 hover:text-indigo-400 transition-colors">
+                                        <i class="fas fa-comment mr-1"></i> Comment
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            {% endfor %}
-        </div>
-        <div class="bg-[#1e1f23] rounded p-6 shadow-lg text-white">
-            <h2 class="text-xl font-semibold mb-2">🏅 Achievements</h2>
-            <p>Earned <strong>{{ user.badges.count }}</strong> badges so far!</p>
-            <div class="flex flex-wrap gap-2 mt-4">
-                {% for badge in user.badges.all %}
-                    <span class="bg-gray-800 text-white px-4 py-2 rounded-full text-sm">{{ badge.name }}</span>
                 {% endfor %}
             </div>
         </div>
-        <div class="bg-[#1e1f23] rounded p-6 shadow-lg text-white">
-            <h2 class="text-xl font-semibold mb-2">👥 Invite a Friend</h2>
-            <p class="text-lg">Share your journey with friends and unlock exciting features!</p>
-            <a href="#" class="text-indigo-400">Invite Now</a>
+        {% else %}
+        <div class="bg-gray-800 rounded p-6 shadow-lg mb-4 text-center">
+            <p class="text-gray-300 text-lg">No community wins yet. Be the first to share your achievement!</p>
         </div>
+        {% endif %}
     </div>
+</div>
 
-    <!-- Recent Challenge Solutions -->
-    {% if user_challenge_solutions %}
-    <div class="mt-8">
-        <h2 class="text-2xl font-bold text-white mb-4">Your Recent Solutions</h2>
-        <div class="space-y-4">
-            {% for solution in user_challenge_solutions %}
-            <div class="bg-[#1e1f23] rounded-lg overflow-hidden shadow-lg p-5">
-                <div class="flex justify-between items-start mb-2">
-                    <h3 class="text-lg font-semibold text-white">{{ solution.challenge.title }}</h3>
-                    <span class="text-xs font-medium bg-{% if solution.challenge.difficulty == 'beginner' %}green-600{% elif solution.challenge.difficulty == 'intermediate' %}yellow-600{% else %}red-600{% endif %} text-white px-2 py-1 rounded">{{ solution.challenge.get_difficulty_display }}</span>
-                </div>
-                <div class="text-gray-500 text-xs mb-3">Submitted on {{ solution.submitted_at|date:"M d, Y" }}</div>
-                <div class="bg-gray-800 p-3 rounded mb-3">
-                    <pre class="text-white text-sm whitespace-pre-wrap">{{ solution.solution_text|truncatechars:150 }}</pre>
-                </div>
-                <a href="{% url 'challenge_detail' solution.challenge.id %}" class="text-indigo-400 hover:text-indigo-300 text-sm">View Full Solution →</a>
+<!-- Recent Challenge Solutions -->
+{% if user_challenge_solutions %}
+<div class="mt-8">
+    <h2 class="text-2xl font-bold text-white mb-4">Your Recent Solutions</h2>
+    <div class="space-y-4">
+        {% for solution in user_challenge_solutions %}
+        <div class="bg-[#1e1f23] rounded overflow-hidden shadow-lg p-5 hover:shadow-xl transition-shadow">
+            <div class="flex justify-between items-start mb-2">
+                <h3 class="text-lg font-semibold text-white">{{ solution.challenge.title }}</h3>
+                <span
+                    class="text-xs font-medium bg-{% if solution.challenge.difficulty == 'beginner' %}green-600{% elif solution.challenge.difficulty == 'intermediate' %}yellow-600{% else %}red-600{% endif %} text-white px-2 py-1 rounded">{{
+                    solution.challenge.get_difficulty_display }}</span>
             </div>
-            {% endfor %}
+            <div class="text-gray-500 text-xs mb-3">Submitted on {{ solution.submitted_at|date:"M d, Y" }}</div>
+            <div class="bg-gray-800 p-3 rounded mb-3">
+                <pre
+                    class="text-white text-sm whitespace-pre-wrap">{{ solution.solution_text|truncatechars:150 }}</pre>
+            </div>
+            <a href="{% url 'challenge_detail' solution.challenge.id %}"
+                class="text-indigo-400 hover:text-indigo-300 text-sm">View Full Solution →</a>
         </div>
+        {% endfor %}
     </div>
+</div>
     {% endif %}
     
     <!-- Tech News Section -->
@@ -142,14 +181,32 @@
             </div>
         </div>
     </div>
-    {% endif %}
-    
-    <!-- Action Buttons -->
-    <div class="flex flex-wrap gap-4 justify-start">
-        <a href="{% url 'profile' %}" class="bg-indigo-500 hover:bg-indigo-600 text-white px-5 py-3 rounded shadow transition-all">Edit Profile</a>
-        <a href="{% url 'challenges' %}" class="bg-gray-700 hover:bg-gray-600 text-white px-5 py-3 rounded shadow transition-all">Challenges</a>
-        <a href="{% url 'new_challenge' %}" class="bg-rose-600 hover:bg-rose-700 text-white px-5 py-3 rounded shadow transition-all">New Challenge</a>
-        <a href="{% url 'wins:submit_win' %}" class="bg-green-600 hover:bg-green-700 text-white px-5 py-3 rounded shadow transition-all">Log a Win</a>
+{% endif %}
+
+
+        <!-- Action Buttons -->
+        <div class="flex flex-col md:flex-row gap-3 md:gap-4 w-full">
+            <button
+              onclick="window.location.href='{% url 'profile' %}'"
+              class="flex-1 bg-indigo-500 hover:bg-indigo-600 text-white px-5 py-3 rounded shadow text-center transition-all">
+              Edit Profile
+            </button>
+            <button
+              onclick="window.location.href='{% url 'challenges' %}'"
+              class="flex-1 bg-gray-700 hover:bg-gray-600 text-white px-5 py-3 rounded shadow text-center transition-all">
+              Challenges
+            </button>
+            <button
+              onclick="window.location.href='{% url 'new_challenge' %}'"
+              class="flex-1 bg-rose-600 hover:bg-rose-700 text-white px-5 py-3 rounded shadow text-center transition-all">
+              New Challenge
+            </button>
+            <button
+              onclick="window.location.href='{% url 'wins:submit_win' %}'"
+              class="flex-1 bg-sky-500 hover:bg-sky-600 text-white px-5 py-3 rounded shadow text-center transition-all">
+              Log a Win
+            </button>
+          </div>
+          
     </div>
-</div>
-{% endblock %}
+    {% endblock %}

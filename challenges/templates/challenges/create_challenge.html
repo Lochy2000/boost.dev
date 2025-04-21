@@ -1,6 +1,6 @@
-{% extends 'dashboard/dash_base.html' %}
+{% extends 'base.html' %}
 
-{% block dashboard_content %}
+{% block content %}
 <div class="px-6 py-8 max-w-5xl mx-auto space-y-8">
     <!-- Back button -->
     <div>
@@ -14,7 +14,7 @@
     </div>
 
     <!-- Challenge Form -->
-    <div class="bg-[#1e1f23] p-6 rounded-lg">
+    <div class="bg-[#1e1f23] p-6 rounded">
         <form method="post" action="">
             {% csrf_token %}
             
@@ -72,7 +72,7 @@
             </div>
             
             <!-- Imposter Syndrome Connection -->
-            <div class="mb-6 p-4 bg-indigo-900/30 rounded-lg">
+            <div class="mb-6 p-4 bg-indigo-900/30 rounded">
                 <h3 class="text-white font-semibold mb-2">Addressing Imposter Syndrome</h3>
                 <p class="text-gray-300 text-sm mb-3">Your challenge will help others overcome imposter syndrome by building confidence through solving problems. Consider:</p>
                 <ul class="text-gray-300 text-sm list-disc pl-5 space-y-1">

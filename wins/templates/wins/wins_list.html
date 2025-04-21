@@ -1,105 +1,105 @@
-{% extends 'dashboard/dash_base.html' %}
+{% extends 'base.html' %}
 
 {% block title %}My Wins History - Boost.dev{% endblock %}
 
-{% block dashboard_content %}
+{% block content %}
 <div class="container mx-auto px-4 py-8 max-w-3xl">
+
     <h1 class="text-3xl font-bold text-white mb-6">My Wins History</h1>
-    
+
     {% if wins %}
-        {% for win in wins %}
-        <div class="bg-gray-800 rounded-lg p-6 shadow-lg mb-4">
-            <div class="flex items-start">
-                <img src="{{ win.user.userprofile.avatar|default:'https://via.placeholder.com/48' }}"
-                     alt="{{ win.user.username }}"
-                     class="w-12 h-12 rounded-full mr-4">
-                <div class="flex-1">
-                    <div class="flex flex-wrap items-center justify-between">
-                        <h2 class="text-2xl font-bold text-white">{{ win.user.username }}'s Win</h2>
-                        <span class="text-gray-400 text-sm">{{ win.created_at|date:"F j, Y" }}</span>
-                    </div>
-                    
-                    <div class="mt-4 mb-6">
-                        <p class="text-gray-200 text-lg">{{ win.content }}</p>
-                    </div>
-                    
-                    {% if win.ai_feedback %}
-                    <div class="bg-indigo-900 bg-opacity-50 rounded-lg p-4 mb-6">
-                        <div class="flex">
-                            <div class="flex-shrink-0 mr-3">
-                                <div class="w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center">
-                                    <i class="fas fa-robot text-white"></i>
-                                </div>
-                            </div>
-                            <div>
-                                <h3 class="text-indigo-300 font-medium mb-2">AI Coach Feedback:</h3>
-                                <p class="text-gray-200">{{ win.ai_feedback }}</p>
+    {% for win in wins %}
+    <div class="bg-gray-800 rounded p-6 shadow-xl hover:shadow-2xl transition-all mb-6">
+        <div class="flex items-start">
+            <img src="{{ win.user.userprofile.avatar|default:'https://via.placeholder.com/48' }}"
+                alt="{{ win.user.username }}" class="w-14 h-14 rounded-full mr-5">
+            <div class="flex-1">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-2xl font-bold text-white">{{ win.user.username }}'s Win</h2>
+                    <span class="text-gray-400 text-sm">{{ win.created_at|date:"F j, Y" }}</span>
+                </div>
+
+                <div class="mt-4 mb-6">
+                    <p class="text-gray-200 text-lg">{{ win.content }}</p>
+                </div>
+
+                {% if win.ai_feedback %}
+                <div class="bg-indigo-900 bg-opacity-50 rounded p-4 mb-6">
+                    <div class="flex">
+                        <div class="flex-shrink-0 mr-3">
+                            <div class="w-12 h-12 rounded-full bg-indigo-600 flex items-center justify-center">
+                                <i class="fas fa-robot text-white text-xl"></i>
                             </div>
                         </div>
+                        <div>
+                            <h3 class="text-indigo-300 font-medium mb-2">AI Coach Feedback:</h3>
+                            <p class="text-gray-200">{{ win.ai_feedback }}</p>
+                        </div>
                     </div>
-                    {% endif %}
-                    
-                    <div class="flex items-center justify-between border-t border-gray-700 pt-4">
-                        <div class="flex space-x-4">
-                            <button class="text-gray-400 hover:text-indigo-400 transition-colors">
-                                <i class="fas fa-thumbs-up mr-1"></i> Celebrate
-                            </button>
-                            <button class="text-gray-400 hover:text-indigo-400 transition-colors">
-                                <i class="fas fa-comment mr-1"></i> Comment
-                            </button>
-                        </div>
-                        
-                        <div class="flex space-x-3">
-                            <a href="{% url 'wins:toggle_public' win_id=win.id %}" class="text-gray-400 hover:text-white">
-                                {% if win.is_public %}
-                                <i class="fas fa-eye-slash mr-1"></i> Make Private
-                                {% else %}
-                                <i class="fas fa-eye mr-1"></i> Make Public
-                                {% endif %}
-                            </a>
-                            <a href="#" class="text-gray-400 hover:text-red-400">
-                                <i class="fas fa-trash mr-1"></i> Delete
-                            </a>
-                        </div>
+                </div>
+                {% endif %}
+
+                <div class="flex items-center justify-between border-t border-gray-700 pt-4">
+                    <div class="flex space-x-6">
+                        <button class="text-gray-400 hover:text-indigo-400 transition-colors">
+                            <i class="fas fa-thumbs-up mr-1"></i> Celebrate
+                        </button>
+                        <button class="text-gray-400 hover:text-indigo-400 transition-colors">
+                            <i class="fas fa-comment mr-1"></i> Comment
+                        </button>
+                    </div>
+
+                    <div class="flex space-x-4">
+                        <a href="{% url 'wins:toggle_public' win_id=win.id %}" class="text-gray-400 hover:text-white">
+                            {% if win.is_public %}
+                            <i class="fas fa-eye-slash mr-1"></i> Make Private
+                            {% else %}
+                            <i class="fas fa-eye mr-1"></i> Make Public
+                            {% endif %}
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-red-400">
+                            <i class="fas fa-trash mr-1"></i> Delete
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
-        {% endfor %}
+    </div>
+    {% endfor %}
     {% else %}
-        <div class="bg-gray-800 rounded-lg p-6 shadow-lg mb-4 text-center">
-            <p class="text-gray-300 text-lg">You haven't recorded any wins yet. Start tracking your achievements today!</p>
-        </div>
+    <div class="bg-gray-800 rounded p-6 shadow-xl hover:shadow-2xl text-center mb-6">
+        <p class="text-gray-300 text-lg">You haven't recorded any wins yet. Start tracking your achievements today!</p>
+    </div>
     {% endif %}
 
     {% if challenge_solutions %}
-        <h2 class="text-2xl font-bold text-white mb-6">My Challenge Solutions</h2>
-        {% for solution in challenge_solutions %}
-            <div class="bg-gray-800 rounded-lg p-6 shadow-lg mb-4">
-                <h3 class="text-xl font-bold text-white">{{ solution.challenge.title }}</h3>
-                <div class="flex justify-between items-start mt-2 mb-3">
-                    <p class="text-gray-200">{{ solution.submitted_at|date:"F j, Y" }}</p>
-                    <span class="text-xs font-medium bg-{% if solution.challenge.difficulty == 'beginner' %}green-600{% elif solution.challenge.difficulty == 'intermediate' %}yellow-600{% else %}red-600{% endif %} text-white px-2 py-1 rounded">{{ solution.challenge.get_difficulty_display }}</span>
-                </div>
-                <div class="bg-gray-700 p-3 rounded mb-3">
-                    <pre class="text-white text-sm whitespace-pre-wrap">{{ solution.solution_text|truncatechars:150 }}</pre>
-                </div>
-                <a href="{% url 'challenge_detail' solution.challenge.id %}" class="text-indigo-400 hover:text-indigo-300 text-sm">View Full Solution →</a>
-            </div>
-        {% endfor %}
-    {% else %}
-        <div class="bg-gray-800 rounded-lg p-6 shadow-lg mb-4 text-center">
-            <p class="text-gray-300 text-lg">You haven't solved any challenges yet. Try solving some challenges!</p>
+    <h2 class="text-2xl font-bold text-white mb-6">My Challenge Solutions</h2>
+    {% for solution in challenge_solutions %}
+    <div class="bg-gray-800 rounded p-6 shadow-xl hover:shadow-2xl mb-6">
+        <h3 class="text-xl font-bold text-white">{{ solution.challenge.title }}</h3>
+        <div class="flex justify-between items-start mt-2 mb-3">
+            <p class="text-gray-200">{{ solution.submitted_at|date:"F j, Y" }}</p>
+            <span
+                class="text-xs font-medium bg-{% if solution.challenge.difficulty == 'beginner' %}green-600{% elif solution.challenge.difficulty == 'intermediate' %}yellow-600{% else %}red-600{% endif %} text-white px-2 py-1 rounded">{{
+                solution.challenge.get_difficulty_display }}</span>
         </div>
+        <div class="bg-gray-700 p-3 rounded mb-3">
+            <pre class="text-white text-sm whitespace-pre-wrap">{{ solution.solution_text|truncatechars:150 }}</pre>
+        </div>
+        <a href="{% url 'challenge_detail' solution.challenge.id %}"
+            class="text-indigo-400 hover:text-indigo-300 text-sm">View Full Solution →</a>
+    </div>
+    {% endfor %}
+    {% else %}
+    <div class="bg-gray-800 rounded p-6 shadow-xl hover:shadow-2xl text-center mb-6">
+        <p class="text-gray-300 text-lg">You haven't solved any challenges yet. Try solving some challenges!</p>
+    </div>
     {% endif %}
-    
-    <div class="mt-6 flex justify-between">
-        <a href="{% url 'dashboard' %}" class="text-indigo-400 hover:text-indigo-300">
-            <i class="fas fa-arrow-left mr-1"></i> Back to Dashboard
-        </a>
+
+    <div class="mt-8 flex justify-between">
         
         {% if not has_win_today %}
-        <a href="{% url 'wins:submit_win' %}" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded">
+        <a href="{% url 'wins:submit_win' %}" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded transition-all shadow-md hover:shadow-xl">
             Add Today's Win
         </a>
         {% endif %}

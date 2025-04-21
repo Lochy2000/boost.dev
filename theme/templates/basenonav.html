@@ -1,0 +1,64 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>{% block title %}Boost.dev - Accelerate Your Development Journey{% endblock %}</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  {% tailwind_css %}
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+  <!-- FontAwesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+  <header>
+    <a href="{% url 'dashboard:dashboard' %}" class="text-2xl font-bold text-white flex items-center gap-2">
+      <span class="logo-icon text-white">B</span>
+      Boost.dev
+    </a>
+  </header>
+
+  <!-- Messages Section -->
+  {% if messages %}
+  <div class="fixed top-16 left-1/2 transform -translate-x-1/2 z-40 w-full max-w-md px-4">
+    {% for message in messages %}
+    <div class="mb-4 p-4 rounded-lg shadow-md border
+                {% if message.tags == 'success' %}
+                  bg-green-100 text-green-800 border-green-300
+                {% elif message.tags == 'error' %}
+                  bg-red-100 text-red-800 border-red-300
+                {% elif message.tags == 'warning' %}
+                  bg-yellow-100 text-yellow-800 border-yellow-300
+                {% elif message.tags == 'info' %}
+                  bg-blue-100 text-blue-800 border-blue-300
+                {% else %}
+                  bg-gray-100 text-gray-800 border-gray-300
+                {% endif %}">
+      {{ message }}
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  
+
+  <!-- Main Content Section -->
+  <main class="p-4">
+    {% block content %}
+    <!-- Content from child templates will be inserted here -->
+    {% endblock %}
+  </main>
+
+</body>
+
+</html>
