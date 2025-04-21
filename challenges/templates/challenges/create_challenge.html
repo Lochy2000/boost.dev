@@ -20,14 +20,14 @@
             
             <!-- Title -->
             <div class="mb-6">
-                <label for="id_title" class="block text-white font-medium mb-2">Challenge Title</label>
-                {{ form.title }}
+                <label for="title" class="block text-white font-medium mb-2">Challenge Title</label>
+                <input type="text" name="title" id="title" class="w-full bg-gray-800 border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Enter a title for your challenge" required>
             </div>
             
             <!-- Description -->
             <div class="mb-6">
-                <label for="id_description" class="block text-white font-medium mb-2">Challenge Description</label>
-                {{ form.description }}
+                <label for="description" class="block text-white font-medium mb-2">Challenge Description</label>
+                <textarea name="description" id="description" rows="6" class="w-full bg-gray-800 border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Describe your challenge in detail..." required></textarea>
                 <p class="mt-1 text-sm text-gray-500">Use markdown formatting for code samples and lists</p>
             </div>
             
@@ -36,15 +36,15 @@
                 <label class="block text-white font-medium mb-2">Difficulty Level</label>
                 <div class="flex flex-wrap gap-4">
                     <label class="inline-flex items-center">
-                        <input type="radio" name="difficulty" value="beginner" class="form-radio text-indigo-600" {% if form.difficulty.value == 'beginner' %}checked{% endif %}>
+                        <input type="radio" name="difficulty" value="beginner" class="form-radio text-indigo-600" checked>
                         <span class="ml-2 text-gray-300">Beginner</span>
                     </label>
                     <label class="inline-flex items-center">
-                        <input type="radio" name="difficulty" value="intermediate" class="form-radio text-indigo-600" {% if form.difficulty.value == 'intermediate' %}checked{% endif %}>
+                        <input type="radio" name="difficulty" value="intermediate" class="form-radio text-indigo-600">
                         <span class="ml-2 text-gray-300">Intermediate</span>
                     </label>
                     <label class="inline-flex items-center">
-                        <input type="radio" name="difficulty" value="hard" class="form-radio text-indigo-600" {% if form.difficulty.value == 'hard' %}checked{% endif %}>
+                        <input type="radio" name="difficulty" value="hard" class="form-radio text-indigo-600">
                         <span class="ml-2 text-gray-300">Hard</span>
                     </label>
                 </div>
@@ -57,16 +57,16 @@
                 
                 <div class="space-y-4">
                     <div>
-                        <label for="id_hint1" class="block text-gray-300 text-sm mb-1">Hint 1 (Subtle)</label>
-                        {{ form.hint1 }}
+                        <label for="hint1" class="block text-gray-300 text-sm mb-1">Hint 1 (Subtle)</label>
+                        <input type="text" name="hints" id="hint1" class="w-full bg-gray-800 border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Add a subtle hint...">
                     </div>
                     <div>
-                        <label for="id_hint2" class="block text-gray-300 text-sm mb-1">Hint 2 (More descriptive)</label>
-                        {{ form.hint2 }}
+                        <label for="hint2" class="block text-gray-300 text-sm mb-1">Hint 2 (More descriptive)</label>
+                        <input type="text" name="hints" id="hint2" class="w-full bg-gray-800 border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Add a more helpful hint...">
                     </div>
                     <div>
-                        <label for="id_hint3" class="block text-gray-300 text-sm mb-1">Hint 3 (Most descriptive)</label>
-                        {{ form.hint3 }}
+                        <label for="hint3" class="block text-gray-300 text-sm mb-1">Hint 3 (Most descriptive)</label>
+                        <input type="text" name="hints" id="hint3" class="w-full bg-gray-800 border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="Add a very descriptive hint...">
                     </div>
                 </div>
             </div>

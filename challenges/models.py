@@ -30,34 +30,15 @@ class Challenge(models.Model):
             return 'red-600'
 
 class ChallengeSolution(models.Model):
-    CORRECTNESS_CHOICES = [
-        ('correct', 'Correct'),
-        ('almost', 'Almost Correct'),
-        ('partial', 'Partially Correct'),
-        ('incorrect', 'Not Quite Right')
-    ]
-    
     challenge = models.ForeignKey(Challenge, on_delete=models.CASCADE, related_name='solutions')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='challenge_solutions')
     solution_text = models.TextField()
     ai_feedback = models.TextField(blank=True)
     is_correct = models.BooleanField(default=False)
-    correctness_level = models.CharField(max_length=20, choices=CORRECTNESS_CHOICES, default='correct')
     submitted_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
         return f"{self.user.username}'s solution to {self.challenge.title}"
-    
-    def get_correctness_color(self):
-        """Returns a Tailwind CSS color class based on correctness"""
-        if self.correctness_level == 'correct':
-            return 'green-600'
-        elif self.correctness_level == 'almost':
-            return 'yellow-500'
-        elif self.correctness_level == 'partial':
-            return 'orange-500'
-        else:
-            return 'red-500'
 
 # Moving the QuoteSubmission model to challenges for now
 # Later we'll move this functionality to integreate with prompts

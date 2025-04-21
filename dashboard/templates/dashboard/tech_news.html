@@ -1,9 +1,7 @@
-{% extends 'base.html' %}
+{% extends 'dashboard/dash_base.html' %}
 
-{% load static %}
-
-{% block content %}
-<div class="px-4 md:px-8 py-8 max-w-7xl mx-auto">
+{% block dashboard_content %}
+<div class="px-8 py-8 max-w-7xl mx-auto">
     <!-- Header Section -->
     <div class="mb-8">
         <h1 class="text-3xl font-bold text-indigo-400 mb-2">Tech News</h1>
@@ -39,14 +37,79 @@
     </div>
     {% endif %}
 
-    {% if query %}
-    <!-- Search Results Section -->
-    <div class="mb-12">
-        <h2 class="text-2xl font-bold text-white mb-4">Search Results for "{{ query }}"</h2>
+    <!-- Featured Articles -->
+    {% if featured_articles %}
+    <div class="mb-8">
+        <h2 class="text-2xl font-bold text-white mb-4">Featured Articles</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {% for article in featured_articles %}
+            <div class="bg-[#1e1f23] rounded-lg overflow-hidden shadow-lg flex flex-col h-full">
+                {% if article.image_url %}
+                <img src="{{ article.image_url }}" alt="{{ article.title }}" class="w-full h-48 object-cover">
+                {% else %}
+                <div class="w-full h-48 bg-gray-800 flex items-center justify-center">
+                    <span class="text-gray-500">No image available</span>
+                </div>
+                {% endif %}
+                <div class="p-6 flex-grow">
+                    <h3 class="text-xl font-semibold text-white mb-2">{{ article.title }}</h3>
+                    <p class="text-gray-400 mb-4">{{ article.summary|truncatechars:100 }}</p>
+                    <div class="flex justify-between items-center text-sm text-gray-500">
+                        <span>{{ article.read_time }} min read</span>
+                        <span>{{ article.created_at|date:"M d, Y" }}</span>
+                    </div>
+                </div>
+                <div class="px-6 py-4 bg-gray-900/50">
+                    <a href="{{ article.get_absolute_url }}" class="text-indigo-400 hover:text-indigo-300">
+                        Read More →
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Tech News Articles -->
+    <div class="mb-8">
+        <h2 class="text-2xl font-bold text-white mb-4">Latest Tech News</h2>
         
-        {% if search_results %}
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {% for article in search_results %}
+        {% if articles %}
+        <!-- Horizontal scrolling news cards container -->
+        <div class="overflow-x-auto pb-6">
+            <div class="flex space-x-6" style="min-width: min-content">
+                {% for article in articles %}
+                <div class="bg-[#1e1f23] rounded-lg overflow-hidden shadow-lg flex flex-col w-80 flex-shrink-0">
+                    {% if article.urlToImage %}
+                    <img src="{{ article.urlToImage }}" alt="{{ article.title }}" class="w-full h-48 object-cover">
+                    {% else %}
+                    <div class="w-full h-48 bg-gray-800 flex items-center justify-center">
+                        <span class="text-gray-500">No image available</span>
+                    </div>
+                    {% endif %}
+                    <div class="p-6 flex-grow">
+                        <h3 class="text-xl font-semibold text-white mb-2">{{ article.title }}</h3>
+                        <p class="text-gray-400 mb-4">{{ article.description|truncatechars:100 }}</p>
+                        <div class="flex justify-between items-center text-sm text-gray-500">
+                            <span>{{ article.source.name }}</span>
+                            {% if article.publishedAt %}
+                            <span>{{ article.publishedAt|slice:":10" }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="px-6 py-4 bg-gray-900/50">
+                        <a href="{{ article.url }}" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:text-indigo-300">
+                            Read More →
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <!-- Grid layout for news cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-8">
+            {% for article in articles %}
             <div class="bg-[#1e1f23] rounded-lg overflow-hidden shadow-lg flex flex-col h-full">
                 {% if article.urlToImage %}
                 <img src="{{ article.urlToImage }}" alt="{{ article.title }}" class="w-full h-48 object-cover">
@@ -79,7 +142,7 @@
         <div class="flex justify-center mt-8">
             <div class="inline-flex rounded-md shadow-sm" role="group">
                 {% if has_prev %}
-                <a href="?q={{ query }}&page={{ page|add:'-1' }}"
+                <a href="?page={{ page|add:'-1' }}{% if query %}&q={{ query }}{% endif %}"
                     class="px-4 py-2 text-sm font-medium text-white bg-gray-800 rounded-l-lg border border-gray-700 hover:bg-gray-700">
                     Previous
                 </a>
@@ -95,7 +158,7 @@
                 </span>
                 
                 {% if has_next %}
-                <a href="?q={{ query }}&page={{ page|add:'1' }}"
+                <a href="?page={{ page|add:'1' }}{% if query %}&q={{ query }}{% endif %}"
                     class="px-4 py-2 text-sm font-medium text-white bg-gray-800 rounded-r-lg border border-gray-700 hover:bg-gray-700">
                     Next
                 </a>
@@ -112,272 +175,16 @@
         {% else %}
         <div class="bg-gray-800 rounded-lg p-8 text-center">
             <p class="text-gray-400 text-lg mb-4">No articles found</p>
+            {% if query %}
             <p class="text-gray-500">Try a different search term or browse all articles.</p>
             <a href="{% url 'dashboard:tech_news' %}" class="mt-4 inline-block px-6 py-3 bg-indigo-600 text-white rounded-lg">
                 Browse All Articles
             </a>
+            {% else %}
+            <p class="text-gray-500">Please check back later for the latest tech news.</p>
+            {% endif %}
         </div>
         {% endif %}
     </div>
-    
-    {% else %}
-    <!-- Featured Articles Section -->
-    {% if featured_articles %}
-    <div class="mb-12">
-        <h2 class="text-2xl font-bold text-white mb-4">Featured Articles</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {% for article in featured_articles %}
-            <div class="bg-[#1e1f23] rounded-lg overflow-hidden shadow-lg flex flex-col h-full">
-                {% if article.image_url %}
-                <img src="{{ article.image_url }}" alt="{{ article.title }}" class="w-full h-48 object-cover">
-                {% else %}
-                <div class="w-full h-48 bg-gray-800 flex items-center justify-center">
-                    <span class="text-gray-500">No image available</span>
-                </div>
-                {% endif %}
-                <div class="p-6 flex-grow">
-                    <h3 class="text-xl font-semibold text-white mb-2">{{ article.title }}</h3>
-                    <p class="text-gray-400 mb-4">{{ article.summary|truncatechars:100 }}</p>
-                    <div class="flex justify-between items-center text-sm text-gray-500">
-                        <span>{{ article.read_time }} min read</span>
-                        <span>{{ article.created_at|date:"M d, Y" }}</span>
-                    </div>
-                </div>
-                <div class="px-6 py-4 bg-gray-900/50">
-                    <a href="{{ article.get_absolute_url }}" class="text-indigo-400 hover:text-indigo-300">
-                        Read More →
-                    </a>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-    {% endif %}
-
-    <!-- Latest Tech News Section -->
-    <div class="mb-12">
-        <div class="flex justify-between items-center mb-4">
-            <h2 class="text-2xl font-bold text-white">Latest Tech News</h2>
-        </div>
-        
-        {% if latest_articles %}
-        <!-- Horizontal scrolling news cards container -->
-        <div class="overflow-x-auto pb-6">
-            <div class="flex space-x-6" style="min-width: min-content">
-                {% for article in latest_articles %}
-                <div class="bg-[#1e1f23] rounded-lg overflow-hidden shadow-lg flex flex-col w-80 flex-shrink-0">
-                    {% if article.urlToImage %}
-                    <img src="{{ article.urlToImage }}" alt="{{ article.title }}" class="w-full h-48 object-cover">
-                    {% else %}
-                    <div class="w-full h-48 bg-gray-800 flex items-center justify-center">
-                        <span class="text-gray-500">No image available</span>
-                    </div>
-                    {% endif %}
-                    <div class="p-6 flex-grow">
-                        <h3 class="text-xl font-semibold text-white mb-2">{{ article.title }}</h3>
-                        <p class="text-gray-400 mb-4">{{ article.description|truncatechars:100 }}</p>
-                        <div class="flex justify-between items-center text-sm text-gray-500">
-                            <span>{{ article.source.name }}</span>
-                            {% if article.publishedAt %}
-                            <span>{{ article.publishedAt|slice:":10" }}</span>
-                            {% endif %}
-                        </div>
-                    </div>
-                    <div class="px-6 py-4 bg-gray-900/50">
-                        <a href="{{ article.url }}" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:text-indigo-300">
-                            Read More →
-                        </a>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-        {% else %}
-        <div class="bg-gray-800 rounded-lg p-8 text-center">
-            <p class="text-gray-400 text-lg">No articles available at the moment</p>
-        </div>
-        {% endif %}
-    </div>
-
-    <!-- Developer News Section -->
-    <div class="mb-12">
-        <div class="flex justify-between items-center mb-4">
-            <h2 class="text-2xl font-bold text-white">Developer News</h2>
-        </div>
-        
-        {% if dev_articles %}
-        <!-- Horizontal scrolling news cards container -->
-        <div class="overflow-x-auto pb-6">
-            <div class="flex space-x-6" style="min-width: min-content">
-                {% for article in dev_articles %}
-                <div class="bg-[#1e1f23] rounded-lg overflow-hidden shadow-lg flex flex-col w-80 flex-shrink-0">
-                    {% if article.urlToImage %}
-                    <img src="{{ article.urlToImage }}" alt="{{ article.title }}" class="w-full h-48 object-cover">
-                    {% else %}
-                    <div class="w-full h-48 bg-gray-800 flex items-center justify-center">
-                        <span class="text-gray-500">No image available</span>
-                    </div>
-                    {% endif %}
-                    <div class="p-6 flex-grow">
-                        <h3 class="text-xl font-semibold text-white mb-2">{{ article.title }}</h3>
-                        <p class="text-gray-400 mb-4">{{ article.description|truncatechars:100 }}</p>
-                        <div class="flex justify-between items-center text-sm text-gray-500">
-                            <span>{{ article.source.name }}</span>
-                            {% if article.publishedAt %}
-                            <span>{{ article.publishedAt|slice:":10" }}</span>
-                            {% endif %}
-                        </div>
-                    </div>
-                    <div class="px-6 py-4 bg-gray-900/50">
-                        <a href="{{ article.url }}" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:text-indigo-300">
-                            Read More →
-                        </a>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-        {% else %}
-        <div class="bg-gray-800 rounded-lg p-8 text-center">
-            <p class="text-gray-400 text-lg">No developer news available at the moment</p>
-        </div>
-        {% endif %}
-    </div>
-
-    <!-- Software News Section -->
-    <div class="mb-12">
-        <div class="flex justify-between items-center mb-4">
-            <h2 class="text-2xl font-bold text-white">Software Updates & News</h2>
-        </div>
-        
-        {% if software_articles %}
-        <!-- Horizontal scrolling news cards container -->
-        <div class="overflow-x-auto pb-6">
-            <div class="flex space-x-6" style="min-width: min-content">
-                {% for article in software_articles %}
-                <div class="bg-[#1e1f23] rounded-lg overflow-hidden shadow-lg flex flex-col w-80 flex-shrink-0">
-                    {% if article.urlToImage %}
-                    <img src="{{ article.urlToImage }}" alt="{{ article.title }}" class="w-full h-48 object-cover">
-                    {% else %}
-                    <div class="w-full h-48 bg-gray-800 flex items-center justify-center">
-                        <span class="text-gray-500">No image available</span>
-                    </div>
-                    {% endif %}
-                    <div class="p-6 flex-grow">
-                        <h3 class="text-xl font-semibold text-white mb-2">{{ article.title }}</h3>
-                        <p class="text-gray-400 mb-4">{{ article.description|truncatechars:100 }}</p>
-                        <div class="flex justify-between items-center text-sm text-gray-500">
-                            <span>{{ article.source.name }}</span>
-                            {% if article.publishedAt %}
-                            <span>{{ article.publishedAt|slice:":10" }}</span>
-                            {% endif %}
-                        </div>
-                    </div>
-                    <div class="px-6 py-4 bg-gray-900/50">
-                        <a href="{{ article.url }}" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:text-indigo-300">
-                            Read More →
-                        </a>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-        {% else %}
-        <div class="bg-gray-800 rounded-lg p-8 text-center">
-            <p class="text-gray-400 text-lg">No software news available at the moment</p>
-        </div>
-        {% endif %}
-    </div>
-
-    <!-- Cybersecurity & Hacking News Section -->
-    <div class="mb-12">
-        <div class="flex justify-between items-center mb-4">
-            <h2 class="text-2xl font-bold text-white">Cybersecurity & Hacking News</h2>
-        </div>
-        
-        {% if hacking_articles %}
-        <!-- Horizontal scrolling news cards container -->
-        <div class="overflow-x-auto pb-6">
-            <div class="flex space-x-6" style="min-width: min-content">
-                {% for article in hacking_articles %}
-                <div class="bg-[#1e1f23] rounded-lg overflow-hidden shadow-lg flex flex-col w-80 flex-shrink-0">
-                    {% if article.urlToImage %}
-                    <img src="{{ article.urlToImage }}" alt="{{ article.title }}" class="w-full h-48 object-cover">
-                    {% else %}
-                    <div class="w-full h-48 bg-gray-800 flex items-center justify-center">
-                        <span class="text-gray-500">No image available</span>
-                    </div>
-                    {% endif %}
-                    <div class="p-6 flex-grow">
-                        <h3 class="text-xl font-semibold text-white mb-2">{{ article.title }}</h3>
-                        <p class="text-gray-400 mb-4">{{ article.description|truncatechars:100 }}</p>
-                        <div class="flex justify-between items-center text-sm text-gray-500">
-                            <span>{{ article.source.name }}</span>
-                            {% if article.publishedAt %}
-                            <span>{{ article.publishedAt|slice:":10" }}</span>
-                            {% endif %}
-                        </div>
-                    </div>
-                    <div class="px-6 py-4 bg-gray-900/50">
-                        <a href="{{ article.url }}" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:text-indigo-300">
-                            Read More →
-                        </a>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-        {% else %}
-        <div class="bg-gray-800 rounded-lg p-8 text-center">
-            <p class="text-gray-400 text-lg">No cybersecurity news available at the moment</p>
-        </div>
-        {% endif %}
-    </div>
-
-    <!-- Imposter Syndrome Tips Section -->
-    <div class="mb-12">
-        <div class="flex justify-between items-center mb-4">
-            <h2 class="text-2xl font-bold text-white">Imposter Syndrome Tips & Advice</h2>
-        </div>
-        
-        {% if imposter_articles %}
-        <!-- Horizontal scrolling news cards container -->
-        <div class="overflow-x-auto pb-6">
-            <div class="flex space-x-6" style="min-width: min-content">
-                {% for article in imposter_articles %}
-                <div class="bg-[#1e1f23] rounded-lg overflow-hidden shadow-lg flex flex-col w-80 flex-shrink-0">
-                    {% if article.urlToImage %}
-                    <img src="{{ article.urlToImage }}" alt="{{ article.title }}" class="w-full h-48 object-cover">
-                    {% else %}
-                    <div class="w-full h-48 bg-gray-800 flex items-center justify-center">
-                        <span class="text-gray-500">No image available</span>
-                    </div>
-                    {% endif %}
-                    <div class="p-6 flex-grow">
-                        <h3 class="text-xl font-semibold text-white mb-2">{{ article.title }}</h3>
-                        <p class="text-gray-400 mb-4">{{ article.description|truncatechars:100 }}</p>
-                        <div class="flex justify-between items-center text-sm text-gray-500">
-                            <span>{{ article.source.name }}</span>
-                            {% if article.publishedAt %}
-                            <span>{{ article.publishedAt|slice:":10" }}</span>
-                            {% endif %}
-                        </div>
-                    </div>
-                    <div class="px-6 py-4 bg-gray-900/50">
-                        <a href="{{ article.url }}" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:text-indigo-300">
-                            Read More →
-                        </a>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-        {% else %}
-        <div class="bg-gray-800 rounded-lg p-8 text-center">
-            <p class="text-gray-400 text-lg">No imposter syndrome tips available at the moment</p>
-        </div>
-        {% endif %}
-    </div>
-    {% endif %}
 </div>
 {% endblock %}
