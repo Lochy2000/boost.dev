@@ -1,48 +1,50 @@
-{% extends 'dashboard/dash_base.html' %}
+{% extends 'base.html' %}
 
-{% block dashboard_content %}
+{% block content %}
 
 <div class="max-w-5xl mx-auto px-4 py-12 text-gray-200">
-    <!-- Top bar -->
     <div class="flex justify-between items-center mb-10">
         <div>
-            <h1 class="text-4xl font-extrabold text-white">Edit Your Profile</h1>
+            <h1 class="text-4xl font-extrabold text-white mt-6">Edit Your Profile</h1>
             <p class="text-sm text-gray-400 mt-1">Customize your vibe. Show off your dev energy ✨</p>
         </div>
     </div>
-    
-    
+
+
     <div class="grid md:grid-cols-3 gap-10">
         <!-- Left column: Avatar preview -->
         <div class="flex flex-col items-center text-center space-y-6 md:col-span-1">
             <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-[#312fa6] shadow-md">
                 {% if user.userprofile.avatar %}
-                    <img src="{{ user.userprofile.avatar }}" alt="Profile Picture" class="w-full h-full object-cover">
+                <img src="{{ user.userprofile.avatar }}" alt="Profile Picture" class="w-full h-full object-cover">
                 {% else %}
-                    <img src="https://res.cloudinary.com/dn7aws3wl/image/upload/v1739390582/nobody_pcaqjl.jpg" alt="Default Profile Picture" class="w-full h-full object-cover">
+                <img src="https://res.cloudinary.com/dn7aws3wl/image/upload/v1739390582/nobody_pcaqjl.jpg"
+                    alt="Default Profile Picture" class="w-full h-full object-cover">
                 {% endif %}
             </div>
             <p class="text-sm text-gray-400">Avatar preview</p>
 
             <!-- User Level and Progress -->
-            <div class="w-full bg-gray-800 rounded-lg p-4 shadow">
+            <div class="w-full bg-gray-800 rounded p-4 shadow">
                 <div class="flex justify-between items-center mb-2">
                     <span class="text-white font-semibold">Level {{ user.progress.level }}</span>
-                    <span class="text-gray-400 text-sm">{{ user.progress.points }} / {{ user.progress.next_level_threshold }}</span>
+                    <span class="text-gray-400 text-sm">{{ user.progress.points }} / {{
+                        user.progress.next_level_threshold }}</span>
                 </div>
-                
+
                 <!-- Progress Bar -->
                 <div class="w-full bg-gray-700 rounded-full h-4 mb-4">
-                    <div class="bg-{{ user.progress.get_level_color }}-500 h-4 rounded-full" style="width: {{ user.progress.calculate_percentage }}%"></div>
+                    <div class="bg-{{ user.progress.get_level_color }}-500 h-4 rounded-full"
+                        style="width: {{ user.progress.calculate_percentage }}%"></div>
                 </div>
-                
+
                 <p class="text-gray-400 text-sm">{{ user.progress.calculate_percentage }}% to next level</p>
             </div>
-            
+
             <!-- Achievements -->
-            <div class="w-full bg-gray-800 rounded-lg p-4 shadow">
+            <div class="w-full bg-gray-800 rounded p-4 shadow">
                 <h3 class="text-white font-semibold mb-4">Achievements</h3>
-                
+
                 {% if user_achievements %}
                 <div class="grid grid-cols-2 gap-3">
                     {% for user_achievement in user_achievements %}
@@ -65,10 +67,11 @@
                 {{ form.non_field_errors }}
 
                 <div>
-                    <label for="{{ form.avatar.id_for_label }}" class="block mb-1 text-sm text-gray-300">Avatar URL</label>
+                    <label for="{{ form.avatar.id_for_label }}" class="block mb-1 text-sm text-gray-300">Avatar
+                        URL</label>
                     {{ form.avatar }}
                     {% for error in form.avatar.errors %}
-                        <p class="text-sm text-red-500 mt-1">{{ error }}</p>
+                    <p class="text-sm text-red-500 mt-1">{{ error }}</p>
                     {% endfor %}
                 </div>
 
@@ -76,37 +79,41 @@
                     <label for="{{ form.bio.id_for_label }}" class="block mb-1 text-sm text-gray-300">Short Bio</label>
                     {{ form.bio }}
                     {% for error in form.bio.errors %}
-                        <p class="text-sm text-red-500 mt-1">{{ error }}</p>
+                    <p class="text-sm text-red-500 mt-1">{{ error }}</p>
                     {% endfor %}
                 </div>
 
                 <div>
-                    <label for="{{ form.github_username.id_for_label }}" class="block mb-1 text-sm text-gray-300 flex items-center gap-2">
+                    <label for="{{ form.github_username.id_for_label }}"
+                        class="block mb-1 text-sm text-gray-300 flex items-center gap-2">
                         <i class="fab fa-github text-white text-2xl"></i>
                         GitHub Username
                     </label>
                     {{ form.github_username }}
                     {% for error in form.github_username.errors %}
-                        <p class="text-sm text-red-500 mt-1">{{ error }}</p>
+                    <p class="text-sm text-red-500 mt-1">{{ error }}</p>
                     {% endfor %}
                 </div>
 
                 <div>
-                    <label for="{{ form.experience_level.id_for_label }}" class="block mb-1 text-sm text-gray-300">Experience Level</label>
+                    <label for="{{ form.experience_level.id_for_label }}"
+                        class="block mb-1 text-sm text-gray-300">Experience Level</label>
                     {{ form.experience_level }}
                     {% for error in form.experience_level.errors %}
-                        <p class="text-sm text-red-500 mt-1">{{ error }}</p>
+                    <p class="text-sm text-red-500 mt-1">{{ error }}</p>
                     {% endfor %}
                 </div>
 
                 <!-- Buttons -->
                 <div class="flex items-center justify-between pt-6">
-                    
-                    <button type="submit" class="bg-indigo-500 hover:bg-indigo-600 text-white px-5 py-3 rounded shadow transition-all">
+
+                    <button type="submit"
+                        class="bg-indigo-500 hover:bg-indigo-600 text-white px-5 py-3 rounded shadow transition-all">
                         Save Changes
                     </button>
                 </div>
             </form>
+            
         </div>
     </div>
 </div>

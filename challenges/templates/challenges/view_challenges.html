@@ -1,15 +1,16 @@
-{% extends 'dashboard/dash_base.html' %}
+{% extends 'base.html' %}
 
-{% block dashboard_content %}
+{% block content %}
 <div class="px-6 py-8 max-w-5xl mx-auto space-y-8">
+    
     <!-- Header -->
     <div>
-        <h1 class="text-3xl font-bold text-indigo-400">Coding Challenges</h1>
+        <h1 class="text-3xl font-bold text-white">Coding Challenges</h1>
         <p class="mt-2 text-gray-400 text-lg">Learn and grow by tackling these challenges</p>
     </div>
 
     <!-- Filters -->
-    <div class="bg-[#1e1f23] p-4 rounded-lg">
+    <div class="bg-[#1e1f23] p-4 rounded">
         <h2 class="text-xl text-white mb-3">Filters</h2>
         <div class="flex flex-wrap gap-4">
             <a href="{% url 'challenges' %}" class="px-4 py-2 {% if not difficulty_filter %}bg-indigo-600{% else %}bg-gray-700{% endif %} rounded-full text-white text-sm">All</a>
@@ -23,7 +24,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         {% if challenges %}
             {% for challenge in challenges %}
-            <div class="bg-[#1e1f23] rounded-lg overflow-hidden shadow-lg">
+            <div class="bg-[#1e1f23] rounded overflow-hidden shadow-lg">
                 <div class="p-6">
                     <div class="flex justify-between items-start">
                         <h3 class="text-xl font-semibold text-white">{{ challenge.title }}</h3>
