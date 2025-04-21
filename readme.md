@@ -4,11 +4,10 @@
 
 ## Introduction
 
-This project was made for the April Hackthon - "Unmask The Coder" by Code Institute.
-
-It aims to show users that they have good skills and to help dealing with Imposter Syndrome.
-
-The idea for the project came from one of the members and was consistent with the suggested projects by CI - Hack Team. Incorporating more than one idea of those suggested.
+This project was made for the April Hackthon - "Unmask The Coder" by Code Institute.<br>
+It aims to show users that they have good skills and to help dealing with Imposter Syndrome.<br>
+The idea for the project came from one of the members and was consistent with the suggested projects by CI - Hack Team.<br>
+Incorporating more than one idea of those suggested.<br>
 
 Live site: [Boost.dev](https://boost-dev-9ed56bf6f182.herokuapp.com/)
 
@@ -69,7 +68,6 @@ Boost.dev is a simple site with information about Imposter Syndrome that many de
 It's meant to be an interactive and responsive site.
 
   - Users have access to posts related to the main subject
-  - Can showcase their apps/sites for others to see
   - Users can do coding challenges in different levels
 
 The site is designed to be responsive in different screen sizes.
