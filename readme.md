@@ -24,7 +24,6 @@ Live site: [Boost.dev](https://boost-dev-9ed56bf6f182.herokuapp.com/)
     - [Strategy](#strategy)
     - [Agile Methodologies](#agile-methodologies)
     - [Users](#users)
-    - [Profile](#profile)
     - [Wireframes](#wireframes)
     - [Imagery](#imagery)
 - [Technologies Used](#technologies-used)
@@ -119,6 +118,8 @@ Fonts used for this website were:
   - [Segoe UI](https://learn.microsoft.com/en-us/typography/font-list/segoe-ui)
   - [Helvetica-Neue](https://www.cdnfonts.com/helvetica-neue-5.font)
 
+[Back to top](#top)
+
 # Project Planning
 
 The main goal for this project was to create a site that feels friendly, invitting and can provide users the feeling that they are good developers, although they might not see themselves in that way.<br>
@@ -197,6 +198,8 @@ How Boost.dev Helps:
 - Provides a platform to mentor developers through forums and discussions.
 - Helps her stay connected with the developer community and trends.
 
+[Back to top](#top)
+
 ### Wireframes
 Initial wireframes for desktop view as follows:
 
@@ -210,6 +213,8 @@ The initial concept was based on:
 
 After the initial concept was drawn, the team decided to use a navbar on the top that changes to a "hamburger" dorpdown menu on smaller screens.<br>
 
+[Back to top](#top)
+
 ### Imagery
 Background image is an edited version of Ubuntu OS background page
 
@@ -222,6 +227,8 @@ Other images searched on Google and adapted to use on the webiste, include:
   - [Female IS](https://images.herzindagi.info/image/2022/Oct/syndrome.jpg)
   - [Male IS](https://www.the-dentist.co.uk/media/ucnbkru2/suffering-from-imposter-syndrome.jpg)
 
+[Back to top](#top)
+
 ## Features
 Some of the features that can be seen on the website are:
 
@@ -232,6 +239,8 @@ An area where the user can do challenges created by AI and APIs with different l
 
 A space to engage with the community:<br>
 <img src="theme\static\css\images\features\community-hub.png">
+
+[Back to top](#top)
 
 Landing page with information about Imposter Syndrome and Strategies to try to overcome it, also hopping the user will want to register on the site and get support and improve himself and maybe help other developers in a similar situation:<br>
 <img src="theme\static\css\images\features\hackpage.png">
@@ -248,6 +257,8 @@ An intuitive navbar with the main areas that the user can access:
 
 Area with different resources related to Tech:<br>
 <img src="theme\static\css\images\features\resources.png">
+
+[Back to top](#top)
 
 ## Technologies Used
 ### Languages and Technologies
@@ -292,6 +303,8 @@ To begin this project from scratch, you must first create a new GitHub repositor
   - Choose a new repository name and click 'Create repository from template'.<br>
   - In your new repository space, click the purple CodeAnywhere (if this is your IDE of choice) button to generate a new workspace.<br>
 
+[Back to top](#top)
+
 ### Django Project Setup<br>
 Install Django and supporting libraries:<br>
   - pip3 install 'django<4' gunicorn<br>
@@ -324,6 +337,8 @@ For adding to settings.py:
   - if os.path.exists("env.py"):
   - import env
   - SECRET_KEY = os.environ.get('SECRET_KEY') (actual key hidden within env.py)
+
+[Back to top](#top)
 
 Replace DATABASES with:
 
@@ -363,6 +378,8 @@ Set up a new account at Cloudinary and add your Cloudinary API environment varia
   STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')‌<br>  
   MEDIA_URL = '/media/'<br>  
   DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'<br>
+
+[Back to top](#top)
 
 ### Heroku deployment
 To start the deployment process , please follow the below steps:
@@ -409,6 +426,8 @@ A local clone of this repository can be made on GitHub. Please follow the below 
   - Set up your env.py file and from the above steps for Cloudinary and NeonSQL, gather the Cloudinary API key and the Neon SQL url for additon to your code.
   - Ensure that your env.py file is placed in your .gitignore file and follow the remaining steps in the above Django Project Setup section before pushing your code to GitHub.
 
+[Back to top](#top)
+
 ### Fork Project
 A copy of the original repository can be made through GitHub. Please follow the below steps to fork this repository:
 
@@ -426,6 +445,8 @@ To begin this project from scratch, you must first create a new GitHub repositor
   - Click 'Use this template' -> 'Create a new repository'.<br>
   - Choose a new repository name and click 'Create repository from template'.<br>
   - In your new repository space, click the purple CodeAnywhere (if this is your IDE of choice) button to generate a new workspace.<br>
+
+[Back to top](#top)
 
 ### Django Project Setup<br>
 Install Django and supporting libraries:<br>
@@ -498,6 +519,8 @@ Set up a new account at Cloudinary and add your Cloudinary API environment varia
   STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')‌<br>  
   MEDIA_URL = '/media/'<br>  
   DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'<br>
+
+[Back to top](#top)
 
 ### Heroku deployment
 To start the deployment process , please follow the below steps:
@@ -595,10 +618,10 @@ These instructions will guide you through setting up Tailwind CSS in your Django
     python manage.py tailwind install
     ```
 
+[Back to top](#top)
+
 ### Bugs to fix
 - 
-
-[Back to top](#top)
 
 ## AI Implementaion and Orchestration
 ### Code Generation
@@ -612,8 +635,6 @@ Regularly used the AI sites and tools mentioned above for debugging code using t
 
 ### Code Optimisation
 When needing to make more complicated changes to code or part of a page, the different AI sites were used to help fixing them and these were generally tested before pushing to repo, making it most of the times quicker to fix the code or create new code.<br>
-
-AI was also 
 
 ### Impact on Workflow
 Overall It was useful to work with Copilot and have help to build many parts of the site.<br>
@@ -635,6 +656,8 @@ Used [W3C Markup Validation Service](https://validator.w3.org/#validate_by_input
   <img src="theme\static\css\images\html-check\html-check-register.png">
 </details>
 
+[Back to top](#top)
+
 ### CSS Validation
 
 Used [W3C CSS Validation Service](https://jigsaw.w3.org/css-validator/#validate_by_input) to test CSS style and no errors found.
@@ -655,6 +678,7 @@ Used Chrome Dev Tools Lighthouse to audit the site for response time and accessi
   <img src="theme\static\css\images\lighthouse\lighthouse-wins-history.png">
 </details>
 
+[Back to top](#top)
 
 ### Manual Testing
 Website manually tested on the following devices/browsers for responsiveness:
@@ -679,9 +703,6 @@ Website manually tested on the following devices/browsers for responsiveness:
 ### Code References
 Website was inspired on the "Blog" walkthrough project by [Code Institute Bootcamp LMS](https://learn.codeinstitute.net/dashboard) using HTML, CSS, Javascript, Django, Python and other extra tools to allow the user to be able to login into the page without having to use the admin panel.
 <br>
-
-### Media References
-
 
 ### Acknowledgements
 This was a tough hackathon as 2-3 members of the initial group left in the begining or did not contribute for the project, with the Hack Team being aware of this, and the 3 remaining members had to push hard and motivate each other to continue the project.<br>
