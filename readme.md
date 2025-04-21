@@ -476,7 +476,7 @@ These instructions will guide you through setting up Tailwind CSS in your Django
 [Back to top](#top)
 
 ### Bugs to fix
-- 
+- Celebrations on the wins not working, allthough the logic looks good.
 
 ## AI Implementaion and Orchestration
 ### Code Generation
