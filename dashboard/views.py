@@ -47,18 +47,10 @@ def dashboard(request):
     # Get today's prompt
     daily_prompt = DailyPrompt.get_today()
     
-    # Get user's challenge stats and recent submissions
-    user_challenge_count = 0
-    user_challenge_solutions = []
-    
-    if request.user.is_authenticated:
-        # Count user challenge solutions
-        user_challenge_count = ChallengeSolution.objects.filter(user=request.user).count()
-        
-        # Get recent challenge solutions
-        user_challenge_solutions = ChallengeSolution.objects.filter(
-            user=request.user
-        ).select_related('challenge').order_by('-submitted_at')[:3]
+    # Get recent challenge solutions from all users with optimized querying
+    all_challenge_solutions = ChallengeSolution.objects.filter(
+        is_correct=True
+    ).select_related('challenge', 'user', 'user__userprofile').order_by('-submitted_at')[:6]
     
     # Get user's recent wins
     user_wins = []
@@ -75,7 +67,7 @@ def dashboard(request):
         ).exists()
     
     # Get community wins
-    community_wins = DailyWin.objects.filter(is_public=True).exclude(user=request.user).order_by('-created_at')[:5]
+    community_wins = DailyWin.objects.filter(is_public=True).select_related('user__userprofile').order_by('-created_at')[:5]
     
     # Get recommended challenges
     recommended_challenges = Challenge.objects.filter(is_approved=True).order_by('?')[:3]
@@ -90,8 +82,7 @@ def dashboard(request):
         'user_wins': user_wins,
         'has_win_today': has_win_today,
         'user': request.user,
-        'user_challenge_count': user_challenge_count,
-        'user_challenge_solutions': user_challenge_solutions,
+        'all_challenge_solutions': all_challenge_solutions,
         'recommended_challenges': recommended_challenges,
         'tech_news_items': tech_news_items,
     }

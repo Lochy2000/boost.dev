@@ -24,6 +24,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # Static files in app directories and project level
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'theme/static'),
+    os.path.join(BASE_DIR, 'pics'),
 ]
 
 
@@ -93,6 +94,7 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.request',
+                'django.template.context_processors.static',  # Make STATIC_URL available
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'social_django.context_processors.backends',  # Add for social auth
