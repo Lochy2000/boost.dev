@@ -342,7 +342,7 @@ def tech_news(request):
     # Get query parameters
     query = request.GET.get('q', '')
     page = int(request.GET.get('page', 1))
-    page_size = int(request.GET.get('page_size', 12))
+    page_size = int(request.GET.get('page_size', 6))
     
     # Initialize news service
     news_service = get_news_service()
@@ -350,34 +350,49 @@ def tech_news(request):
     # Fetch articles based on search query
     if query:
         news_data = news_service.search_tech_news(query, page=page, page_size=page_size)
+        articles = news_data.get('articles', [])
+        total_results = news_data.get('totalResults', 0)
+        status = news_data.get('status', 'error')
+        error_message = news_data.get('message', None) if status == 'error' else None
+        
+        # Calculate pagination information
+        total_pages = (total_results + page_size - 1) // page_size if total_results > 0 else 1
+        has_next = page < total_pages
+        has_prev = page > 1
+        
+        # Get featured articles from our database
+        featured_articles = Article.objects.filter(is_featured=True, tags__icontains='technology')[:3]
+        
+        context = {
+            'search_results': articles,
+            'featured_articles': featured_articles,
+            'total_results': total_results,
+            'page': page,
+            'page_size': page_size,
+            'total_pages': total_pages,
+            'has_next': has_next,
+            'has_prev': has_prev,
+            'query': query,
+            'error_message': error_message,
+        }
     else:
-        news_data = news_service.get_tech_news(page=page, page_size=page_size)
-    
-    # Process response
-    articles = news_data.get('articles', [])
-    total_results = news_data.get('totalResults', 0)
-    status = news_data.get('status', 'error')
-    error_message = news_data.get('message', None) if status == 'error' else None
-    
-    # Calculate pagination information
-    total_pages = (total_results + page_size - 1) // page_size if total_results > 0 else 1
-    has_next = page < total_pages
-    has_prev = page > 1
-    
-    # Add featured articles from our database
-    featured_articles = Article.objects.filter(is_featured=True, tags__icontains='technology')[:3]
-    
-    context = {
-        'articles': articles,
-        'featured_articles': featured_articles,
-        'total_results': total_results,
-        'page': page,
-        'page_size': page_size,
-        'total_pages': total_pages,
-        'has_next': has_next,
-        'has_prev': has_prev,
-        'query': query,
-        'error_message': error_message,
-    }
+        # Fetch latest general tech news
+        latest_news = news_service.get_tech_news(page=1, page_size=6)
+        
+        # Fetch specialized category news
+        dev_news = news_service.get_developer_news(page=1, page_size=4)
+        software_news = news_service.get_software_news(page=1, page_size=4)
+        hacking_news = news_service.get_hacking_news(page=1, page_size=4)
+        imposter_tips = news_service.get_imposter_tips(page=1, page_size=4)
+        
+        context = {
+            'latest_articles': latest_news.get('articles', []),
+            'dev_articles': dev_news.get('articles', []),
+            'software_articles': software_news.get('articles', []),
+            'hacking_articles': hacking_news.get('articles', []),
+            'imposter_articles': imposter_tips.get('articles', []),
+            'featured_articles': Article.objects.filter(is_featured=True, tags__icontains='technology')[:3],
+            'query': query,
+        }
     
     return render(request, 'dashboard/tech_news.html', context)

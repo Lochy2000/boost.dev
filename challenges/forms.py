@@ -4,13 +4,18 @@ from .models import Challenge, ChallengeSolution, QuoteSubmission
 class ChallengeForm(forms.ModelForm):
     """Form for creating a new challenge"""
     # Add multiple hint fields
-    hint1 = forms.CharField(max_length=200, required=False)
-    hint2 = forms.CharField(max_length=200, required=False)
-    hint3 = forms.CharField(max_length=200, required=False)
+    hint1 = forms.CharField(max_length=200, required=False, widget=forms.TextInput(attrs={'class': 'w-full bg-gray-800 border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500'}))
+    hint2 = forms.CharField(max_length=200, required=False, widget=forms.TextInput(attrs={'class': 'w-full bg-gray-800 border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500'}))
+    hint3 = forms.CharField(max_length=200, required=False, widget=forms.TextInput(attrs={'class': 'w-full bg-gray-800 border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500'}))
     
     class Meta:
         model = Challenge
         fields = ['title', 'description', 'difficulty']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'w-full bg-gray-800 border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500'}),
+            'description': forms.Textarea(attrs={'rows': 6, 'class': 'w-full bg-gray-800 border border-gray-700 rounded py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500'}),
+            'difficulty': forms.RadioSelect()
+        }
         
     def save(self, commit=True):
         instance = super().save(commit=False)
@@ -23,6 +28,10 @@ class ChallengeForm(forms.ModelForm):
             hints.append(self.cleaned_data.get('hint2'))
         if self.cleaned_data.get('hint3'):
             hints.append(self.cleaned_data.get('hint3'))
+        
+        # Make sure we have at least one hint
+        if not hints:
+            hints.append("Start by breaking down the problem into smaller parts.")
             
         instance.hints = hints
         

@@ -40,22 +40,28 @@
             {% if challenge.hints %}
                 {% for hint in challenge.hints %}
                 <div>
-                    <button class="text-indigo-400 hover:text-indigo-300 flex items-center gap-2 hint-toggle" data-target="hint-{{ forloop.counter }}">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9h16.5m-16.5 6.75h16.5" />
-                        </svg>
-                        <span class="font-medium">Hint {{ forloop.counter }}</span>
-                        <span class="text-xs ml-2 text-gray-400 font-normal">
+                    <button class="text-indigo-400 hover:text-indigo-300 flex items-center gap-2 hint-toggle w-full" data-target="hint-{{ forloop.counter }}" data-hint-num="{{ forloop.counter }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 icon-toggle">
                             {% if forloop.counter == 1 %}
-                                (subtle guidance)
-                            {% elif forloop.counter == 2 %}
-                                (more specific)
-                            {% elif forloop.counter == 3 %}
-                                (most helpful)
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
+                            {% else %}
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                             {% endif %}
-                        </span>
+                        </svg>
+                        <div class="flex flex-1 justify-between">
+                            <span class="font-medium">Hint {{ forloop.counter }}</span>
+                            <span class="text-xs ml-2 text-gray-400 font-normal">
+                                {% if forloop.counter == 1 %}
+                                    (subtle guidance)
+                                {% elif forloop.counter == 2 %}
+                                    (more specific)
+                                {% elif forloop.counter == 3 %}
+                                    (most helpful)
+                                {% endif %}
+                            </span>
+                        </div>
                     </button>
-                    <div id="hint-{{ forloop.counter }}" class="{% if forloop.counter > 1 %}hidden {% endif %}mt-2 bg-gray-800 p-3 rounded">
+                    <div id="hint-{{ forloop.counter }}" class="hint-content {% if forloop.counter == 1 %}{% else %}hidden{% endif %} mt-2 bg-gray-800 p-3 rounded">
                         <p class="text-gray-200">{{ hint }}</p>
                     </div>
                 </div>
@@ -83,6 +89,14 @@
             <div class="mb-4">
                 {{ form.solution_text }}
             </div>
+            
+            {% if user_solution %}
+            <div class="mb-4 flex items-center">
+                <input type="checkbox" id="update_existing" name="update_existing" value="true" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500 rounded">
+                <label for="update_existing" class="ml-2 text-sm text-gray-300">Update my previous solution instead of creating a new one</label>
+            </div>
+            {% endif %}
+            
             <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded">Submit Solution</button>
         </form>
     </div>
@@ -90,7 +104,14 @@
     <!-- Previous Solutions (if any) -->
     {% if user_solution %}
     <div class="bg-[#1e1f23] p-6 rounded">
-        <h2 class="text-xl font-semibold text-white mb-3">Your Previous Solution</h2>
+        <div class="flex justify-between items-start mb-3">
+            <h2 class="text-xl font-semibold text-white">Your Previous Solution</h2>
+            <span class="text-xs font-medium bg-{{ user_solution.get_correctness_color }} text-white px-2 py-1 rounded-full">
+                {% with correctness=user_solution.correctness_level %}
+                    {% if correctness == 'correct' %}Correct{% elif correctness == 'almost' %}Almost Correct{% elif correctness == 'partial' %}Partially Correct{% else %}Not Quite Right{% endif %}
+                {% endwith %}
+            </span>
+        </div>
         <div class="bg-gray-800 p-4 rounded">
             <pre class="text-white whitespace-pre-wrap">{{ user_solution.solution_text }}</pre>
         </div>
@@ -104,47 +125,118 @@
         </div>
     </div>
     {% endif %}
+    
+    <!-- View All Solutions Button -->
+    <div class="flex justify-center my-6 space-x-4">
+        <button id="toggle-solutions-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <span id="toggle-solutions-text">Quick View Solutions</span>
+        </button>
+        <a href="{% url 'challenge_solutions' challenge.id %}" class="bg-cyan-600 hover:bg-cyan-700 text-white px-5 py-2 rounded flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+            </svg>
+            <span>View All Solutions</span>
+        </a>
+    </div>
+    
+    <!-- Other Users' Solutions -->
+    <div id="community-solutions" class="bg-[#1e1f23] p-6 rounded hidden">
+        <h2 class="text-xl font-semibold text-white mb-3">Community Solutions</h2>
+        {% if other_solutions %}
+        <div class="space-y-6">
+            {% for solution in other_solutions %}
+            <div class="bg-gray-800 p-4 rounded">
+                <div class="flex justify-between items-start mb-3">
+                    <div class="flex items-center gap-2">
+                        {% if solution.user.userprofile.avatar %}
+                        <img src="{{ solution.user.userprofile.avatar }}" alt="{{ solution.user.username }}" class="w-6 h-6 rounded-full">
+                        {% else %}
+                        <span class="w-6 h-6 rounded-full bg-indigo-600 flex items-center justify-center text-xs font-bold text-white">{{ solution.user.username|first|upper }}</span>
+                        {% endif %}
+                        <span class="font-medium text-indigo-400">{{ solution.user.username }}</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs font-medium bg-{{ solution.get_correctness_color }} text-white px-2 py-1 rounded-full">
+                            {% with correctness=solution.correctness_level %}
+                                {% if correctness == 'correct' %}Correct{% elif correctness == 'almost' %}Almost Correct{% elif correctness == 'partial' %}Partially Correct{% else %}Not Quite Right{% endif %}
+                            {% endwith %}
+                        </span>
+                        <span class="text-xs text-gray-500">{{ solution.submitted_at|date:"M d, Y" }}</span>
+                    </div>
+                </div>
+                <pre class="text-white whitespace-pre-wrap">{{ solution.solution_text }}</pre>
+                
+                <!-- AI Feedback for this solution -->
+                <div class="mt-4 border-t border-gray-700 pt-4">
+                    <h4 class="text-sm font-medium text-gray-300 mb-2">AI Feedback</h4>
+                    <div class="bg-indigo-900/30 p-3 rounded text-sm">
+                        <p class="text-gray-300">{{ solution.ai_feedback }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-6">
+            <p class="text-gray-400">No solutions have been submitted yet. Be the first to solve this challenge!</p>
+        </div>
+        {% endif %}
+    </div>
 </div>
 {% endblock %}
 
 {% block extra_js %}
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    // Enhanced hint toggles with tracking
+    // Fix for hints toggle
     const hintToggles = document.querySelectorAll('.hint-toggle');
-    const hintRevealedCount = {};
     
     hintToggles.forEach(toggle => {
+      console.log("Attaching event listener to hint toggle:", toggle);
       const targetId = toggle.getAttribute('data-target');
-      const hintNumber = parseInt(targetId.split('-')[1]);
-      hintRevealedCount[hintNumber] = 0;
+      const targetElement = document.getElementById(targetId);
+      const iconToggle = toggle.querySelector('.icon-toggle');
+      const hintNumber = parseInt(toggle.getAttribute('data-hint-num'));
       
-      toggle.addEventListener('click', function() {
-        const targetElement = document.getElementById(targetId);
+      // Initialize correct state for first hint's icon
+      if (hintNumber === 1) {
+        iconToggle.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />';
+      }
+      
+      toggle.addEventListener('click', function(e) {
+        console.log("Hint toggle clicked:", toggle);
+        e.preventDefault();
         
+        // Toggle visibility
         if (targetElement.classList.contains('hidden')) {
           // Reveal hint
           targetElement.classList.remove('hidden');
-          hintRevealedCount[hintNumber]++;
           
-          // First time revealing this hint
-          if (hintRevealedCount[hintNumber] === 1) {
-            // Visual feedback for using a hint
-            toggle.classList.add('text-green-400');
-            setTimeout(() => {
-              toggle.classList.remove('text-green-400');
-              toggle.classList.add('text-indigo-400');
-            }, 1000);
-            
-            // If this is a higher-level hint, reveal previous hints too
-            if (hintNumber > 1) {
-              for (let i = 1; i < hintNumber; i++) {
-                const prevHint = document.getElementById(`hint-${i}`);
-                if (prevHint && prevHint.classList.contains('hidden')) {
-                  prevHint.classList.remove('hidden');
-                  const prevToggle = document.querySelector(`[data-target="hint-${i}"]`);
-                  if (prevToggle) {
-                    prevToggle.classList.add('text-indigo-300');
+          // Change plus icon to minus
+          iconToggle.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />';
+          
+          // Visual feedback
+          toggle.classList.add('text-green-400');
+          setTimeout(() => {
+            toggle.classList.remove('text-green-400');
+          }, 500);
+          
+          // If this is a higher-level hint, reveal previous hints too
+          const hintNumber = parseInt(toggle.getAttribute('data-hint-num'));
+          if (hintNumber > 1) {
+            for (let i = 1; i < hintNumber; i++) {
+              const prevHint = document.getElementById(`hint-${i}`);
+              if (prevHint && prevHint.classList.contains('hidden')) {
+                prevHint.classList.remove('hidden');
+                const prevToggle = document.querySelector(`[data-hint-num="${i}"]`);
+                if (prevToggle) {
+                  const prevIcon = prevToggle.querySelector('.icon-toggle');
+                  if (prevIcon) {
+                    prevIcon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />';
                   }
                 }
               }
@@ -153,17 +245,60 @@
         } else {
           // Hide hint
           targetElement.classList.add('hidden');
+          // Change minus icon back to plus
+          iconToggle.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />';
         }
       });
     });
     
-    // Initialize hint status
-    const firstHint = document.getElementById('hint-1');
-    if (firstHint && !firstHint.classList.contains('hidden')) {
-      const firstToggle = document.querySelector('[data-target="hint-1"]');
-      if (firstToggle) {
-        hintRevealedCount[1] = 1;
+    // Toggle solutions visibility
+    const toggleSolutionsBtn = document.getElementById('toggle-solutions-btn');
+    const communitySolutions = document.getElementById('community-solutions');
+    const toggleSolutionsText = document.getElementById('toggle-solutions-text');
+    
+    if (toggleSolutionsBtn && communitySolutions) {
+      console.log("Attaching event listener to toggleSolutionsBtn:", toggleSolutionsBtn);
+      toggleSolutionsBtn.addEventListener('click', function() {
+        console.log("toggleSolutionsBtn clicked:", toggleSolutionsBtn);
+        // Toggle the visibility
+        if (communitySolutions.classList.contains('hidden')) {
+          communitySolutions.classList.remove('hidden');
+          toggleSolutionsText.textContent = "Hide Solutions";
+          toggleSolutionsBtn.classList.add('bg-gray-700');
+          toggleSolutionsBtn.classList.remove('bg-indigo-600');
+          // Smooth scroll to the solutions section
+          communitySolutions.scrollIntoView({ behavior: 'smooth' });
+        } else {
+          communitySolutions.classList.add('hidden');
+          toggleSolutionsText.textContent = "Quick View Solutions";
+          toggleSolutionsBtn.classList.remove('bg-gray-700');
+          toggleSolutionsBtn.classList.add('bg-indigo-600');
+        }
+      });
+    }
+    
+    // Auto-populate solution form when "Update Previous Solution" is checked
+    const updateExistingCheckbox = document.getElementById('update_existing');
+    const solutionTextarea = document.querySelector('textarea[name="solution_text"]');
+    
+    if (updateExistingCheckbox && solutionTextarea) {
+      // Get user's previous solution text
+      const previousSolutionElement = document.querySelector('.bg-gray-800 pre.text-white');
+      let previousSolutionText = '';
+      
+      if (previousSolutionElement) {
+        previousSolutionText = previousSolutionElement.textContent.trim();
       }
+      
+      updateExistingCheckbox.addEventListener('change', function() {
+        if (this.checked && previousSolutionText) {
+          // Populate the textarea with previous solution
+          solutionTextarea.value = previousSolutionText;
+        } else if (!this.checked && solutionTextarea.value === previousSolutionText) {
+          // Clear the textarea if it contains the previous solution
+          solutionTextarea.value = '';
+        }
+      });
     }
   });
 </script>
