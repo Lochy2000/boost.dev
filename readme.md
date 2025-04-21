@@ -278,14 +278,9 @@ Area with different resources related to Tech:<br>
   - Heroku
 
 ### Libraries
-  - Bootstrap v5.2.3
   - Django v3.2.19
-  - Django AllAuth v0.54.0
-  - Django Crispy Forms v2.0
   - Google Fonts
-  - Crispy Bootstrap5 v0.7
-  - Django Summernote v0.8.2
-  - Pillow v9.5
+  - Tailwind CSS
 
 ### Tools and Programs
   - Balsamiq wireframe
@@ -481,7 +476,7 @@ These instructions will guide you through setting up Tailwind CSS in your Django
 [Back to top](#top)
 
 ### Bugs to fix
-- 
+- Celebrations on the wins not working, allthough the logic looks good.
 
 ## AI Implementaion and Orchestration
 ### Code Generation
