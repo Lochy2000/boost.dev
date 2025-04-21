@@ -9,10 +9,10 @@ It aims to show users that they have good skills and to help dealing with Impost
 
 The idea for the project came from one of the members and was consistent with the suggested projects by CI - Hack Team. Incorporating more than one idea of those suggested.
 
-Live site: [Boost.dev]( )
+Live site: [Boost.dev](https://boost-dev-9ed56bf6f182.herokuapp.com/)
 
 ## Table of Contents
-- [Boost.dev]()
+- [Boost.dev](#boostdev)
     - [Introduction](#introduction)
     - [Table of Contents](#table-of-contents)
     - [Overview](#overview)
@@ -21,6 +21,7 @@ Live site: [Boost.dev]( )
     - [Contrast Check](#contrast-check)
     - [Typography](#typography)
 - [Project Planning](#project-planning)
+    - [Strategy](#strategy)
     - [Agile Methodologies](#agile-methodologies)
     - [Users](#users)
     - [Profile](#profile)
@@ -122,7 +123,7 @@ Fonts used for this website were:
 
 The main goal for this project was to create a site that feels friendly, invitting and can provide users the feeling that they are good developers, although they might not see themselves in that way.<br>
 
-## Strategy Plan
+## Strategy
 
   - User-friendly platform to post artwork
   - Appealing and minimalistic layout and colors
@@ -195,6 +196,58 @@ Challenges:
 How Boost.dev Helps:
 - Provides a platform to mentor developers through forums and discussions.
 - Helps her stay connected with the developer community and trends.
+
+### Wireframes
+Initial wireframes for desktop view as follows:
+
+<img src="theme\static\css\images\lighthouse\wireframe1.png">
+<img src="theme\static\css\images\lighthouse\wireframe2.png">
+
+The initial concept was based on:
+
+  - [daily.dev](https://daily.dev/)
+  - [gamma.app](https://gamma.app/docs/boostdev-Where-Confidence-Grows-ltxw0nuvix1u7ue?mode=doc)
+
+After the initial concept was drawn, the team decided to use a navbar on the top that changes to a "hamburger" dorpdown menu on smaller screens.<br>
+
+### Imagery
+Background image is an edited version of Ubuntu OS background page
+
+  - [Ubuntu background](https://www.lebigdata.fr/wp-content/uploads/2021/07/Desktop_Ubuntu_20.04.png)
+
+Other images searched on Google and adapted to use on the webiste, include:
+
+  - [Cat Imposter Syndrome](https://londonmumsmagazine.com/wp-content/uploads/2015/02/imposter-syndrome-cats.jpg)
+  - [3 C's imposter syndrome](https://www.dynamictransitionsllp.com/wp-content/uploads/2022/09/3-Cs-Image-1200x675.jpg)
+  - [Female IS](https://images.herzindagi.info/image/2022/Oct/syndrome.jpg)
+  - [Male IS](https://www.the-dentist.co.uk/media/ucnbkru2/suffering-from-imposter-syndrome.jpg)
+
+## Features
+Some of the features that can be seen on the website are:
+
+An area where the user can do challenges created by AI and APIs with different levels of difficulty:<br>
+<img src="theme\static\css\images\features\challenges-1.png">
+<img src="theme\static\css\images\features\challenges-2.png">
+<img src="theme\static\css\images\features\challenges.png">
+
+A space to engage with the community:<br>
+<img src="theme\static\css\images\features\community-hub.png">
+
+Landing page with information about Imposter Syndrome and Strategies to try to overcome it, also hopping the user will want to register on the site and get support and improve himself and maybe help other developers in a similar situation:<br>
+<img src="theme\static\css\images\features\hackpage.png">
+
+Recent challenges doneby the user for other users to see:<br>
+<img src="theme\static\css\images\features\main-page-bottom-area.png">
+<img src="theme/static/css/images/features/main-page-top-area.png">
+
+Area where the user can post wins achieved on that day or previously:<br>
+<img src="theme\static\css\images\features\my-wins.png">
+
+An intuitive navbar with the main areas that the user can access:
+<img src="theme\static\css\images\features\navbar.png">
+
+Area with different resources related to Tech:<br>
+<img src="theme\static\css\images\features\resources.png">
 
 ## Technologies Used
 ### Languages and Technologies
