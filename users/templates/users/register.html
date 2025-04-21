@@ -11,6 +11,7 @@
         <div class="form-group">
             <label for="{{ form.username.id_for_label }}">Username</label>
             {{ form.username }}
+            <small id="id_username_helptext" class="help-text">Enter a unique username. Max 150 characters.</small>
             {% if form.username.errors %}
                 <div class="error">{{ form.username.errors }}</div>
             {% endif %}
@@ -27,6 +28,7 @@
         <div class="form-group">
             <label for="{{ form.password1.id_for_label }}">Password</label>
             {{ form.password1 }}
+            <small id="id_password1_helptext" class="help-text">Your password must be at least 8 characters long.</small>
             {% if form.password1.errors %}
                 <div class="error">{{ form.password1.errors }}</div>
             {% endif %}
@@ -35,6 +37,7 @@
         <div class="form-group">
             <label for="{{ form.password2.id_for_label }}">Confirm Password</label>
             {{ form.password2 }}
+            <small id="id_password2_helptext" class="help-text">Re-enter your password for confirmation.</small>
             {% if form.password2.errors %}
                 <div class="error">{{ form.password2.errors }}</div>
             {% endif %}
