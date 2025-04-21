@@ -8,6 +8,11 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>{% block title %}Boost.dev - Accelerate Your Development Journey{% endblock %}</title>
 
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="{% static 'favicons/favicon.ico' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicons/favicon-32x32.png' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicons/favicon-16x16.png' %}">
+
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   {% tailwind_css %}
@@ -17,18 +22,18 @@
 
   <!-- FontAwesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  {% block extra_css %}{% endblock %}
 </head>
 
-<body>
+<body class="bg-gray-100">
 
   <!-- Navbar -->
-  <header class="shadow-lg sticky top-0 z-50">
+  <header class="shadow-lg sticky top-0 z-50 backdrop-blur-md">
     <nav class="container mx-auto flex items-center justify-between p-4">
       <!-- Logo -->
       <a href="/"
-        class="text-2xl font-bold text-white flex items-center gap-2 hover:text-indigo-300 transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">
-        <span class="logo-icon">B</span>
-        Boost.dev
+        class="text-2xl font-bold text-white flex items-center gap-2 hover:opacity-80 transition-opacity focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-transparent rounded">
+        <img src="{% static 'images/rocklogo.png' %}" alt="Boost.dev" class="h-12" />
       </a>
 
       <!-- Hamburger (shown on mobile) -->
@@ -81,26 +86,41 @@
                 style="width: {{ user.progress.calculate_percentage }}%"></div>
             </div>
           </div>
-          <!-- Profile Image -->
-          <!-- Replace your current avatar block with this -->
-{% if user.is_authenticated %}
-<div class="relative group text-center">
-  <img src="{{ user.userprofile.avatar|default:'https://res.cloudinary.com/dn7aws3wl/image/upload/v1739390582/nobody_pcaqjl.jpg' }}"
-    alt="{{ user.username }}'s Profile"
-    class="w-10 h-10 rounded-full object-cover border border-gray-700 cursor-pointer" />
-    <i class="fas fa-chevron-down text-sm text-white group-hover:text-indigo-300 transition-transform duration-300"></i>
-  
-  <!-- Dropdown on hover -->
-  <div class="absolute right-0 mt-2 w-48 bg-gray-800 text-white rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-50">
-    <div class="p-2 border-b border-gray-700 text-sm text-center">{{ user.username }}</div>
-    <a href="{% url 'profile' %}" class="block px-4 py-2 hover:bg-gray-700">My Profile</a>
-    <form method="post" action="{% url 'logout' %}">
-      {% csrf_token %}
-      <button type="submit" class="w-full text-center px-4 py-2 hover:bg-gray-700">Log Out</button>
-    </form>
-  </div>
-</div>
-{% endif %}
+          <!-- User menu -->
+          <div class="relative ml-3 flex items-center space-x-4">
+            {% if user.is_authenticated %}
+            <!-- User Avatar -->
+            <div class="relative group text-center">
+                <img src="{{ user.userprofile.avatar|default:'https://via.placeholder.com/32' }}"
+                    alt="{{ user.username }}'s Profile"
+                    class="w-10 h-10 rounded-full object-cover border border-gray-700 cursor-pointer" />
+                <i class="fas fa-chevron-down text-sm text-white group-hover:text-indigo-300 transition-transform duration-300"></i>
+
+                <!-- Dropdown on hover -->
+                <div class="absolute right-0 mt-2 w-48 bg-gray-800 text-white rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-50">
+                    <div class="p-2 border-b border-gray-700 text-sm text-center">{{ user.username }}</div>
+                    <a href="{% url 'users:profile' %}" class="block px-4 py-2 hover:bg-gray-700">My Profile</a>
+                    <form method="post" action="{% url 'users:logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="w-full text-center px-4 py-2 hover:bg-gray-700">Log Out</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Notification Icon -->
+            <div class="relative">
+                <button id="notification-icon" class="text-gray-300 hover:text-white">
+                    <i class="fas fa-bell text-xl"></i>
+                    <span id="notification-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center hidden">0</span>
+                </button>
+                
+                <!-- Notification Dropdown -->
+                <div id="notification-dropdown" class="hidden absolute right-0 mt-2 w-80 bg-gray-800 rounded-lg shadow-lg overflow-hidden z-50">
+                    {# Notifications will be rendered here by JavaScript #}
+                </div>
+            </div>
+            {% endif %}
+          </div>
         </li>
       </ul>
 
@@ -136,11 +156,11 @@
         class="text-white text-xl font-medium w-full text-center py-3 hover:text-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">
         Community
       </a>
-      <a href="{% url 'profile' %}"
+      <a href="{% url 'users:profile' %}"
         class="text-white text-xl font-medium w-full text-center py-3 hover:text-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">
         My Profile
       </a>
-      <form method="post" action="{% url 'logout' %}" class="w-full">
+      <form method="post" action="{% url 'users:logout' %}" class="w-full">
         {% csrf_token %}
         <button type="submit"
           class="text-white text-xl font-medium w-full text-center py-3 hover:text-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">
@@ -290,6 +310,11 @@
       }, 5000);
     }
   </script>
+  {% block extra_js %}
+  <!-- Include notification scripts -->
+  <script src="{% static 'js/notifications.js' %}"></script>
+  <script src="{% static 'js/wins.js' %}"></script>
+  {% endblock %}
 </body>
 
 </html>

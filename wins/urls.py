@@ -10,4 +10,5 @@ urlpatterns = [
     path('my-wins/', views.my_wins, name='my_wins'),
     path('community/', views.community_wins, name='community_wins'),
     path('toggle-public/<int:win_id>/', views.toggle_public, name='toggle_public'),
+    path('celebrate/<int:win_id>/', views.toggle_celebration, name='toggle_celebration'),
 ]

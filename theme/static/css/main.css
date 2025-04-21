@@ -38,15 +38,15 @@ body::before {
 }
 
 header {
-    position: absolute; /* Position the header at the top-left corner */
+    position: absolute;
     top: 0;
     left: 0;
-    width: 100%; /* Optional: Make the header span the full width */
+    width: 100%;
     display: flex;
     align-items: center;
-    justify-content: flex-start; /* Align the logo to the left */
+    justify-content: flex-start;
     padding: 1.5rem 2rem;
-    z-index: 10; /* Ensure the header stays above other content */
+    z-index: 10;
 }
 
 .logo {

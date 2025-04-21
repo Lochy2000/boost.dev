@@ -8,6 +8,7 @@ class DailyWin(models.Model):
     ai_feedback = models.TextField(blank=True)
     is_public = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
+    celebrations = models.ManyToManyField(User, related_name='celebrated_wins', blank=True)
     
     class Meta:
         ordering = ['-created_at']
@@ -17,3 +18,17 @@ class DailyWin(models.Model):
         
     def is_today(self):
         return self.created_at.date() == timezone.now().date()
+        
+    def celebration_count(self):
+        return self.celebrations.count()
+        
+    def is_celebrated_by(self, user):
+        return self.celebrations.filter(id=user.id).exists()
+        
+    def toggle_celebration(self, user):
+        if self.is_celebrated_by(user):
+            self.celebrations.remove(user)
+            return False
+        else:
+            self.celebrations.add(user)
+            return True

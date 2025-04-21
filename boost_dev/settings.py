@@ -23,6 +23,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Static files in app directories and project level
 STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
     os.path.join(BASE_DIR, 'theme/static'),
     os.path.join(BASE_DIR, 'pics'),
 ]

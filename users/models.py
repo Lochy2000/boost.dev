@@ -143,3 +143,29 @@ class UserFlag(models.Model):
     
     def __str__(self):
         return f"{self.user.username} - {self.flag_type} - {self.value}"
+
+
+class Notification(models.Model):
+    NOTIFICATION_TYPES = [
+        ('celebration', 'Win Celebration'),
+        ('level_up', 'Level Up'),
+        ('achievement', 'Achievement'),
+        ('challenge', 'Challenge'),
+    ]
+    
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications')
+    notification_type = models.CharField(max_length=20, choices=NOTIFICATION_TYPES)
+    content = models.CharField(max_length=255)
+    link = models.CharField(max_length=255, blank=True)
+    is_read = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        ordering = ['-created_at']
+    
+    def __str__(self):
+        return f"{self.notification_type} for {self.user.username}"
+    
+    def mark_as_read(self):
+        self.is_read = True
+        self.save()

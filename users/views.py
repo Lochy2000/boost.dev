@@ -1,11 +1,12 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib import messages
 from .forms import SignUpForm, UserProfileForm
 from django.contrib.auth.decorators import login_required
-from .models import UserProgress, Achievement, UserAchievement
+from .models import UserProgress, Achievement, UserAchievement, Notification
 from .utils import add_user_points, award_level_achievement, award_achievement, get_level_title
+from django.http import JsonResponse
 
 def register_view(request):
     if request.method == 'POST':
@@ -72,8 +73,6 @@ def logout_view(request):
     messages.success(request, "You have been logged out successfully!")
     return redirect('home')
 
-
-
 @login_required
 def profile_view(request):
     if request.method == 'POST':
@@ -109,3 +108,26 @@ def social_auth_callback(request):
     """Handle callback from social authentication providers"""
     # This would be implemented based on the social auth library being used
     return redirect('dashboard:dashboard')
+
+@login_required
+def get_notifications(request):
+    """Get user's unread notifications"""
+    notifications = Notification.objects.filter(user=request.user, is_read=False)
+    return JsonResponse({
+        'notifications': [
+            {
+                'id': n.id,
+                'type': n.notification_type,
+                'content': n.content,
+                'link': n.link,
+                'created_at': n.created_at.isoformat()
+            } for n in notifications
+        ]
+    })
+
+@login_required
+def mark_notification_read(request, notification_id):
+    """Mark a notification as read"""
+    notification = get_object_or_404(Notification, id=notification_id, user=request.user)
+    notification.mark_as_read()
+    return JsonResponse({'success': True})
