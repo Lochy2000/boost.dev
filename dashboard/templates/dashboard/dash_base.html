@@ -29,7 +29,7 @@ bg-gray-900/80 backdrop-blur-md border-b border-gray-700 text-white px-6 py-4 fl
       </div>
     </div>
   </div>
-  <form method="post" action="{% url 'logout' %}">
+  <form method="post" action="{% url 'users:logout' %}">
     {% csrf_token %}
     <button type="submit"
       class="bg-indigo-500 hover:bg-indigo-600 text-white px-5 py-3 rounded shadow transition-all">
@@ -49,7 +49,7 @@ bg-gray-900/80 backdrop-blur-md border-b border-gray-700 text-white px-6 py-4 fl
         <a href="{% url 'wins:submit_win' %}" class="block px-3 py-2 rounded hover:bg-[#312fa6]">Log a Win</a>
         <a href="{% url 'wins:my_wins' %}" class="block px-3 py-2 rounded hover:bg-[#312fa6]">My Wins</a>
         <a href="{% url 'wins:community_wins' %}" class="block px-3 py-2 rounded hover:bg-[#312fa6]">Community</a>
-        <a href="{% url 'profile' %}" class="block px-3 py-2 rounded hover:bg-[#312fa6]">Profile</a>
+        <a href="{% url 'users:profile' %}" class="block px-3 py-2 rounded hover:bg-[#312fa6]">Profile</a>
       </nav>
     </aside>
     <!-- Main dashboard content -->
