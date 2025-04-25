@@ -1,0 +1,200 @@
+.weather-widget-title {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  color: black;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* From Uiverse.io by zanina-yassine */ 
+.weather-widget-card {
+  width: 100%;
+  height: 140px;
+  position: relative;
+  padding: 25px;
+  background: radial-gradient(178.94% 106.41% at 26.42% 106.41%, #FFF7B1 0%, rgba(255, 255, 255, 0) 71.88%), #FFFFFF;
+  box-shadow: 0px 155px 62px rgba(0, 0, 0, 0.01), 0px 87px 52px rgba(0, 0, 0, 0.05), 0px 39px 39px rgba(0, 0, 0, 0.09), 0px 10px 21px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1);
+  border-radius: 23px;
+  transition: all 0.8s cubic-bezier(0.15, 0.83, 0.66, 1);
+  cursor: pointer;
+}
+.weather-widget-card:hover {
+  transform: scale(1.05);
+}
+.weather-widget-container {
+  width: 120px;
+  height: 120px;
+  position: absolute;
+  right: 5px;
+  top: -20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(0.4);
+}
+.weather-widget-cloud {
+  width: 250px;
+}
+.weather-widget-front {
+  padding-top: 45px;
+  margin-left: 25px;
+  display: inline;
+  position: absolute;
+  z-index: 11;
+  animation: weather-widget-clouds 8s infinite;
+  animation-timing-function: ease-in-out;
+}
+.weather-widget-back {
+  margin-top: -30px;
+  margin-left: 150px;
+  z-index: 12;
+  animation: weather-widget-clouds 12s infinite;
+  animation-timing-function: ease-in-out;
+}
+.weather-widget-right-front {
+  width: 45px;
+  height: 45px;
+  border-radius: 50% 50% 50% 0%;
+  background-color: #4c9beb;
+  display: inline-block;
+  margin-left: -25px;
+  z-index: 5;
+}
+.weather-widget-left-front {
+  width: 65px;
+  height: 65px;
+  border-radius: 50% 50% 0% 50%;
+  background-color: #4c9beb;
+  display: inline-block;
+  z-index: 5;
+}
+.weather-widget-right-back {
+  width: 50px;
+  height: 50px;
+  border-radius: 50% 50% 50% 0%;
+  background-color: #4c9beb;
+  display: inline-block;
+  margin-left: -20px;
+  z-index: 5;
+}
+.weather-widget-left-back {
+  width: 30px;
+  height: 30px;
+  border-radius: 50% 50% 0% 50%;
+  background-color: #4c9beb;
+  display: inline-block;
+  z-index: 5;
+}
+.weather-widget-sun {
+  width: 120px;
+  height: 120px;
+  background: -webkit-linear-gradient(to right, #fcbb04, #fffc00);
+  background: linear-gradient(to right, #fcbb04, #fffc00);
+  border-radius: 60px;
+  display: inline;
+  position: absolute;
+}
+.weather-widget-sunshine {
+  animation: weather-widget-sunshines 2s infinite;
+}
+@keyframes weather-widget-sunshines {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+}
+@keyframes weather-widget-clouds {
+  0% {
+    transform: translateX(15px);
+  }
+  50% {
+    transform: translateX(0px);
+  }
+  100% {
+    transform: translateX(15px);
+  }
+}
+.weather-widget-header {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-top: 0;
+  padding-top: 0;
+  max-width: 100px;
+}
+.weather-widget-header span:first-child {
+  word-break: break-all;
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 120%;
+  color: rgba(87, 77, 51, 0.66);
+}
+
+.weather-widget-header span:last-child {
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 120%;
+  color: rgba(87, 77, 51, 0.33);
+}
+.weather-widget-temp {
+  position: absolute;
+  left: 25px;
+  bottom: 12px;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 40px;
+  color: rgba(87, 77, 51, 1);
+}
+.weather-widget-temp-scale {
+  width: 60px;
+  height: 26px;
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.06);
+  border-radius: 9px;
+}
+.weather-widget-temp-scale span {
+  font-weight: 600;
+  font-size: 11px;
+  line-height: 134.49%;
+  color: rgba(87, 77, 51, 0.66);
+}
+
+/* Special condition styles */
+.weather-widget-card.weather-widget-clear {
+  background: radial-gradient(178.94% 106.41% at 26.42% 106.41%, #FFF7B1 0%, rgba(255, 255, 255, 0) 71.88%), #FFFFFF;
+}
+
+.weather-widget-card.weather-widget-clouds {
+  background: radial-gradient(178.94% 106.41% at 26.42% 106.41%, #E0E0E0 0%, rgba(255, 255, 255, 0) 71.88%), #F0F0F0;
+}
+
+.weather-widget-card.weather-widget-rain {
+  background: radial-gradient(178.94% 106.41% at 26.42% 106.41%, #B1C3FF 0%, rgba(255, 255, 255, 0) 71.88%), #E5EEFF;
+}
+
+.weather-widget-card.weather-widget-thunder {
+  background: radial-gradient(178.94% 106.41% at 26.42% 106.41%, #E3D7FF 0%, rgba(255, 255, 255, 0) 71.88%), #F0E6FF;
+}
+
+.weather-widget-card.weather-widget-snow {
+  background: radial-gradient(178.94% 106.41% at 26.42% 106.41%, #FFFFFF 0%, rgba(255, 255, 255, 0) 71.88%), #F9FBFF;
+}
+
+.weather-widget-card.weather-widget-mist {
+  background: radial-gradient(178.94% 106.41% at 26.42% 106.41%, #D9E8FF 0%, rgba(255, 255, 255, 0) 71.88%), #EDF4FF;
+}
+
+/* Add rounded corners for all other cards on the site */
+.rounded-card {
+  border-radius: 23px;
+}

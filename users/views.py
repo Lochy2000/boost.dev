@@ -92,7 +92,7 @@ def profile_view(request):
             award_achievement(request.user, "Early Adopter", request)
             
             messages.success(request, f"Profile updated successfully! {points_message}")
-            return redirect('profile')
+            return redirect('users:profile')
     else:
         form = UserProfileForm(instance=request.user.userprofile)
     

@@ -30,11 +30,18 @@ class Challenge(models.Model):
             return 'red-600'
 
 class ChallengeSolution(models.Model):
+    CORRECTNESS_CHOICES = [
+        ('correct', 'Correct'),
+        ('partial', 'Partially Correct'),
+        ('incorrect', 'Incorrect')
+    ]
+    
     challenge = models.ForeignKey(Challenge, on_delete=models.CASCADE, related_name='solutions')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='challenge_solutions')
     solution_text = models.TextField()
     ai_feedback = models.TextField(blank=True)
     is_correct = models.BooleanField(default=False)
+    correctness_level = models.CharField(max_length=20, choices=CORRECTNESS_CHOICES, default='correct')
     submitted_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):

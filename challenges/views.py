@@ -1,15 +1,18 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.db import models
 from .models import Challenge, ChallengeSolution, QuoteSubmission
 from .forms import ChallengeForm, ChallengeSolutionForm
 from services.ai_challenge import get_challenge_feedback, generate_new_challenge
 
 @login_required
 def challenge_list(request):
-    """View for listing all challenges"""
+    """View for listing all challenges with pagination and search"""
     # Get filter parameters
     difficulty = request.GET.get('difficulty', '')
+    query = request.GET.get('q', '')
+    page = int(request.GET.get('page', 1))
     
     # Get challenges from database
     challenges = Challenge.objects.filter(is_approved=True)
@@ -18,9 +21,57 @@ def challenge_list(request):
     if difficulty:
         challenges = challenges.filter(difficulty=difficulty)
     
+    # Apply search query if provided
+    if query:
+        challenges = challenges.filter(
+            models.Q(title__icontains=query) | 
+            models.Q(description__icontains=query) |
+            models.Q(created_by__username__icontains=query)
+        )
+    
+    # Order challenges by creation date (newest first)
+    challenges = challenges.order_by('-created_at')
+    
+    # Pagination
+    items_per_page = 6
+    total_challenges = challenges.count()
+    total_pages = (total_challenges + items_per_page - 1) // items_per_page
+    
+    # Handle page boundaries
+    if page < 1:
+        page = 1
+    elif page > total_pages and total_pages > 0:
+        page = total_pages
+    
+    # Get current page items
+    start_index = (page - 1) * items_per_page
+    end_index = start_index + items_per_page
+    current_challenges = challenges[start_index:end_index]
+    
+    # Check if user has already submitted solutions for these challenges
+    if request.user.is_authenticated:
+        challenge_ids = [challenge.id for challenge in current_challenges]
+        user_solutions = {}
+        solutions = ChallengeSolution.objects.filter(
+            challenge_id__in=challenge_ids,
+            user=request.user
+        )
+        for solution in solutions:
+            user_solutions[solution.challenge_id] = solution
+    else:
+        user_solutions = {}
+    
     context = {
-        'challenges': challenges,
+        'challenges': current_challenges,
         'difficulty_filter': difficulty,
+        'query': query,
+        'total_challenges': total_challenges,
+        'total_pages': total_pages,
+        'current_page': page,
+        'has_prev': page > 1,
+        'has_next': page < total_pages,
+        'page_range': range(max(1, page - 2), min(total_pages + 1, page + 3)),
+        'user_solutions': user_solutions,
     }
     
     return render(request, 'challenges/view_challenges.html', context)
@@ -87,6 +138,12 @@ def submit_solution(request, pk):
                 solution.challenge = challenge
                 solution.user = request.user
                 solution.is_correct = True  # Mark all submitted solutions as correct for now
+                # Check if correctness_level column exists and set it
+                try:
+                    solution.correctness_level = 'correct'  # Set correctness level to 'correct' by default
+                except Exception as e:
+                    print(f"Error setting correctness_level: {e}")
+                    # Field might not exist yet, continue anyway
                 
                 # Get AI feedback
                 try:

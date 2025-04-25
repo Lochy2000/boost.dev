@@ -77,29 +77,82 @@
 
     <!-- Solution Submission -->
     <div class="bg-[#1e1f23] p-6 rounded">
-        <h2 class="text-xl font-semibold text-white mb-3">Your Solution</h2>
+        <div class="flex justify-between items-center mb-3">
+            <h2 class="text-xl font-semibold text-white">Submit Your Solution</h2>
+            <div class="text-gray-400 text-sm">
+                <span class="flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.383a14.406 14.406 0 01-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 10-7.517 0c.85.493 1.509 1.333 1.509 2.316V18" />
+                    </svg>
+                    Code, comments, and explanations accepted
+                </span>
+            </div>
+        </div>
         <form method="post" action="{% url 'submit_solution' challenge.id %}">
             {% csrf_token %}
             <div class="mb-4">
                 {{ form.solution_text }}
             </div>
-            <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded">Submit Solution</button>
+            <div class="flex justify-between items-center">
+                <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2 rounded-lg transition-colors flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                    </svg>
+                    Submit Solution
+                </button>
+                {% if user_solution %}
+                <a href="#solution" class="text-indigo-400 hover:text-indigo-300 flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" />
+                    </svg>
+                    View Previous Solution
+                </a>
+                {% endif %}
+            </div>
         </form>
     </div>
 
     <!-- Previous Solutions (if any) -->
     {% if user_solution %}
-    <div class="bg-[#1e1f23] p-6 rounded">
-        <h2 class="text-xl font-semibold text-white mb-3">Your Previous Solution</h2>
+    <div id="solution" class="bg-[#1e1f23] p-6 rounded">
+        <div class="flex justify-between items-center mb-3">
+            <h2 class="text-xl font-semibold text-white">Your Solution</h2>
+            <div class="flex items-center gap-2">
+                {% if user_solution.is_correct %}
+                <span class="inline-flex items-center bg-green-600/20 border border-green-600 text-green-400 px-3 py-1 rounded-lg text-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-1">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Correct Solution
+                </span>
+                {% else %}
+                <span class="inline-flex items-center bg-yellow-600/20 border border-yellow-600 text-yellow-400 px-3 py-1 rounded-lg text-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-1">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75v.75m0 3v.75m0 3v.75" />
+                    </svg>
+                    Needs Review
+                </span>
+                {% endif %}
+                <span class="text-gray-500 text-sm">Submitted {{ user_solution.submitted_at|date:"M d, Y" }}</span>
+            </div>
+        </div>
         <div class="bg-gray-800 p-4 rounded">
             <pre class="text-white whitespace-pre-wrap">{{ user_solution.solution_text }}</pre>
         </div>
         
         <!-- AI Feedback -->
         <div class="mt-4">
-            <h3 class="text-lg font-medium text-white mb-2">AI Feedback</h3>
-            <div class="bg-indigo-900/50 p-4 rounded">
-                <p class="text-white">{{ user_solution.ai_feedback }}</p>
+            <h3 class="text-lg font-medium text-white mb-2">
+                <span class="flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z" />
+                    </svg>
+                    AI Feedback
+                </span>
+            </h3>
+            <div class="bg-indigo-900/50 p-4 rounded border border-indigo-800">
+                <p class="text-white whitespace-pre-line">{{ user_solution.ai_feedback }}</p>
             </div>
         </div>
     </div>

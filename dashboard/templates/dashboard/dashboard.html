@@ -30,58 +30,39 @@
         </div>
     </div>
 
-    <!-- Daily Boost Section -->
-    <div class="bg-indigo-900 rounded-lg overflow-hidden shadow-2xl text-white hover:shadow-indigo-700/20 hover:shadow-2xl transition-all duration-300 mb-4">
-        <div class="flex flex-col md:flex-row items-center">
-            <div class="p-3 md:p-4 md:w-2/3">
-                <h2 class="text-lg font-bold mb-2">💡 Daily Boost</h2>
-                <div class="flex items-start text-gray-200 mb-2">
-                    <i class="fas fa-quote-left text-indigo-400 mr-2 mt-1"></i>
-                    <p class="quote italic text-base">{{ daily_prompt.quote.text }}</p>
-                    <i class="fas fa-quote-right text-indigo-400 ml-2 mt-auto"></i>
-                </div>
-                <p class="text-sm font-light text-indigo-300">{{ daily_prompt.quote.author }}</p>
-            </div>
-            <div class="md:w-1/3 h-24 md:h-32 relative overflow-hidden">
-                <img src="{% static 'sunrise.png' %}" alt="Daily Inspiration" class="w-full h-full object-cover opacity-80">
-                <div class="absolute inset-0 bg-gradient-to-r from-indigo-900 to-transparent"></div>
-            </div>
-        </div>
-    </div>
+    {% include 'dashboard/sidebar_cards.html' %}
 
     <!-- Cards Grid Section -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <!-- Featured Challenge Card -->
-        <div class="bg-gray-800/60 backdrop-blur-sm rounded-lg overflow-hidden shadow-lg text-white group hover:shadow-xl hover:shadow-indigo-500/10 transition-all duration-300 relative">
+        <div class="bg-gray-800/60 backdrop-blur-sm rounded-card overflow-hidden shadow-lg text-white group hover:shadow-xl hover:shadow-indigo-500/10 transition-all duration-300 relative">
             <div class="absolute inset-0 bg-gradient-to-b from-indigo-600/20 to-indigo-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             <div class="relative p-4">
                 <div class="flex justify-between items-center mb-3">
-                    <h2 class="text-lg font-bold text-indigo-400">⭐ Featured Challenge</h2>
+                    <h2 class="text-lg font-bold text-gray-100 flex items-center">
+                        <i class="fas fa-star text-yellow-400 mr-2"></i> Featured Challenge
+                    </h2>
                 </div>
                 
                 <div class="mb-3 overflow-hidden rounded-lg h-32">
                     <img src="{% static 'cats/challenge.png' %}" alt="Challenge" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500">
                 </div>
                 
-                {% if recommended_challenges.0 %}
-                <h3 class="font-semibold text-lg mb-2">{{ recommended_challenges.0.title }}</h3>
-                <p class="text-gray-400 text-sm mb-4">{{ recommended_challenges.0.description|truncatechars:100 }}</p>
-                <a href="{% url 'challenge_detail' recommended_challenges.0.id %}" class="text-indigo-300 hover:text-indigo-200 inline-block mt-2 group-hover:underline">Browse Challenges →</a>
-                {% else %}
-                <h3 class="font-semibold text-lg mb-2">Create a basic counter using React</h3>
-                <p class="text-gray-400 text-sm mb-4">Are you up for the challenge?</p>
+                <p class="text-gray-300 mb-4">View our curated coding challenges to test your skills and grow as a developer.</p>
+                
                 <a href="{% url 'challenges' %}" class="text-indigo-300 hover:text-indigo-200 inline-block mt-2 group-hover:underline">Browse Challenges →</a>
-                {% endif %}
             </div>
         </div>
 
         <!-- Wins Card -->
-        <div class="bg-gray-800/60 backdrop-blur-sm rounded-lg overflow-hidden shadow-lg text-white group hover:shadow-xl hover:shadow-yellow-500/10 transition-all duration-300 relative">
+        <div class="bg-gray-800/60 backdrop-blur-sm rounded-card overflow-hidden shadow-lg text-white group hover:shadow-xl hover:shadow-yellow-500/10 transition-all duration-300 relative">
             <div class="absolute inset-0 bg-gradient-to-b from-yellow-600/20 to-yellow-800/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             <div class="relative p-4">
                 <div class="mb-3">
                     <div class="flex justify-between items-center">
-                        <h2 class="text-lg font-bold text-yellow-400">🏆 Wins</h2>
+                        <h2 class="text-lg font-bold text-gray-100 flex items-center">
+                            <i class="fas fa-trophy text-yellow-400 mr-2"></i> Wins
+                        </h2>
                     </div>
                 </div>
                 
@@ -89,20 +70,21 @@
                     <img src="{% static 'cats/wins.png' %}" alt="Your wins" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500">
                 </div>
                 
-                <p class="mb-2">You completed your first challenge!</p>
-                <p class="text-gray-400 text-sm mb-4">Keep up the great work and celebrate your achievements!</p>
+                <p class="text-gray-300 mb-4">View the feed to celebrate your achievements and track your progress over time.</p>
                 
                 <a href="{% url 'wins:my_wins' %}" class="text-yellow-300 hover:text-yellow-200 inline-block mt-2 group-hover:underline">View My Wins →</a>
             </div>
         </div>
 
         <!-- Community Feed Card -->
-        <div class="bg-gray-800/60 backdrop-blur-sm rounded-lg overflow-hidden shadow-lg text-white group hover:shadow-xl hover:shadow-rose-500/10 transition-all duration-300 relative">
+        <div class="bg-gray-800/60 backdrop-blur-sm rounded-card overflow-hidden shadow-lg text-white group hover:shadow-xl hover:shadow-rose-500/10 transition-all duration-300 relative">
             <div class="absolute inset-0 bg-gradient-to-b from-rose-600/20 to-rose-800/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             <div class="relative p-4">
                 <div class="mb-3">
                     <div class="flex justify-between items-center">
-                        <h2 class="text-lg font-bold text-rose-400">👥 Community Feed</h2>
+                        <h2 class="text-lg font-bold text-gray-100 flex items-center">
+                            <i class="fas fa-users text-rose-400 mr-2"></i> Community Feed
+                        </h2>
                     </div>
                 </div>
                 
@@ -110,22 +92,7 @@
                     <img src="{% static 'cats/community.png' %}" alt="Community" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500">
                 </div>
                 
-                {% if community_wins and community_wins.0 %}
-                <div class="mb-4">
-                    <div class="flex items-center mb-2">
-                        {% if community_wins.0.user.userprofile.avatar %}
-                        <img src="{{ community_wins.0.user.userprofile.avatar }}" alt="{{ community_wins.0.user.username }}" class="w-6 h-6 rounded-full mr-2">
-                        {% else %}
-                        <img src="{% static 'cats/heart_cat.png' %}" alt="{{ community_wins.0.user.username }}" class="w-6 h-6 rounded-full mr-2">
-                        {% endif %}
-                        <h3 class="font-medium">{{ community_wins.0.user.username }}</h3>
-                    </div>
-                    <p class="text-gray-400 text-sm">{{ community_wins.0.content|truncatechars:60 }}</p>
-                </div>
-                {% else %}
-                <p class="mb-2">No community wins yet.</p>
-                <p class="text-gray-400 text-sm mb-4">Be the first to share your achievement!</p>
-                {% endif %}
+                <p class="text-gray-300 mb-4">View the feed to see what other developers are learning, building, and celebrating.</p>
                 
                 <a href="{% url 'wins:community_wins' %}" class="text-rose-300 hover:text-rose-200 inline-block mt-2 group-hover:underline">View Community →</a>
             </div>
@@ -141,7 +108,7 @@
         <div class="overflow-x-auto -mx-4 sm:mx-0 pb-4">
             <div class="flex space-x-4 sm:space-x-6 px-4 sm:px-0" style="min-width: min-content">
                 {% for solution in all_challenge_solutions %}
-                <div class="bg-gray-800/60 backdrop-blur-sm rounded-lg overflow-hidden shadow-lg w-80 flex-shrink-0 group hover:shadow-xl hover:shadow-cyan-500/10 transition-all duration-300">
+                <div class="bg-gray-800/60 backdrop-blur-sm rounded-card overflow-hidden shadow-lg w-80 flex-shrink-0 group hover:shadow-xl hover:shadow-cyan-500/10 transition-all duration-300">
                     <div class="p-5 relative">
                         <div class="absolute inset-0 bg-gradient-to-b from-cyan-600/10 to-cyan-900/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                         <div class="relative">
@@ -178,7 +145,7 @@
             </div>
         </div>
         {% else %}
-        <div class="bg-gray-800/40 rounded-lg p-6 text-center">
+        <div class="bg-gray-800/40 rounded-card p-6 text-center">
             <p class="text-gray-300 text-lg">No challenge solutions yet.</p>
             <p class="text-gray-400">Be the first to solve a challenge and share your solution!</p>
             <a href="{% url 'challenges' %}" class="mt-4 inline-block text-cyan-400 hover:text-cyan-300">Browse Challenges →</a>
@@ -201,7 +168,7 @@
         <div class="overflow-x-auto -mx-4 sm:mx-0 pb-4">
             <div class="flex space-x-4 sm:space-x-6 px-4 sm:px-0" style="min-width: min-content">
                 {% for article in tech_news_items %}
-                <div class="bg-gray-800/60 backdrop-blur-sm rounded-lg overflow-hidden shadow-lg flex flex-col w-80 flex-shrink-0 group hover:shadow-xl hover:shadow-green-500/10 transition-all duration-300">
+                <div class="bg-gray-800/60 backdrop-blur-sm rounded-card overflow-hidden shadow-lg flex flex-col w-80 flex-shrink-0 group hover:shadow-xl hover:shadow-green-500/10 transition-all duration-300">
                     <div class="relative h-40 overflow-hidden">
                         {% if article.urlToImage %}
                         <img src="{{ article.urlToImage }}" alt="{{ article.title }}" class="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-500">

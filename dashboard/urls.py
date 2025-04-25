@@ -5,7 +5,7 @@ app_name = 'dashboard'
 
 urlpatterns = [
     path('', views.dashboard, name='dashboard'),
-    path('index/', views.index, name='index'),
+    # Removed index path since the view doesn't exist
     path('community/', views.community, name='community'),
     path('tech_news/', views.tech_news, name='tech_news'),
 ]

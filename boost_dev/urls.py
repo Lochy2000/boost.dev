@@ -20,7 +20,7 @@ from dashboard import views
 from users import views as user_views
 
 urlpatterns = [
-    path('', views.home, name='home'),
+    path('', views.dashboard, name='home'),
     path('dashboard/', include('dashboard.urls', namespace='dashboard')),
     path('register/', user_views.register_view, name='register'),
     path('login/', user_views.login_view, name='login'),

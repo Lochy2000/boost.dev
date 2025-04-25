@@ -1,0 +1,195 @@
+/* Boost.dev Card Styles from Uiverse.io */
+
+.boost-card-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.boost-card-design {
+  height: 100%;
+  width: 100%;
+  border-radius: 0.5rem;
+  background: rgb(255, 11, 0);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 11, 0, 1) 13%,
+    rgba(255, 158, 0, 1) 100%
+  );
+  position: relative;
+  overflow: hidden;
+}
+
+.boost-color-border {
+  border-radius: 50%;
+  background-color: #ffffff20;
+  box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.1);
+}
+
+.boost-circle-1 {
+  height: 250px;
+  width: 250px;
+  position: absolute;
+  right: -60px;
+  top: -60px;
+}
+
+.boost-circle-2 {
+  height: 200px;
+  width: 200px;
+}
+
+.boost-circle-3 {
+  height: 150px;
+  width: 150px;
+}
+
+.boost-circle-4 {
+  height: 110px;
+  width: 110px;
+}
+
+.boost-circle-5 {
+  height: 75px;
+  width: 75px;
+  border-radius: 50%;
+  background-color: #ffffff;
+}
+
+.boost-shape {
+  height: 280px;
+  width: 280px;
+  background-color: #484848;
+  transform: rotate(45deg);
+  position: absolute;
+}
+
+.boost-shadow {
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.75);
+}
+
+.boost-mountain-1 {
+  z-index: 1;
+  bottom: -140px;
+  left: -140px;
+}
+
+.boost-mountain-2 {
+  bottom: -150px;
+  left: -30px;
+}
+
+.boost-mountain-3 {
+  z-index: 2;
+  bottom: -170px;
+  left: 100px;
+}
+
+.boost-card-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem;
+  height: 100%;
+}
+
+.boost-card-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, rgba(87, 13, 248, 0.5) 0%, rgba(87, 13, 248, 0.15) 100%);
+  backdrop-filter: blur(5px);
+  z-index: 10;
+}
+
+/* Animation styles */
+.boost-card-design {
+  animation: pulse 8s infinite ease-in-out;
+}
+
+.boost-circle-5 {
+  animation: glow 3s infinite alternate;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes glow {
+  from {
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  }
+  to {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 255, 255, 0.6);
+  }
+}
+
+/* Weather Card Styles */
+.weather-card {
+  background: linear-gradient(135deg, #72b1ff 0%, #3164c2 100%);
+  border-radius: 1rem;
+  overflow: hidden;
+  position: relative;
+  height: 100%;
+  padding: 1.5rem;
+  color: white;
+}
+
+.weather-icon {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.weather-temp {
+  font-size: 3rem;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.weather-feels {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.weather-condition {
+  font-size: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+.weather-details {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.weather-detail-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.weather-detail-icon {
+  font-size: 1.2rem;
+  margin-bottom: 0.25rem;
+}
+
+.weather-location {
+  position: absolute;
+  bottom: 1rem;
+  right: 1.5rem;
+  display: flex;
+  align-items: center;
+}
