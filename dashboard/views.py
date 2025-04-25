@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from services.weather import get_weather_service
@@ -7,6 +7,16 @@ from wins.models import DailyWin
 import logging
 
 logger = logging.getLogger(__name__)
+
+def home(request):
+    """
+    Home page view that directs authenticated users to the dashboard
+    and non-authenticated users to the home page
+    """
+    if request.user.is_authenticated:
+        return redirect('dashboard:dashboard')
+    else:
+        return render(request, 'home.html')
 
 @login_required
 def dashboard(request):
