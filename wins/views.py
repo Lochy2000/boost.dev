@@ -125,13 +125,35 @@ def toggle_celebration(request, win_id):
 
 def community_wins(request):
     """View for displaying public wins from all users"""
-    wins = DailyWin.objects.filter(is_public=True).order_by('-created_at')
+    # Get wins with pagination
+    all_wins = DailyWin.objects.filter(is_public=True).order_by('-created_at')
+    
+    # Pagination parameters
+    page = request.GET.get('page', 1)
+    try:
+        page = int(page)
+    except ValueError:
+        page = 1
+    
+    # Calculate pagination indexes
+    wins_per_page = 6
+    start_idx = (page - 1) * wins_per_page
+    end_idx = start_idx + wins_per_page
+    
+    # Get paginated wins
+    wins = all_wins[start_idx:end_idx]
     
     # Add celebration info for each win
     for win in wins:
         win.celebration_count = win.celebration_count()
         if request.user.is_authenticated:
             win.is_celebrated_by_user = win.is_celebrated_by(request.user)
+    
+    # Calculate pagination information
+    total_wins = all_wins.count()
+    total_pages = (total_wins + wins_per_page - 1) // wins_per_page
+    has_next = page < total_pages
+    has_prev = page > 1
     
     # Get all challenge solutions, not just the ones marked as correct
     challenge_solutions = ChallengeSolution.objects.all().order_by('-submitted_at')
@@ -147,5 +169,13 @@ def community_wins(request):
     return render(request, 'wins/community_wins.html', {
         'wins': wins,
         'challenge_solutions': challenge_solutions,
-        'has_win_today': has_win_today
+        'has_win_today': has_win_today,
+        'pagination': {
+            'page': page,
+            'total_pages': total_pages,
+            'has_next': has_next,
+            'has_prev': has_prev,
+            'next_page': page + 1,
+            'prev_page': page - 1
+        }
     })

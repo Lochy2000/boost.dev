@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="px-6 py-8 max-w-5xl mx-auto space-y-8">
+<div class="px-6 py-8 max-w-6xl mx-auto space-y-8">
     
     <!-- Header -->
     <div>
@@ -9,24 +9,68 @@
         <p class="mt-2 text-gray-400 text-lg">Learn and grow by tackling these challenges</p>
     </div>
 
-    <!-- Filters -->
-    <div class="bg-[#1e1f23] p-4 rounded">
-        <h2 class="text-xl text-white mb-3">Filters</h2>
+    <!-- Search and Filters -->
+    <div class="bg-[#1e1f23] p-6 rounded">
+        <!-- Search Bar -->
+        <form method="get" action="{% url 'challenges' %}" class="mb-6">
+            <div class="flex flex-col md:flex-row gap-4">
+                <div class="flex-grow">
+                    <input type="text" name="q" value="{{ query }}" placeholder="Search challenges..." 
+                        class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white">
+                </div>
+                {% if difficulty_filter %}
+                <input type="hidden" name="difficulty" value="{{ difficulty_filter }}">
+                {% endif %}
+                <button type="submit" class="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 rounded-lg text-white font-medium transition-colors">
+                    Search
+                </button>
+                {% if query %}
+                <a href="{% url 'challenges' %}{% if difficulty_filter %}?difficulty={{ difficulty_filter }}{% endif %}" 
+                    class="px-6 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-white font-medium transition-colors text-center">
+                    Clear Search
+                </a>
+                {% endif %}
+            </div>
+        </form>
+        
+        <!-- Difficulty Filters -->
+        <h2 class="text-xl text-white mb-3">Difficulty</h2>
         <div class="flex flex-wrap gap-4">
-            <a href="{% url 'challenges' %}" class="px-4 py-2 {% if not difficulty_filter %}bg-indigo-600{% else %}bg-gray-700{% endif %} rounded-full text-white text-sm">All</a>
-            <a href="{% url 'challenges' %}?difficulty=beginner" class="px-4 py-2 {% if difficulty_filter == 'beginner' %}bg-indigo-600{% else %}bg-gray-700{% endif %} rounded-full text-white text-sm">Beginner</a>
-            <a href="{% url 'challenges' %}?difficulty=intermediate" class="px-4 py-2 {% if difficulty_filter == 'intermediate' %}bg-indigo-600{% else %}bg-gray-700{% endif %} rounded-full text-white text-sm">Intermediate</a>
-            <a href="{% url 'challenges' %}?difficulty=hard" class="px-4 py-2 {% if difficulty_filter == 'hard' %}bg-indigo-600{% else %}bg-gray-700{% endif %} rounded-full text-white text-sm">Hard</a>
+            <a href="{% url 'challenges' %}{% if query %}?q={{ query }}{% endif %}" 
+                class="px-4 py-2 {% if not difficulty_filter %}bg-indigo-600{% else %}bg-gray-700{% endif %} rounded-lg text-white text-sm transition-colors hover:bg-indigo-500">
+                All Levels
+            </a>
+            <a href="{% url 'challenges' %}?difficulty=beginner{% if query %}&q={{ query }}{% endif %}" 
+                class="px-4 py-2 {% if difficulty_filter == 'beginner' %}bg-green-600{% else %}bg-gray-700{% endif %} rounded-lg text-white text-sm transition-colors hover:bg-green-500">
+                Beginner
+            </a>
+            <a href="{% url 'challenges' %}?difficulty=intermediate{% if query %}&q={{ query }}{% endif %}" 
+                class="px-4 py-2 {% if difficulty_filter == 'intermediate' %}bg-yellow-600{% else %}bg-gray-700{% endif %} rounded-lg text-white text-sm transition-colors hover:bg-yellow-500">
+                Intermediate
+            </a>
+            <a href="{% url 'challenges' %}?difficulty=hard{% if query %}&q={{ query }}{% endif %}" 
+                class="px-4 py-2 {% if difficulty_filter == 'hard' %}bg-red-600{% else %}bg-gray-700{% endif %} rounded-lg text-white text-sm transition-colors hover:bg-red-500">
+                Hard
+            </a>
         </div>
     </div>
 
+    <!-- Challenge Count and Summary -->
+    <div class="flex justify-between items-center">
+        <h2 class="text-2xl font-semibold text-white">All Challenges {% if difficulty_filter %}({{ difficulty_filter|title }}){% endif %}</h2>
+        <p class="text-gray-400">
+            Showing {{ challenges|length }} of {{ total_challenges }} challenges
+            {% if query %}matching "{{ query }}"{% endif %}
+        </p>
+    </div>
+
     <!-- Challenge Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {% if challenges %}
             {% for challenge in challenges %}
-            <div class="bg-[#1e1f23] rounded overflow-hidden shadow-lg">
-                <div class="p-6">
-                    <div class="flex justify-between items-start">
+            <div class="bg-[#1e1f23] rounded-lg overflow-hidden shadow-lg flex flex-col h-full transition-transform hover:scale-[1.02] hover:shadow-xl">
+                <div class="p-6 flex-grow">
+                    <div class="flex justify-between items-start mb-3">
                         <h3 class="text-xl font-semibold text-white">{{ challenge.title }}</h3>
                         <div class="flex items-center gap-2">
                             {% if challenge.is_ai_generated %}
@@ -35,25 +79,106 @@
                             <span class="text-xs font-medium bg-{{ challenge.get_difficulty_color }} text-white px-2 py-1 rounded">{{ challenge.get_difficulty_display }}</span>
                         </div>
                     </div>
-                    <p class="mt-2 text-gray-400">{{ challenge.description|striptags|truncatechars:120 }}</p>
-                    <div class="mt-4 flex justify-between items-center">
-                        <a href="{% url 'challenge_detail' challenge.id %}" class="text-indigo-400 hover:text-indigo-300">View Challenge →</a>
-                        <span class="text-xs text-gray-500">Created by: {{ challenge.created_by.username }}</span>
+                    <p class="mt-2 text-gray-400 mb-4">{{ challenge.description|striptags|truncatechars:100 }}</p>
+                    
+                    <!-- Created info -->
+                    <div class="text-xs text-gray-500 mb-4 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                        </svg>
+                        <span>{{ challenge.created_by.username }}</span>
+                        <span class="mx-1">•</span>
+                        <span>{{ challenge.created_at|date:"M d, Y" }}</span>
+                    </div>
+                </div>
+                
+                <!-- Action buttons at bottom -->
+                <div class="p-4 bg-gray-800/30 border-t border-gray-700">
+                    <div class="flex flex-wrap gap-2 justify-between items-center">
+                        <a href="{% url 'challenge_detail' challenge.id %}" class="text-indigo-400 hover:text-indigo-300 flex items-center gap-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                            </svg>
+                            View Challenge
+                        </a>
+                        
+                        {% if challenge.id in user_solutions %}
+                        <a href="{% url 'challenge_detail' challenge.id %}#solution" class="text-green-400 hover:text-green-300 flex items-center gap-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            View Solution
+                        </a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
             {% endfor %}
         {% else %}
-            <div class="col-span-2 text-center py-8">
-                <p class="text-gray-400">No challenges found. {% if difficulty_filter %}Try a different difficulty filter.{% endif %}</p>
+            <div class="col-span-3 bg-gray-800/50 rounded-lg p-8 text-center">
+                <p class="text-gray-400 text-lg mb-4">No challenges found</p>
+                {% if query or difficulty_filter %}
+                <p class="text-gray-500">Try a different search term or filter setting.</p>
+                <a href="{% url 'challenges' %}" class="mt-4 inline-block px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-500 transition-colors">
+                    View All Challenges
+                </a>
+                {% else %}
+                <p class="text-gray-500">Be the first to create a challenge!</p>
+                {% endif %}
             </div>
         {% endif %}
     </div>
 
+    <!-- Pagination -->
+    {% if total_pages > 1 %}
+    <div class="flex justify-center mt-8">
+        <div class="inline-flex rounded-md shadow-sm" role="group">
+            {% if has_prev %}
+            <a href="?page={{ current_page|add:'-1' }}{% if difficulty_filter %}&difficulty={{ difficulty_filter }}{% endif %}{% if query %}&q={{ query }}{% endif %}" 
+                class="px-4 py-2 text-sm font-medium text-white bg-gray-800 rounded-l-lg border border-gray-700 hover:bg-gray-700 transition-colors">
+                Previous
+            </a>
+            {% else %}
+            <span class="px-4 py-2 text-sm font-medium text-gray-400 bg-gray-900 rounded-l-lg border border-gray-700 cursor-not-allowed">
+                Previous
+            </span>
+            {% endif %}
+            
+            {% for p in page_range %}
+            <a href="?page={{ p }}{% if difficulty_filter %}&difficulty={{ difficulty_filter }}{% endif %}{% if query %}&q={{ query }}{% endif %}" 
+                class="px-4 py-2 text-sm font-medium {% if p == current_page %}bg-indigo-600 text-white{% else %}bg-gray-800 text-white hover:bg-gray-700{% endif %} border-t border-b border-gray-700 transition-colors">
+                {{ p }}
+            </a>
+            {% endfor %}
+            
+            {% if has_next %}
+            <a href="?page={{ current_page|add:'1' }}{% if difficulty_filter %}&difficulty={{ difficulty_filter }}{% endif %}{% if query %}&q={{ query }}{% endif %}" 
+                class="px-4 py-2 text-sm font-medium text-white bg-gray-800 rounded-r-lg border border-gray-700 hover:bg-gray-700 transition-colors">
+                Next
+            </a>
+            {% else %}
+            <span class="px-4 py-2 text-sm font-medium text-gray-400 bg-gray-900 rounded-r-lg border border-gray-700 cursor-not-allowed">
+                Next
+            </span>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
     <!-- Action Buttons -->
-    <div class="flex flex-wrap gap-4 justify-start pt-6">
-        <a href="{% url 'new_challenge' %}" class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-3 rounded shadow transition-all">Create a Challenge</a>
-        <a href="{% url 'generate_challenge' %}" class="bg-rose-600 hover:bg-rose-700 text-white px-5 py-3 rounded shadow transition-all">Generate a Challenge</a>
+    <div class="flex flex-wrap gap-4 justify-center md:justify-start pt-6">
+        <a href="{% url 'new_challenge' %}" class="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-3 rounded-lg shadow transition-colors flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+            </svg>
+            Create a Challenge
+        </a>
+        <a href="{% url 'generate_challenge' %}" class="bg-rose-600 hover:bg-rose-500 text-white px-5 py-3 rounded-lg shadow transition-colors flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" />
+            </svg>
+            Generate with AI
+        </a>
     </div>
 </div>
 {% endblock %}

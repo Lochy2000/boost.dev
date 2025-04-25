@@ -1,0 +1,95 @@
+<!-- Daily Boost and Weather/Challenge Cards Section -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+    <!-- Daily Boost Card -->
+    <div class="relative md:col-span-2">
+        <h2 class="text-xl font-bold text-white mb-3 flex items-center">
+            <i class="fas fa-lightbulb text-yellow-400 mr-2"></i> Daily Boost
+        </h2>
+        <div class="bg-transparent text-white overflow-hidden rounded-lg h-64">
+            <!-- The UI Card Design - Full Size -->
+            <div class="boost-card-center h-full relative shadow-2xl transition-all duration-300 hover:shadow-lg">
+                <div class="boost-card-design w-full h-full">
+                    <div class="boost-circle-1 boost-card-center boost-color-border">
+                        <div class="boost-circle-2 boost-card-center boost-color-border">
+                            <div class="boost-circle-3 boost-card-center boost-color-border">
+                                <div class="boost-circle-4 boost-card-center boost-color-border">
+                                    <div class="boost-circle-5"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="boost-mountain-1 boost-shape boost-shadow"></div>
+                    <div class="boost-mountain-2 boost-shape"></div>
+                    <div class="boost-mountain-3 boost-shape boost-shadow"></div>
+                </div>
+                
+                <!-- Quote overlay with simplified content -->
+                <div class="absolute inset-0 flex flex-col justify-center items-center px-8 py-6 text-center z-10">
+                    {% if ai_boost %}
+                    <div class="bg-black/30 p-4 rounded-xl backdrop-blur-sm">
+                        <p class="quote italic text-lg font-medium text-white">"{{ ai_boost.quote }}"</p>
+                        <p class="text-sm font-light text-white/90 mt-2">- {{ ai_boost.author }}</p>
+                    </div>
+                    {% else %}
+                    <div class="bg-black/30 p-4 rounded-xl backdrop-blur-sm">
+                        <p class="quote italic text-lg font-medium text-white">"{{ daily_prompt.quote.text }}"</p>
+                        <p class="text-sm font-light text-white/90 mt-2">- {{ daily_prompt.quote.author }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Weather and Challenge Cards Column -->
+    <div class="md:col-span-1 flex flex-col gap-6">
+        <!-- Weather Card -->
+        {% if weather %}
+        <div>
+            <h2 class="text-xl font-bold text-white mb-3 flex items-center">
+                <i class="fas fa-cloud-sun text-yellow-400 mr-2"></i> Weather
+            </h2>
+            <div class="weather-widget-card {% if weather.condition == 'Clear' %}weather-widget-clear{% elif weather.condition == 'Clouds' %}weather-widget-clouds{% elif weather.condition == 'Rain' %}weather-widget-rain{% elif weather.condition == 'Thunderstorm' %}weather-widget-thunder{% elif weather.condition == 'Snow' %}weather-widget-snow{% elif weather.condition == 'Mist' or weather.condition == 'Fog' %}weather-widget-mist{% endif %}">
+                <div class="weather-widget-title">
+                    <i class="fas fa-cloud-sun text-yellow-400 mr-2"></i> Weather
+                </div>
+                <div class="weather-widget-container">
+                    <div class="weather-widget-cloud weather-widget-front">
+                        <span class="weather-widget-left-front"></span>
+                        <span class="weather-widget-right-front"></span>
+                    </div>
+                    <span class="weather-widget-sun weather-widget-sunshine"></span>
+                    <span class="weather-widget-sun"></span>
+                    <div class="weather-widget-cloud weather-widget-back">
+                        <span class="weather-widget-left-back"></span>
+                        <span class="weather-widget-right-back"></span>
+                    </div>
+                </div>
+                <div class="weather-widget-header">
+                    <span>{{ weather.city }}, {{ weather.country }}</span>
+                    <span>{{ weather.timestamp|slice:":10" }}</span>
+                </div>
+                <span class="weather-widget-temp">{{ weather.temperature }}°</span>
+                <div class="weather-widget-temp-scale">
+                    <span>Celsius</span>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        
+        <!-- Today's Challenge Card -->
+        <div>
+            <h2 class="text-xl font-bold text-white mb-3 flex items-center">
+                <i class="fas fa-star text-yellow-400 mr-2"></i> Today's Challenge
+            </h2>
+            <div class="bg-indigo-800/70 rounded-card shadow-lg">
+                <div class="p-4 border border-indigo-600/30">
+                    <p class="text-white mb-3">Solve our latest challenge to level up 20 points.</p>
+                    <a href="{% url 'challenges' %}" class="text-indigo-300 hover:text-indigo-200 inline-flex items-center group">
+                        View Challenge <i class="fas fa-arrow-right ml-1 group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

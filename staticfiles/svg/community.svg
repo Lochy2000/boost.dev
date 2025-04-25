@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800px" height="600px" viewBox="0 0 800 600" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(150, 100)">
+            <!-- Group of four people -->
+            
+            <!-- Person 1 (pink outfit) -->
+            <g transform="translate(50, 180)">
+                <!-- Body -->
+                <rect fill="#FF8ED4" x="0" y="50" width="80" height="120" rx="10"></rect>
+                <!-- Head -->
+                <circle fill="#FFEBF7" cx="40" cy="25" r="25"></circle>
+                <!-- Arms -->
+                <rect fill="#FFEBF7" x="-10" y="70" width="20" height="70" rx="5"></rect>
+                <rect fill="#FFEBF7" x="70" y="70" width="20" height="70" rx="5"></rect>
+                <!-- Legs -->
+                <rect fill="#F9C5E4" x="15" y="170" width="20" height="40"></rect>
+                <rect fill="#F9C5E4" x="45" y="170" width="20" height="40"></rect>
+                <!-- Hair -->
+                <path fill="#333333" d="M40,0 C25,0 15,10 15,25 L65,25 C65,10 55,0 40,0 Z"></path>
+            </g>
+            
+            <!-- Person 2 (blue outfit) -->
+            <g transform="translate(150, 180)">
+                <!-- Body -->
+                <rect fill="#8E9FFF" x="0" y="50" width="80" height="120" rx="10"></rect>
+                <!-- Head -->
+                <circle fill="#E6EBFF" cx="40" cy="25" r="25"></circle>
+                <!-- Arms -->
+                <rect fill="#E6EBFF" x="-10" y="70" width="20" height="70" rx="5"></rect>
+                <rect fill="#E6EBFF" x="70" y="70" width="20" height="70" rx="5"></rect>
+                <!-- Legs -->
+                <rect fill="#C5CFF9" x="15" y="170" width="20" height="40"></rect>
+                <rect fill="#C5CFF9" x="45" y="170" width="20" height="40"></rect>
+                <!-- Hair -->
+                <path fill="#553300" d="M20,12 C30,0 50,0 60,12 C65,20 65,30 60,40 L20,40 C15,30 15,20 20,12 Z"></path>
+            </g>
+            
+            <!-- Person 3 (white outfit) -->
+            <g transform="translate(250, 180)">
+                <!-- Body -->
+                <rect fill="#FFFFFF" x="0" y="50" width="80" height="120" rx="10"></rect>
+                <!-- Head -->
+                <circle fill="#F0F0F0" cx="40" cy="25" r="25"></circle>
+                <!-- Arms -->
+                <rect fill="#F0F0F0" x="-10" y="70" width="20" height="70" rx="5"></rect>
+                <rect fill="#F0F0F0" x="70" y="70" width="20" height="70" rx="5"></rect>
+                <!-- Legs -->
+                <rect fill="#E0E0E0" x="15" y="170" width="20" height="40"></rect>
+                <rect fill="#E0E0E0" x="45" y="170" width="20" height="40"></rect>
+                <!-- Hair -->
+                <path fill="#000000" d="M15,25 C15,13 25,0 40,0 C55,0 65,13 65,25 L15,25 Z"></path>
+                <rect fill="#000000" x="15" y="20" width="50" height="15" rx="7"></rect>
+            </g>
+            
+            <!-- Person 4 (purple outfit) -->
+            <g transform="translate(350, 180)">
+                <!-- Body -->
+                <rect fill="#B88EFF" x="0" y="50" width="80" height="120" rx="10"></rect>
+                <!-- Head -->
+                <circle fill="#F2EBFF" cx="40" cy="25" r="25"></circle>
+                <!-- Arms -->
+                <rect fill="#F2EBFF" x="-10" y="70" width="20" height="70" rx="5"></rect>
+                <rect fill="#F2EBFF" x="70" y="70" width="20" height="70" rx="5"></rect>
+                <!-- Legs -->
+                <rect fill="#E0C5F9" x="15" y="170" width="20" height="40"></rect>
+                <rect fill="#E0C5F9" x="45" y="170" width="20" height="40"></rect>
+                <!-- Hair -->
+                <path fill="#000000" d="M15,25 C15,10 25,0 40,0 C55,0 65,10 65,25 C55,15 25,15 15,25 Z"></path>
+            </g>
+            
+            <!-- Connection lines between people -->
+            <g stroke="#96BBFA" stroke-width="3" stroke-dasharray="5,3">
+                <line x1="90" y1="250" x2="150" y2="250"></line>
+                <line x1="230" y1="250" x2="250" y2="250"></line>
+                <line x1="330" y1="250" x2="350" y2="250"></line>
+            </g>
+            
+            <!-- Communication bubbles -->
+            <g>
+                <!-- Bubble 1 -->
+                <path fill="#F8F9FA" stroke="#E5E7EB" stroke-width="2" d="M60,150 C30,150 30,120 60,120 L100,120 C130,120 130,150 100,150 L90,170 L80,150 L60,150 Z"></path>
+                <!-- Bubble 2 -->
+                <path fill="#F8F9FA" stroke="#E5E7EB" stroke-width="2" d="M260,140 C230,140 230,110 260,110 L300,110 C330,110 330,140 300,140 L310,160 L290,140 L260,140 Z"></path>
+                <!-- Bubble 3 -->
+                <path fill="#F8F9FA" stroke="#E5E7EB" stroke-width="2" d="M360,150 C330,150 330,120 360,120 L400,120 C430,120 430,150 400,150 L390,170 L380,150 L360,150 Z"></path>
+            </g>
+        </g>
+    </g>
+</svg>

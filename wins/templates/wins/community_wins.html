@@ -23,6 +23,33 @@
                     {% include 'wins/win_card.html' with win=win show_ai_feedback=True %}
                 {% endfor %}
             </div>
+            
+            <!-- Pagination Controls -->
+            {% if pagination.total_pages > 1 %}
+            <div class="flex justify-center items-center mt-6 gap-4">
+                {% if pagination.has_prev %}
+                <a href="?page={{ pagination.prev_page }}" class="flex items-center justify-center px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-md transition-colors">
+                    <i class="fas fa-chevron-left mr-2"></i> Previous
+                </a>
+                {% else %}
+                <button disabled class="flex items-center justify-center px-4 py-2 bg-gray-800 text-gray-500 rounded-md cursor-not-allowed">
+                    <i class="fas fa-chevron-left mr-2"></i> Previous
+                </button>
+                {% endif %}
+                
+                <span class="text-gray-300">Page {{ pagination.page }} of {{ pagination.total_pages }}</span>
+                
+                {% if pagination.has_next %}
+                <a href="?page={{ pagination.next_page }}" class="flex items-center justify-center px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-md transition-colors">
+                    Next <i class="fas fa-chevron-right ml-2"></i>
+                </a>
+                {% else %}
+                <button disabled class="flex items-center justify-center px-4 py-2 bg-gray-800 text-gray-500 rounded-md cursor-not-allowed">
+                    Next <i class="fas fa-chevron-right ml-2"></i>
+                </button>
+                {% endif %}
+            </div>
+            {% endif %}
         {% else %}
             <div class="bg-gray-800 rounded-lg p-6 shadow-lg mb-4 text-center">
                 <p class="text-gray-300 text-lg">No community wins yet. Be the first to share your achievement!</p>
