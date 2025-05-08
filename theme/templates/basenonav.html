@@ -8,6 +8,10 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>{% block title %}Boost.dev - Accelerate Your Development Journey{% endblock %}</title>
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{% static 'favicons/favicon.ico' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicons/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicons/favicon-16x16.png' %}">
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   {% tailwind_css %}
@@ -21,11 +25,12 @@
 
 <body>
 
-  <header>
-    <a href="{% url 'dashboard:dashboard' %}" class="text-2xl font-bold text-white flex items-center gap-2">
-      <span class="logo-icon text-white">B</span>
-      Boost.dev
-    </a>
+  <header class="shadow-lg sticky top-0 z-50 backdrop-blur-md">
+    <nav class="container mx-auto flex items-center justify-between p-4">
+      <a href="{% url 'dashboard:dashboard' %}" class="text-2xl font-bold text-white flex items-center gap-2 hover:opacity-80 transition-opacity focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-transparent rounded">
+        <img src="{% static 'images/whitlogo.png' %}" alt="Boost.dev Logo" class="responsive-logo" />
+      </a>
+    </nav>
   </header>
 
   <!-- Messages Section -->

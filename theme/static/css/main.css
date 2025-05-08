@@ -430,6 +430,22 @@ footer {
     }
 }
 
+.responsive-logo {
+    width: 350px; /* Standard logo width */
+    /* height: 500px; Standard logo height */
+    max-width: 100%; /* Ensure responsiveness */
+    height: auto; 
+    
+}
+
+@media (max-width: 768px) {
+    .responsive-logo {
+        width: 200px; /* Adjust size for smaller screens */
+        height: 200px; /* Adjust size for smaller screens */
+        
+    }
+}
+
 /* Media Queries */
 @media (max-width: 600px) {
     h1 {
