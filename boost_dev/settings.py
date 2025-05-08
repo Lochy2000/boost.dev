@@ -83,6 +83,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'boost_dev.urls'
@@ -192,6 +193,12 @@ SOCIAL_AUTH_GITHUB_SECRET = os.environ.get('GITHUB_SECRET', '')
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get('GOOGLE_KEY', '')
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get('GOOGLE_SECRET', '')
+
+SOCIAL_AUTH_FACEBOOK_OAUTH2_KEY = os.environ.get('FACEBOOK_KEY', '')
+SOCIAL_AUTH_FACEBOOK_OAUTH2_SECRET = os.environ.get('FACEBOOK_SECRET', '')
+
+SOCIAL_AUTH_LINKEDIN_OAUTH2_KEY = os.environ.get('LINKEDIN_OAUTH2_KEY', '')
+SOCIAL_AUTH_LINKEDIN_OAUTH2_SECRET = os.environ.get('LINKEDIN_OAUTH2_SECRET', '')
 
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/dashboard/'
 SOCIAL_AUTH_LOGIN_ERROR_URL = '/login/'
