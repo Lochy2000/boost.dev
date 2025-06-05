@@ -23,8 +23,7 @@ def submit_win(request):
                 try:
                     print(f"Getting AI feedback for: {win.content}")
                     feedback = get_ai_feedback(win.content, request.user.username)
-                    # Replace the template placeholder with actual username
-                    win.ai_feedback = feedback.replace("{user.username}", request.user.username)
+                    win.ai_feedback = feedback
                     print(f"Received AI feedback: {win.ai_feedback}")
                 except Exception as e:
                     print(f"Error getting AI feedback: {e}")
