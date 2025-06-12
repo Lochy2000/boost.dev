@@ -24,7 +24,7 @@ urlpatterns = [
     path('dashboard/', include('dashboard.urls', namespace='dashboard')),
     path('register/', user_views.register_view, name='register'),
     path('accounts/', include('social_django.urls', namespace='social')),
-    path('accounts/login/', user_views.login_view, name='login'),
+    path('login/', user_views.login_view, name='login'),
     path('users/', include('users.urls')),
     path('grappelli/', include('grappelli.urls')),
     path('admin/', admin.site.urls),
