@@ -18,12 +18,15 @@
 
   <!-- Custom CSS -->
   <link rel="stylesheet" href="{% static 'css/main.css' %}">
+  
+  <!-- Enhanced lo-fi styles -->
+  <link rel="stylesheet" href="{% static 'css/home-enhanced.css' %}">
 
   <!-- FontAwesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 
-<body>
+<body class="min-h-screen flex flex-col">
 
   <header class="shadow-lg sticky top-0 z-50 backdrop-blur-md">
     <nav class="container mx-auto flex items-center justify-between p-4">
@@ -58,7 +61,7 @@
   
 
   <!-- Main Content Section -->
-  <main class="p-4">
+  <main>
     {% block content %}
     <!-- Content from child templates will be inserted here -->
     {% endblock %}
