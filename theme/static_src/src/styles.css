@@ -8,3 +8,18 @@
   * the scope of this path.
   */
 @source "../../../**/*.{html,py,js}";
+
+/* Global background for the entire page */
+html,
+body {
+  background-image: url('../boost-dev-bkgd.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* Ensures background stays fixed during scroll */
+}
+
+/* Custom background for hero section - this will be an overlay within the hero section */
+.hero-bg-image {
+  background-image: url('../images/boost-dev-bkgd.png');
+}
