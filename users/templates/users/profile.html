@@ -1,120 +1,266 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 
-<div class="max-w-5xl mx-auto px-4 py-12 text-gray-200">
-    <div class="flex justify-between items-center mb-10">
-        <div>
-            <h1 class="text-4xl font-extrabold text-white mt-6">Edit Your Profile</h1>
-            <p class="text-sm text-gray-400 mt-1">Customize your vibe. Show off your dev energy ✨</p>
+<!-- Floating geometric elements -->
+<div class="floating-element floating-circle" style="top: 20%; left: 8%; animation-delay: 2s;"></div>
+<div class="floating-element floating-square" style="top: 75%; right: 10%; animation-delay: 5s;"></div>
+
+<div class="container mx-auto px-4 py-8 max-w-6xl">
+    <!-- Enhanced Header -->
+    <div class="glass-card p-8 mb-10 fade-in">
+        <div class="flex items-center justify-between">
+            <div>
+                <h1 class="text-4xl font-bold heading-gradient mb-2">
+                    <i class="fas fa-user-circle mr-3 text-purple-400"></i>
+                    Edit Your Profile
+                </h1>
+                <p class="text-gray-400 text-lg">Customize your developer identity and showcase your journey ✨</p>
+            </div>
+            <div class="hidden lg:flex items-center gap-2">
+                <div class="w-3 h-3 bg-purple-400 rounded-full animate-pulse"></div>
+                <span class="text-gray-400 text-sm">Live preview</span>
+            </div>
         </div>
     </div>
 
-
-    <div class="grid md:grid-cols-3 gap-10">
-        <!-- Left column: Avatar preview -->
-        <div class="flex flex-col items-center text-center space-y-6 md:col-span-1">
-            <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-[#312fa6] shadow-md">
-                {% if user.userprofile.avatar %}
-                <img src="{{ user.userprofile.avatar }}" alt="Profile Picture" class="w-full h-full object-cover">
+    <div class="grid lg:grid-cols-3 gap-8">
+        <!-- Left Column: Profile Preview -->
+        <div class="lg:col-span-1 space-y-6">
+            <!-- Avatar & Basic Info -->
+            <div class="content-card glass-card-purple text-center fade-in">
+                <div class="relative inline-block mb-6">
+                    <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-purple-400/50 shadow-lg mx-auto">
+                        {% if user.userprofile.avatar %}
+                        <img src="{{ user.userprofile.avatar }}" alt="Profile Picture" class="w-full h-full object-cover">
+                        {% else %}
+                        <div class="w-full h-full bg-gradient-to-br from-purple-400 to-blue-500 flex items-center justify-center">
+                            <i class="fas fa-user text-white text-4xl"></i>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="absolute -bottom-2 -right-2 w-8 h-8 bg-green-400 rounded-full border-2 border-gray-900 flex items-center justify-center">
+                        <i class="fas fa-check text-white text-xs"></i>
+                    </div>
+                </div>
+                
+                <h3 class="text-xl font-bold text-white mb-2">{{ user.username }}</h3>
+                <p class="text-gray-400 text-sm mb-4">{{ user.userprofile.experience_level|title }} Developer</p>
+                
+                {% if user.userprofile.bio %}
+                <p class="text-gray-300 text-sm leading-relaxed">{{ user.userprofile.bio }}</p>
                 {% else %}
-                <img src="https://res.cloudinary.com/dn7aws3wl/image/upload/v1739390582/nobody_pcaqjl.jpg"
-                    alt="Default Profile Picture" class="w-full h-full object-cover">
+                <p class="text-gray-500 text-sm italic">Add a bio to tell others about yourself!</p>
                 {% endif %}
             </div>
-            <p class="text-sm text-gray-400">Avatar preview</p>
 
-            <!-- User Level and Progress -->
-            <div class="w-full bg-gray-800 rounded p-4 shadow">
-                <div class="flex justify-between items-center mb-2">
-                    <span class="text-white font-semibold">Level {{ user.progress.level }}</span>
-                    <span class="text-gray-400 text-sm">{{ user.progress.points }} / 
-                        {{ user.progress.next_level_threshold }}</span>
+            <!-- Level & Progress -->
+            <div class="content-card glass-card-blue fade-in">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold text-white flex items-center">
+                        <i class="fas fa-chart-line mr-2 text-blue-400"></i>
+                        Progress
+                    </h3>
+                    <span class="text-blue-400 font-bold">Level {{ user.progress.level }}</span>
                 </div>
 
-                <!-- Progress Bar -->
-                <div class="w-full bg-gray-700 rounded-full h-4 mb-4">
-                    <div class="bg-{{ user.progress.get_level_color }}-500 h-4 rounded-full"
-                        style="width: {{ user.progress.calculate_percentage }}%"></div>
+                <div class="mb-4">
+                    <div class="flex justify-between text-sm text-gray-400 mb-2">
+                        <span>{{ user.progress.points }} XP</span>
+                        <span>{{ user.progress.next_level_threshold }} XP</span>
+                    </div>
+                    <div class="w-full bg-gray-700 rounded-full h-3 overflow-hidden">
+                        <div class="bg-gradient-to-r from-blue-400 to-purple-500 h-3 rounded-full transition-all duration-500"
+                             style="width: {{ user.progress.calculate_percentage }}%"></div>
+                    </div>
+                    <p class="text-gray-400 text-xs mt-2 text-center">{{ user.progress.calculate_percentage }}% to next level</p>
                 </div>
-
-                <p class="text-gray-400 text-sm">{{ user.progress.calculate_percentage }}% to next level</p>
             </div>
 
             <!-- Achievements -->
-            <div class="w-full bg-gray-800 rounded p-4 shadow">
-                <h3 class="text-white font-semibold mb-4">Achievements</h3>
+            <div class="content-card glass-card-green fade-in">
+                <h3 class="text-lg font-semibold text-white mb-4 flex items-center">
+                    <i class="fas fa-trophy mr-2 text-yellow-400"></i>
+                    Achievements
+                </h3>
 
                 {% if user_achievements %}
                 <div class="grid grid-cols-2 gap-3">
                     {% for user_achievement in user_achievements %}
-                    <div class="bg-gray-700 rounded p-2 text-center">
-                        <i class="fas fa-{{ user_achievement.achievement.icon }} text-yellow-400 text-xl mb-1"></i>
-                        <p class="text-white text-sm font-medium">{{ user_achievement.achievement.name }}</p>
+                    <div class="bg-white/5 rounded-lg p-3 text-center border border-white/10 hover:border-yellow-400/30 transition-colors">
+                        <i class="fas fa-{{ user_achievement.achievement.icon }} text-yellow-400 text-lg mb-2"></i>
+                        <p class="text-white text-xs font-medium">{{ user_achievement.achievement.name }}</p>
                     </div>
                     {% endfor %}
                 </div>
                 {% else %}
-                <p class="text-gray-400 text-sm text-center">No achievements yet. Keep going!</p>
+                <div class="text-center py-6">
+                    <i class="fas fa-medal text-4xl text-gray-600 mb-3"></i>
+                    <p class="text-gray-400 text-sm">No achievements yet</p>
+                    <p class="text-gray-500 text-xs">Keep coding to unlock rewards!</p>
+                </div>
                 {% endif %}
             </div>
         </div>
 
-        <!-- Right column: Form -->
-        <div class="md:col-span-2">
-            <form method="post" action="{% url 'users:profile' %}" class="space-y-6">
-                {% csrf_token %}
-                {{ form.non_field_errors }}
-
-                <div>
-                    <label for="{{ form.avatar.id_for_label }}" class="block mb-1 text-sm text-gray-300">Avatar
-                        URL</label>
-                    {{ form.avatar }}
-                    {% for error in form.avatar.errors %}
-                    <p class="text-sm text-red-500 mt-1">{{ error }}</p>
-                    {% endfor %}
+        <!-- Right Column: Edit Form -->
+        <div class="lg:col-span-2">
+            <div class="content-card fade-in">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-white mb-2 flex items-center">
+                        <i class="fas fa-edit mr-2 text-purple-400"></i>
+                        Profile Settings
+                    </h2>
+                    <p class="text-gray-400">Update your information and preferences</p>
                 </div>
 
-                <div>
-                    <label for="{{ form.bio.id_for_label }}" class="block mb-1 text-sm text-gray-300">Short Bio</label>
-                    {{ form.bio }}
-                    {% for error in form.bio.errors %}
-                    <p class="text-sm text-red-500 mt-1">{{ error }}</p>
-                    {% endfor %}
-                </div>
+                <form method="post" action="{% url 'users:profile' %}" class="space-y-6">
+                    {% csrf_token %}
+                    
+                    {% if form.non_field_errors %}
+                    <div class="bg-red-500/10 border border-red-500/20 rounded-lg p-4 mb-6">
+                        {% for error in form.non_field_errors %}
+                        <p class="text-red-400 text-sm flex items-center">
+                            <i class="fas fa-exclamation-circle mr-2"></i>{{ error }}
+                        </p>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
 
-                <div>
-                    <label for="{{ form.github_username.id_for_label }}"
-                        class="block mb-1 text-sm text-gray-300 flex items-center gap-2">
-                        <i class="fab fa-github text-white text-2xl"></i>
-                        GitHub Username
-                    </label>
-                    {{ form.github_username }}
-                    {% for error in form.github_username.errors %}
-                    <p class="text-sm text-red-500 mt-1">{{ error }}</p>
-                    {% endfor %}
-                </div>
+                    <!-- Avatar URL -->
+                    <div class="form-group">
+                        <label for="{{ form.avatar.id_for_label }}" class="form-label">
+                            <i class="fas fa-image mr-2 text-purple-400"></i>Avatar URL
+                        </label>
+                        <input type="url" 
+                               name="avatar" 
+                               id="{{ form.avatar.id_for_label }}" 
+                               value="{{ form.avatar.value|default:'' }}"
+                               placeholder="https://example.com/your-avatar.jpg"
+                               class="form-input">
+                        <small class="text-gray-500 text-xs mt-1 block">
+                            <i class="fas fa-info-circle mr-1"></i>Paste a direct link to your profile image
+                        </small>
+                        {% for error in form.avatar.errors %}
+                        <p class="text-red-400 text-sm mt-2 flex items-center">
+                            <i class="fas fa-exclamation-circle mr-1"></i>{{ error }}
+                        </p>
+                        {% endfor %}
+                    </div>
 
-                <div>
-                    <label for="{{ form.experience_level.id_for_label }}"
-                        class="block mb-1 text-sm text-gray-300">Experience Level</label>
-                    {{ form.experience_level }}
-                    {% for error in form.experience_level.errors %}
-                    <p class="text-sm text-red-500 mt-1">{{ error }}</p>
-                    {% endfor %}
-                </div>
+                    <!-- Bio -->
+                    <div class="form-group">
+                        <label for="{{ form.bio.id_for_label }}" class="form-label">
+                            <i class="fas fa-quote-left mr-2 text-blue-400"></i>Bio
+                        </label>
+                        <textarea name="bio" 
+                                  id="{{ form.bio.id_for_label }}" 
+                                  rows="4"
+                                  placeholder="Tell us about yourself, your interests, and your coding journey..."
+                                  class="form-input">{{ form.bio.value|default:'' }}</textarea>
+                        <small class="text-gray-500 text-xs mt-1 block">
+                            <i class="fas fa-info-circle mr-1"></i>Share what makes you unique as a developer
+                        </small>
+                        {% for error in form.bio.errors %}
+                        <p class="text-red-400 text-sm mt-2 flex items-center">
+                            <i class="fas fa-exclamation-circle mr-1"></i>{{ error }}
+                        </p>
+                        {% endfor %}
+                    </div>
 
-                <!-- Buttons -->
-                <div class="flex items-center justify-between pt-6">
+                    <!-- GitHub Username -->
+                    <div class="form-group">
+                        <label for="{{ form.github_username.id_for_label }}" class="form-label">
+                            <i class="fab fa-github mr-2 text-gray-300"></i>GitHub Username
+                        </label>
+                        <input type="text" 
+                               name="github_username" 
+                               id="{{ form.github_username.id_for_label }}" 
+                               value="{{ form.github_username.value|default:'' }}"
+                               placeholder="your-github-username"
+                               class="form-input">
+                        <small class="text-gray-500 text-xs mt-1 block">
+                            <i class="fas fa-link mr-1"></i>Connect your GitHub to showcase your repositories
+                        </small>
+                        {% for error in form.github_username.errors %}
+                        <p class="text-red-400 text-sm mt-2 flex items-center">
+                            <i class="fas fa-exclamation-circle mr-1"></i>{{ error }}
+                        </p>
+                        {% endfor %}
+                    </div>
 
-                    <button type="submit"
-                        class="bg-indigo-500 hover:bg-indigo-600 text-white px-5 py-3 rounded shadow transition-all">
-                        Save Changes
-                    </button>
-                </div>
-            </form>
-            
+                    <!-- Experience Level -->
+                    <div class="form-group">
+                        <label for="{{ form.experience_level.id_for_label }}" class="form-label">
+                            <i class="fas fa-chart-line mr-2 text-green-400"></i>Experience Level
+                        </label>
+                        <select name="experience_level" 
+                                id="{{ form.experience_level.id_for_label }}" 
+                                class="form-input">
+                            {% for value, label in form.experience_level.field.choices %}
+                                <option value="{{ value }}" {% if form.experience_level.value == value %}selected{% endif %}>
+                                    {{ label }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                        <small class="text-gray-500 text-xs mt-1 block">
+                            <i class="fas fa-info-circle mr-1"></i>This helps us tailor content to your skill level
+                        </small>
+                        {% for error in form.experience_level.errors %}
+                        <p class="text-red-400 text-sm mt-2 flex items-center">
+                            <i class="fas fa-exclamation-circle mr-1"></i>{{ error }}
+                        </p>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex flex-col sm:flex-row gap-4 pt-6 border-t border-gray-700/50">
+                        <button type="submit" class="btn-modern btn-primary flex-1 sm:flex-none">
+                            <i class="fas fa-save mr-2"></i>Save Changes
+                        </button>
+                        <a href="{% url 'dashboard:dashboard' %}" class="btn-modern btn-glass flex-1 sm:flex-none">
+                            <i class="fas fa-arrow-left mr-2"></i>Back to Dashboard
+                        </a>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
+
+<style>
+/* Profile page specific enhancements */
+.content-card .form-input:focus {
+    border-color: var(--accent-purple);
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+}
+
+/* Enhanced select styling */
+select.form-input {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.75rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+    appearance: none;
+}
+
+/* Progress bar animation */
+.bg-gradient-to-r {
+    background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+}
+
+/* Avatar border animation */
+.border-purple-400\/50 {
+    border-color: rgba(139, 92, 246, 0.5);
+    animation: border-glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes border-glow {
+    from { border-color: rgba(139, 92, 246, 0.3); }
+    to { border-color: rgba(139, 92, 246, 0.8); }
+}
+</style>
+
 {% endblock %}

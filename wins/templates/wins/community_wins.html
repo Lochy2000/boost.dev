@@ -9,104 +9,306 @@
 {% endblock %}
 
 {% block content %}
+
+<!-- Floating geometric elements -->
+<div class="floating-element floating-circle" style="top: 15%; right: 10%; animation-delay: 1s;"></div>
+<div class="floating-element floating-square" style="top: 65%; left: 5%; animation-delay: 4s;"></div>
+<div class="floating-element floating-triangle" style="top: 35%; right: 8%; animation-delay: 7s;"></div>
+
 <div class="container mx-auto px-4 py-8 max-w-6xl">
-    <h1 class="text-3xl font-bold text-white mb-2">Community Hub</h1>
-    <p class="text-gray-300 mb-6">Discover wins and challenge solutions shared by the Boost.dev community!</p>
+    <!-- Enhanced Header -->
+    <div class="glass-card p-8 mb-10 fade-in">
+        <div class="text-center">
+            <h1 class="text-4xl font-bold heading-gradient mb-4">
+                <i class="fas fa-users mr-3 text-blue-400"></i>
+                Community Hub
+            </h1>
+            <p class="text-gray-300 text-lg max-w-2xl mx-auto">
+                Discover amazing wins and innovative challenge solutions shared by our vibrant developer community. 
+                Get inspired, learn from others, and celebrate collective growth!
+            </p>
+        </div>
+        
+        <!-- Community Stats -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+            <div class="text-center p-4 bg-white/5 rounded-lg border border-white/10">
+                <div class="text-2xl font-bold text-purple-400">{{ wins.count|default:"0" }}</div>
+                <div class="text-xs text-gray-400 mt-1">Community Wins</div>
+            </div>
+            <div class="text-center p-4 bg-white/5 rounded-lg border border-white/10">
+                <div class="text-2xl font-bold text-blue-400">{{ challenge_solutions.count|default:"0" }}</div>
+                <div class="text-xs text-gray-400 mt-1">Solutions Shared</div>
+            </div>
+            <div class="text-center p-4 bg-white/5 rounded-lg border border-white/10">
+                <div class="text-2xl font-bold text-green-400">1.2K+</div>
+                <div class="text-xs text-gray-400 mt-1">Active Members</div>
+            </div>
+            <div class="text-center p-4 bg-white/5 rounded-lg border border-white/10">
+                <div class="text-2xl font-bold text-orange-400">24/7</div>
+                <div class="text-xs text-gray-400 mt-1">Community Support</div>
+            </div>
+        </div>
+    </div>
     
     <!-- Community Wins Section -->
-    <div class="mb-10">
-        <h2 class="text-2xl font-bold text-white mb-4">Community Wins</h2>
+    <div class="mb-12 fade-in">
+        <div class="flex items-center justify-between mb-6">
+            <h2 class="text-2xl font-bold text-white flex items-center">
+                <i class="fas fa-trophy mr-3 text-yellow-400"></i>
+                <span class="heading-gradient">Community Wins</span>
+            </h2>
+            <div class="flex items-center gap-2">
+                <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                <span class="text-gray-400 text-sm">Live updates</span>
+            </div>
+        </div>
         
         {% if wins %}
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {% for win in wins %}
                     {% include 'wins/win_card.html' with win=win show_ai_feedback=True %}
                 {% endfor %}
             </div>
             
-            <!-- Pagination Controls -->
+            <!-- Enhanced Pagination -->
             {% if pagination.total_pages > 1 %}
-            <div class="flex justify-center items-center mt-6 gap-4">
+            <div class="flex justify-center items-center mt-10 gap-4">
                 {% if pagination.has_prev %}
-                <a href="?page={{ pagination.prev_page }}" class="flex items-center justify-center px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-md transition-colors">
+                <a href="?page={{ pagination.prev_page }}" class="btn-modern btn-glass">
                     <i class="fas fa-chevron-left mr-2"></i> Previous
                 </a>
                 {% else %}
-                <button disabled class="flex items-center justify-center px-4 py-2 bg-gray-800 text-gray-500 rounded-md cursor-not-allowed">
+                <button disabled class="btn-modern btn-glass opacity-50 cursor-not-allowed">
                     <i class="fas fa-chevron-left mr-2"></i> Previous
                 </button>
                 {% endif %}
                 
-                <span class="text-gray-300">Page {{ pagination.page }} of {{ pagination.total_pages }}</span>
+                <div class="flex items-center gap-2">
+                    <span class="text-gray-300 font-medium">Page {{ pagination.page }} of {{ pagination.total_pages }}</span>
+                </div>
                 
                 {% if pagination.has_next %}
-                <a href="?page={{ pagination.next_page }}" class="flex items-center justify-center px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-md transition-colors">
+                <a href="?page={{ pagination.next_page }}" class="btn-modern btn-glass">
                     Next <i class="fas fa-chevron-right ml-2"></i>
                 </a>
                 {% else %}
-                <button disabled class="flex items-center justify-center px-4 py-2 bg-gray-800 text-gray-500 rounded-md cursor-not-allowed">
+                <button disabled class="btn-modern btn-glass opacity-50 cursor-not-allowed">
                     Next <i class="fas fa-chevron-right ml-2"></i>
                 </button>
                 {% endif %}
             </div>
             {% endif %}
         {% else %}
-            <div class="bg-gray-800 rounded-lg p-6 shadow-lg mb-4 text-center">
-                <p class="text-gray-300 text-lg">No community wins yet. Be the first to share your achievement!</p>
+            <div class="content-card text-center py-12">
+                <div class="mb-6">
+                    <i class="fas fa-trophy text-5xl text-gray-600 mb-4"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-300 mb-2">No community wins yet</h3>
+                <p class="text-gray-400 mb-6">Be the first to share your achievement with the community!</p>
+                <a href="{% url 'wins:submit_win' %}" class="btn-modern btn-primary">
+                    <i class="fas fa-plus mr-2"></i>Share Your Win
+                </a>
             </div>
         {% endif %}
     </div>
     
     <!-- Challenge Solutions Section -->
-    <div>
-        <h2 class="text-2xl font-bold text-white mb-4">Community Challenge Solutions</h2>
+    <div class="fade-in">
+        <div class="flex items-center justify-between mb-6">
+            <h2 class="text-2xl font-bold text-white flex items-center">
+                <i class="fas fa-code mr-3 text-cyan-400"></i>
+                <span class="heading-gradient">Community Challenge Solutions</span>
+            </h2>
+            <div class="flex items-center gap-2">
+                <div class="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></div>
+                <span class="text-gray-400 text-sm">Fresh solutions</span>
+            </div>
+        </div>
         
         {% if challenge_solutions %}
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {% for solution in challenge_solutions %}
-                <div class="bg-[#1e1f23] rounded-lg overflow-hidden shadow-lg p-5">
-                    <div class="flex justify-between items-start mb-2">
-                        <h3 class="text-lg font-semibold text-white">{{ solution.challenge.title }}</h3>
-                        <span class="text-xs font-medium bg-{% if solution.challenge.difficulty == 'beginner' %}green-600{% elif solution.challenge.difficulty == 'intermediate' %}yellow-600{% else %}red-600{% endif %} text-white px-2 py-1 rounded">{{ solution.challenge.get_difficulty_display }}</span>
+                <div class="content-card glass-card-blue group hover:scale-105 fade-in">
+                    <div class="relative">
+                        <!-- Solution Header -->
+                        <div class="flex justify-between items-start mb-4">
+                            <h3 class="text-lg font-semibold text-white group-hover:text-cyan-300 transition-colors">
+                                {{ solution.challenge.title }}
+                            </h3>
+                            <span class="text-xs font-medium bg-{% if solution.challenge.difficulty == 'beginner' %}green-600{% elif solution.challenge.difficulty == 'intermediate' %}yellow-600{% else %}red-600{% endif %} text-white px-3 py-1 rounded-full">
+                                {{ solution.challenge.get_difficulty_display }}
+                            </span>
+                        </div>
+                        
+                        <!-- Solver Info -->
+                        <div class="flex items-center mb-4">
+                            <div class="w-8 h-8 bg-gradient-to-br from-cyan-400 to-purple-500 rounded-full flex items-center justify-center mr-2">
+                                <span class="text-white font-bold text-xs">{{ solution.user.username.0|upper }}</span>
+                            </div>
+                            <div>
+                                <span class="text-white font-medium text-sm">{{ solution.user.username }}</span>
+                                <div class="text-gray-500 text-xs">{{ solution.submitted_at|date:"M d, Y" }}</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Code Preview -->
+                        <div class="bg-gray-900/70 p-4 rounded-lg mb-4 border border-gray-700/50 relative overflow-hidden">
+                            <div class="absolute top-2 right-2">
+                                <i class="fas fa-code text-cyan-400 text-xs"></i>
+                            </div>
+                            <pre class="text-cyan-300 text-sm whitespace-pre-wrap overflow-hidden" style="max-height: 120px">{{ solution.solution_text|truncatechars:150 }}</pre>
+                            {% if solution.solution_text|length > 150 %}
+                            <div class="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-gray-900/70 to-transparent"></div>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- Solution Footer -->
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-medium bg-{{ solution.get_correctness_color }} text-white px-3 py-1 rounded-full">
+                                {% with correctness=solution.correctness_level %}
+                                    {% if correctness == 'correct' %}✓ Correct
+                                    {% elif correctness == 'almost' %}~ Almost
+                                    {% elif correctness == 'partial' %}◐ Partial
+                                    {% else %}✗ Needs Work{% endif %}
+                                {% endwith %}
+                            </span>
+                            <a href="{% url 'challenge_detail' solution.challenge.id %}" 
+                               class="text-cyan-400 hover:text-cyan-300 text-sm font-medium text-animated flex items-center">
+                                View Full Solution <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
                     </div>
-                    <p class="text-gray-300 mb-2">Solved by: {{ solution.user.username }}</p>
-                    <div class="text-gray-500 text-xs mb-3">Submitted on {{ solution.submitted_at|date:"M d, Y" }}</div>
-                    <div class="bg-gray-800 p-3 rounded mb-3">
-                        <pre class="text-white text-sm whitespace-pre-wrap">{{ solution.solution_text|truncatechars:120 }}</pre>
-                    </div>
-                    <a href="{% url 'challenge_detail' solution.challenge.id %}" class="text-indigo-400 hover:text-indigo-300 text-sm">View Full Solution →</a>
                 </div>
                 {% endfor %}
             </div>
         {% else %}
-            <div class="bg-gray-800 rounded-lg p-6 shadow-lg mb-4 text-center">
-                <p class="text-gray-300 text-lg">No challenge solutions yet. Be the first to solve a challenge!</p>
+            <div class="content-card text-center py-12">
+                <div class="mb-6">
+                    <i class="fas fa-code text-5xl text-gray-600 mb-4"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-300 mb-2">No challenge solutions yet</h3>
+                <p class="text-gray-400 mb-6">Be the first to solve a challenge and share your solution!</p>
+                <a href="{% url 'challenges' %}" class="btn-modern btn-primary">
+                    <i class="fas fa-rocket mr-2"></i>Browse Challenges
+                </a>
             </div>
         {% endif %}
     </div>
     
-    <div class="mt-8 flex justify-between">
-        <a href="{% url 'dashboard:dashboard' %}" class="text-indigo-400 hover:text-indigo-300">
-            <i class="fas fa-arrow-left mr-1"></i> Back to Dashboard
-        </a>
-        
-        {% if request.user.is_authenticated %}
-            <div class="space-x-4">
-                <a href="{% url 'challenges' %}" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded">
-                    Solve a Challenge
+    <!-- Enhanced Action Bar -->
+    <div class="glass-card p-6 mt-12 fade-in">
+        <div class="flex flex-col lg:flex-row justify-between items-center gap-6">
+            <div class="flex items-center">
+                <div class="mr-4">
+                    <i class="fas fa-rocket text-3xl text-purple-400"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-white">Ready to contribute?</h3>
+                    <p class="text-gray-400 text-sm">Share your achievements and help inspire others in their journey!</p>
+                </div>
+            </div>
+            
+            <div class="flex flex-wrap gap-3">
+                <a href="{% url 'dashboard:dashboard' %}" class="btn-modern btn-glass">
+                    <i class="fas fa-arrow-left mr-2"></i>Back to Dashboard
                 </a>
                 
-                {% if not has_win_today %}
-                <a href="{% url 'wins:submit_win' %}" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded">
-                    Add Today's Win
-                </a>
+                {% if request.user.is_authenticated %}
+                    <a href="{% url 'challenges' %}" class="btn-modern btn-secondary">
+                        <i class="fas fa-code mr-2"></i>Solve Challenge
+                    </a>
+                    
+                    {% if not has_win_today %}
+                    <a href="{% url 'wins:submit_win' %}" class="btn-modern btn-primary">
+                        <i class="fas fa-plus mr-2"></i>Share Today's Win
+                    </a>
+                    {% else %}
+                    <button class="btn-modern btn-glass opacity-50 cursor-not-allowed" disabled>
+                        <i class="fas fa-check mr-2"></i>Win Shared Today
+                    </button>
+                    {% endif %}
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn-modern btn-primary">
+                        <i class="fas fa-sign-in-alt mr-2"></i>Login to Share
+                    </a>
                 {% endif %}
             </div>
-        {% else %}
-            <a href="{% url 'login' %}" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded">
-                Login to Share Your Win
-            </a>
-        {% endif %}
+        </div>
     </div>
 </div>
+
+<style>
+/* Community page specific enhancements */
+.content-card:nth-child(odd) .glass-card-green {
+    background: linear-gradient(145deg, rgba(16, 185, 129, 0.05), rgba(139, 92, 246, 0.05));
+}
+
+.content-card:nth-child(even) .glass-card-blue {
+    background: linear-gradient(145deg, rgba(59, 130, 246, 0.05), rgba(16, 185, 129, 0.05));
+}
+
+/* Enhanced code block styling */
+pre {
+    font-family: 'Fira Code', 'Monaco', 'Cascadia Code', 'Roboto Mono', monospace;
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
+/* Hover glow effects for specific cards */
+.glass-card-green:hover {
+    box-shadow: 
+        0 20px 50px rgba(16, 185, 129, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.glass-card-blue:hover {
+    box-shadow: 
+        0 20px 50px rgba(59, 130, 246, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Staggered animations for grid items */
+.content-card:nth-child(1) { animation-delay: 0.1s; }
+.content-card:nth-child(2) { animation-delay: 0.2s; }
+.content-card:nth-child(3) { animation-delay: 0.3s; }
+.content-card:nth-child(4) { animation-delay: 0.4s; }
+.content-card:nth-child(5) { animation-delay: 0.5s; }
+.content-card:nth-child(6) { animation-delay: 0.6s; }
+
+/* Enhanced avatar gradients */
+.bg-gradient-to-br {
+    background: linear-gradient(135deg, var(--accent-green), var(--accent-blue));
+}
+
+/* Interactive elements */
+.animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: .5;
+    }
+}
+
+/* Scroll indicators for long content */
+.scroll-indicator {
+    position: relative;
+}
+
+.scroll-indicator::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background: linear-gradient(to top, rgba(13, 17, 23, 0.8), transparent);
+    pointer-events: none;
+}
+</style>
+
 {% endblock %}
