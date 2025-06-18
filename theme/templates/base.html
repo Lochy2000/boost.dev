@@ -19,6 +19,8 @@
 
   <!-- Custom CSS -->
   <link rel="stylesheet" href="{% static 'css/main.css' %}">
+  <link rel="stylesheet" href="{% static 'css/theme-enhanced.css' %}">
+  <link rel="stylesheet" href="{% static 'css/home-enhanced.css' %}">
   <link rel="stylesheet" href="{% static 'css/boost-card.css' %}">
   <link rel="stylesheet" href="{% static 'css/weather-card.css' %}">
 
@@ -27,152 +29,206 @@
   {% block extra_css %}{% endblock %}
 </head>
 
-<body class="bg-gray-100">
+<body class="min-h-screen flex flex-col">
+  
+  <!-- Grid overlay for lo-fi effect -->
+  <div class="grid-overlay"></div>
 
-  <!-- Navbar -->
-  <header class="shadow-lg sticky top-0 z-50 backdrop-blur-md">
-    <nav class="container mx-auto flex items-center justify-between p-4">
-      <!-- Logo -->
-      <a href="/"
-        class="text-2xl font-bold text-white flex items-center gap-2 hover:opacity-80 transition-opacity focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-transparent rounded">
-        <img src="{% static 'images/whitlogo.png' %}" alt="Boost.dev Logo" class="responsive-logo" />
-      </a>
+  <!-- Enhanced Navbar -->
+  <header class="nav-enhanced shadow-lg sticky top-0 z-50">
+    <nav class="container mx-auto flex items-center justify-between px-4 py-3 lg:px-6 xl:px-8">
+      <!-- Logo Section -->
+      <div class="flex items-center">
+        <a href="/" class="text-2xl font-bold text-white flex items-center gap-2 hover:opacity-80 transition-opacity focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2 focus:ring-offset-transparent rounded-lg">
+          <img src="{% static 'images/whitlogo.png' %}" alt="Boost.dev Logo" class="responsive-logo" />
+        </a>
+      </div>
 
-      <!-- Hamburger (shown on mobile) -->
-      <button id="menu-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Toggle menu"
-        class="md:hidden text-white focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded p-1">
-        <i class="fas fa-bars fa-lg"></i>
-      </button>
-     
-      <!-- Desktop Links - Updated for better mid-size handling -->
-      <ul id="desktop-menu" class="hidden md:flex items-center space-x-1 lg:space-x-2 xl:space-x-4">
-        <li>
-          <a href="{% url 'dashboard:dashboard' %}"
-            class="px-2 py-1 lg:px-3 lg:py-2 rounded text-sm lg:text-base hover:bg-gray-700 hover:text-indigo-300 text-white transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-gray-900">
-            Dashboard
-          </a>
-        </li>
-        <li>
-          <a href="{% url 'dashboard:tech_news' %}"
-            class="px-2 py-1 lg:px-3 lg:py-2 rounded text-sm lg:text-base hover:bg-gray-700 hover:text-indigo-300 text-white transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-gray-900">
-            Resources
-          </a>
-        </li>
-        <li>
-          <a href="{% url 'wins:my_wins' %}"
-            class="px-2 py-1 lg:px-3 lg:py-2 rounded text-sm lg:text-base hover:bg-gray-700 hover:text-indigo-300 text-white transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-gray-900">
-            My Wins
-          </a>
-        </li>
-        <li>
-          <a href="{% url 'challenges' %}"
-            class="px-2 py-1 lg:px-3 lg:py-2 rounded text-sm lg:text-base hover:bg-gray-700 hover:text-indigo-300 text-white transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-gray-900">
-            Challenges
-          </a>
-        </li>
-        <li>
-          <a href="{% url 'wins:community_wins' %}"
-            class="px-2 py-1 lg:px-3 lg:py-2 rounded text-sm lg:text-base hover:bg-gray-700 hover:text-indigo-300 text-white transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-gray-900">
-            Community
-          </a>
-        </li>
-        <li class="flex flex-col items-end">
-          <!-- Progress Bar Above Profile -->          
-          <div class="w-32 mb-1">
-            <div class="flex justify-between items-center text-xs mb-1">
-              <span class="text-white">Lvl {{ user.progress.level }}</span>
-              <span class="text-white">{{ user.progress.points }}/{{ user.progress.next_level_threshold }}</span>
+      <!-- Desktop Navigation -->
+      <div class="hidden lg:flex items-center space-x-6">
+        <a href="{% url 'dashboard:dashboard' %}" class="nav-link">
+          <i class="fas fa-home mr-2"></i>Dashboard
+        </a>
+        <a href="{% url 'dashboard:tech_news' %}" class="nav-link">
+          <i class="fas fa-newspaper mr-2"></i>Resources
+        </a>
+        <a href="{% url 'wins:my_wins' %}" class="nav-link">
+          <i class="fas fa-trophy mr-2"></i>My Wins
+        </a>
+        <a href="{% url 'challenges' %}" class="nav-link">
+          <i class="fas fa-code mr-2"></i>Challenges
+        </a>
+        <a href="{% url 'wins:community_wins' %}" class="nav-link">
+          <i class="fas fa-users mr-2"></i>Community
+        </a>
+      </div>
+
+      <!-- User Profile Section -->
+      <div class="flex items-center space-x-4">
+        {% if user.is_authenticated %}
+        <!-- Progress Bar Section -->
+        <div class="hidden lg:block">
+          <div class="flex items-center space-x-3">
+            <div class="text-right">
+              <div class="text-xs text-gray-300">Level {{ user.progress.level }}</div>
+              <div class="w-24 bg-gray-700 rounded-full h-2 mt-1">
+                <div class="bg-{{ user.progress.get_level_color }}-500 h-2 rounded-full transition-all duration-500"
+                     style="width: {{ user.progress.calculate_percentage }}%"></div>
+              </div>
             </div>
-            <div class="w-full bg-gray-700 rounded-full h-1.5">
-              <div class="bg-{{ user.progress.get_level_color }}-500 h-1.5 rounded-full"
-                style="width: {{ user.progress.calculate_percentage }}%"></div>
+            <div class="text-xs text-gray-400">
+              {{ user.progress.points }}/{{ user.progress.next_level_threshold }}
             </div>
           </div>
-          <!-- User menu -->
-          <div class="relative ml-3 flex items-center space-x-4">
-            {% if user.is_authenticated %}
-            <!-- User Avatar -->
-            <div class="relative group text-center">
-                <img src="{{ user.userprofile.avatar|default:'https://via.placeholder.com/32' }}"
-                    alt="{{ user.username }}'s Profile"
-                    class="w-10 h-10 rounded-full object-cover border border-gray-700 cursor-pointer" />
-                <i class="fas fa-chevron-down text-sm text-white group-hover:text-indigo-300 transition-transform duration-300"></i>
+        </div>
 
-                <!-- Dropdown on hover -->
-                <div class="absolute right-0 mt-2 w-48 bg-gray-800 text-white rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-50">
-                    <div class="p-2 border-b border-gray-700 text-sm text-center">{{ user.username }}</div>
-                    <a href="{% url 'users:profile' %}" class="block px-4 py-2 hover:bg-gray-700">My Profile</a>
-                    <form method="post" action="{% url 'users:logout' %}">
-                        {% csrf_token %}
-                        <button type="submit" class="w-full text-center px-4 py-2 hover:bg-gray-700">Log Out</button>
-                    </form>
-                </div>
+        <!-- Notification Icon -->
+        <div class="relative">
+          <button id="notification-icon" class="text-gray-300 hover:text-white transition-colors p-2 hover:bg-gray-700 rounded-lg">
+            <i class="fas fa-bell text-lg"></i>
+            <span id="notification-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center hidden">0</span>
+          </button>
+          
+          <!-- Notification Dropdown -->
+          <div id="notification-dropdown" class="hidden absolute right-0 mt-2 w-80 bg-gray-800 rounded-lg shadow-lg overflow-hidden z-50">
+            {# Notifications will be rendered here by JavaScript #}
+          </div>
+        </div>
+
+        <!-- User Avatar & Dropdown -->
+        <div class="relative group">
+          <div class="flex items-center space-x-2 cursor-pointer p-2 hover:bg-gray-700 rounded-lg transition-colors">
+            <img src="{{ user.userprofile.avatar|default:'https://via.placeholder.com/32' }}"
+                 alt="{{ user.username }}'s Profile"
+                 class="w-8 h-8 rounded-full object-cover border border-gray-600" />
+            <div class="hidden lg:block text-sm text-white">{{ user.username }}</div>
+            <i class="fas fa-chevron-down text-xs text-gray-400 group-hover:text-white transition-colors"></i>
+          </div>
+
+          <!-- Enhanced Dropdown -->
+          <div class="absolute right-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-all duration-300 z-50 transform translate-y-2 group-hover:translate-y-0">
+            <div class="p-3 border-b border-gray-700">
+              <div class="text-sm font-medium text-white">{{ user.username }}</div>
+              <div class="text-xs text-gray-400">Level {{ user.progress.level }}</div>
             </div>
-
-            <!-- Notification Icon -->
-            <div class="relative">
-                <button id="notification-icon" class="text-gray-300 hover:text-white">
-                    <i class="fas fa-bell text-xl"></i>
-                    <span id="notification-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 flex items-center justify-center hidden">0</span>
+            <div class="py-2">
+              <a href="{% url 'users:profile' %}" class="flex items-center px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors">
+                <i class="fas fa-user mr-3"></i>My Profile
+              </a>
+              <a href="{% url 'wins:my_wins' %}" class="flex items-center px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors lg:hidden">
+                <i class="fas fa-trophy mr-3"></i>My Wins
+              </a>
+              <a href="{% url 'challenges' %}" class="flex items-center px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors lg:hidden">
+                <i class="fas fa-code mr-3"></i>Challenges
+              </a>
+            </div>
+            <div class="border-t border-gray-700">
+              <form method="post" action="{% url 'users:logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="flex items-center w-full px-4 py-3 text-sm text-red-400 hover:bg-red-900/20 hover:text-red-300 transition-colors">
+                  <i class="fas fa-sign-out-alt mr-3"></i>Log Out
                 </button>
-                
-                <!-- Notification Dropdown -->
-                <div id="notification-dropdown" class="hidden absolute right-0 mt-2 w-80 bg-gray-800 rounded-lg shadow-lg overflow-hidden z-50">
-                    {# Notifications will be rendered here by JavaScript #}
-                </div>
+              </form>
             </div>
-            {% endif %}
           </div>
-        </li>
-      </ul>
+        </div>
+        {% endif %}
 
+        <!-- Mobile Menu Button -->
+        <button id="menu-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Toggle menu"
+                class="lg:hidden text-white p-2 hover:bg-gray-700 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400">
+          <i class="fas fa-bars text-lg"></i>
+        </button>
+      </div>
     </nav>
 
-    <!-- Mobile Menu Overlay - Improved for accessibility -->
-    <div id="mobile-menu"
-      class="fixed inset-0 z-50 hidden bg-gray-900 bg-opacity-95 flex flex-col items-center justify-center space-y-4 p-6 transition-opacity duration-300"
-      aria-hidden="true">
-      <button id="mobile-menu-close"
-        class="absolute top-4 right-4 text-white text-3xl focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded p-1"
-        aria-label="Close menu">
-        <i class="fas fa-times"></i>
-      </button>
+    <!-- Enhanced Mobile Menu -->
+    <div id="mobile-menu" class="fixed inset-0 z-50 hidden bg-gray-900/95 backdrop-blur-sm" aria-hidden="true">
+      <div class="flex flex-col h-full">
+        <!-- Mobile Menu Header -->
+        <div class="flex justify-between items-center p-6 border-b border-gray-700">
+          <div class="flex items-center space-x-3">
+            <img src="{% static 'images/whitlogo.png' %}" alt="Boost.dev" class="h-8" />
+            <span class="text-white font-bold text-lg">BOOST.DEV</span>
+          </div>
+          <button id="mobile-menu-close" class="text-white p-2 hover:bg-gray-700 rounded-lg transition-colors" aria-label="Close menu">
+            <i class="fas fa-times text-xl"></i>
+          </button>
+        </div>
 
-      <a href="{% url 'dashboard:dashboard' %}"
-        class="text-white text-xl font-medium w-full text-center py-3 hover:text-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">
-        Dashboard
-      </a>
-      <a href="{% url 'dashboard:tech_news' %}"
-        class="text-white text-xl font-medium w-full text-center py-3 hover:text-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">
-        Resources
-      </a>
-      <a href="{% url 'wins:submit_win' %}"
-        class="text-white text-xl font-medium w-full text-center py-3 hover:text-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">
-        Log a Win
-      </a>
-      <a href="{% url 'wins:my_wins' %}"
-        class="text-white text-xl font-medium w-full text-center py-3 hover:text-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">
-        My Wins
-      </a>
-      <a href="{% url 'challenges' %}"
-        class="text-white text-xl font-medium w-full text-center py-3 hover:text-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">
-        Challenges
-      </a>
-      <a href="{% url 'wins:community_wins' %}"
-        class="text-white text-xl font-medium w-full text-center py-3 hover:text-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">
-        Community
-      </a>
-      <a href="{% url 'users:profile' %}"
-        class="text-white text-xl font-medium w-full text-center py-3 hover:text-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">
-        My Profile
-      </a>
-      <form method="post" action="{% url 'users:logout' %}" class="w-full">
-        {% csrf_token %}
-        <button type="submit"
-          class="text-white text-xl font-medium w-full text-center py-3 hover:text-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2 focus:ring-offset-gray-900 rounded">
-          Log Out
-        </button>
-      </form>
+        <!-- Mobile Menu Content -->
+        <div class="flex-1 overflow-y-auto">
+          <div class="px-6 py-8 space-y-6">
+            <!-- User Profile Section -->
+            {% if user.is_authenticated %}
+            <div class="glass-card p-4 text-center">
+              <img src="{{ user.userprofile.avatar|default:'https://via.placeholder.com/64' }}" 
+                   alt="{{ user.username }}" 
+                   class="w-16 h-16 rounded-full mx-auto mb-3 border-2 border-purple-400" />
+              <h3 class="text-white font-semibold">{{ user.username }}</h3>
+              <div class="text-sm text-gray-400 mb-3">Level {{ user.progress.level }}</div>
+              <div class="w-full bg-gray-700 rounded-full h-2">
+                <div class="bg-{{ user.progress.get_level_color }}-500 h-2 rounded-full transition-all duration-500"
+                     style="width: {{ user.progress.calculate_percentage }}%"></div>
+              </div>
+              <div class="text-xs text-gray-400 mt-1">
+                {{ user.progress.points }}/{{ user.progress.next_level_threshold }} XP
+              </div>
+            </div>
+            {% endif %}
+
+            <!-- Navigation Links -->
+            <nav class="space-y-3">
+              <a href="{% url 'dashboard:dashboard' %}" class="mobile-nav-link">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+                <i class="fas fa-chevron-right ml-auto"></i>
+              </a>
+              <a href="{% url 'dashboard:tech_news' %}" class="mobile-nav-link">
+                <i class="fas fa-newspaper"></i>
+                <span>Resources</span>
+                <i class="fas fa-chevron-right ml-auto"></i>
+              </a>
+              <a href="{% url 'wins:my_wins' %}" class="mobile-nav-link">
+                <i class="fas fa-trophy"></i>
+                <span>My Wins</span>
+                <i class="fas fa-chevron-right ml-auto"></i>
+              </a>
+              <a href="{% url 'challenges' %}" class="mobile-nav-link">
+                <i class="fas fa-code"></i>
+                <span>Challenges</span>
+                <i class="fas fa-chevron-right ml-auto"></i>
+              </a>
+              <a href="{% url 'wins:community_wins' %}" class="mobile-nav-link">
+                <i class="fas fa-users"></i>
+                <span>Community</span>
+                <i class="fas fa-chevron-right ml-auto"></i>
+              </a>
+              <a href="{% url 'wins:submit_win' %}" class="mobile-nav-link">
+                <i class="fas fa-plus-circle"></i>
+                <span>Log a Win</span>
+                <i class="fas fa-chevron-right ml-auto"></i>
+              </a>
+              <a href="{% url 'users:profile' %}" class="mobile-nav-link">
+                <i class="fas fa-user"></i>
+                <span>My Profile</span>
+                <i class="fas fa-chevron-right ml-auto"></i>
+              </a>
+            </nav>
+          </div>
+        </div>
+
+        <!-- Mobile Menu Footer -->
+        <div class="border-t border-gray-700 p-6">
+          <form method="post" action="{% url 'users:logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="w-full flex items-center justify-center space-x-3 p-4 bg-red-600/20 border border-red-600/30 rounded-lg text-red-400 hover:bg-red-600/30 transition-colors">
+              <i class="fas fa-sign-out-alt"></i>
+              <span>Log Out</span>
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
 
   </header>

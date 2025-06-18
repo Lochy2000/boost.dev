@@ -1,0 +1,590 @@
+/* ===== BOOST.DEV MODERN LO-FI TECH THEME ===== */
+
+:root {
+    /* Core Colors */
+    --primary-bg: #0d1117;
+    --secondary-bg: #161b22;
+    --tertiary-bg: #21262d;
+    --quaternary-bg: #2d333b;
+    
+    /* Accent Colors */
+    --accent-purple: #8b5cf6;
+    --accent-blue: #3b82f6;
+    --accent-green: #10b981;
+    --accent-orange: #f59e0b;
+    --accent-red: #ef4444;
+    --accent-pink: #ec4899;
+    
+    /* Text Colors */
+    --text-primary: #f0f6fc;
+    --text-secondary: #8b949e;
+    --text-muted: #6e7681;
+    --text-white: #ffffff;
+    
+    /* Border & Effects */
+    --border-subtle: #30363d;
+    --border-accent: #21262d;
+    --glow-purple: rgba(139, 92, 246, 0.3);
+    --glow-blue: rgba(59, 130, 246, 0.3);
+    --glow-green: rgba(16, 185, 129, 0.3);
+    
+    /* Glass Effects */
+    --glass-bg: linear-gradient(145deg, rgba(33, 38, 45, 0.8), rgba(22, 27, 34, 0.9));
+    --glass-border: rgba(255, 255, 255, 0.1);
+    
+    /* Animations */
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+    --transition-slow: 0.5s ease;
+}
+
+/* ===== GLOBAL STYLES ===== */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--primary-bg);
+    color: var(--text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.6;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Enhanced Background with Grid */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../css/images/boost-dev-bkgd.png') no-repeat center center;
+    background-size: cover;
+    opacity: 0.08;
+    z-index: -2;
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(ellipse at top left, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
+        radial-gradient(ellipse at bottom right, rgba(59, 130, 246, 0.05) 0%, transparent 50%);
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Animated Grid Overlay */
+.grid-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(rgba(139, 92, 246, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(139, 92, 246, 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: grid-drift 25s linear infinite;
+    z-index: -1;
+    pointer-events: none;
+}
+
+@keyframes grid-drift {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(60px, 60px); }
+}
+
+/* ===== ENHANCED GLASS CARDS ===== */
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-subtle);
+    border-radius: 16px;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 var(--glass-border);
+    position: relative;
+    overflow: hidden;
+    transition: all var(--transition-normal);
+}
+
+.glass-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 12px 40px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 var(--glass-border);
+}
+
+.glass-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-purple), transparent);
+    opacity: 0.5;
+}
+
+/* Hover Glow Effects */
+.glass-card-purple:hover {
+    box-shadow: 
+        0 12px 40px rgba(139, 92, 246, 0.2),
+        inset 0 1px 0 var(--glass-border);
+}
+
+.glass-card-blue:hover {
+    box-shadow: 
+        0 12px 40px rgba(59, 130, 246, 0.2),
+        inset 0 1px 0 var(--glass-border);
+}
+
+.glass-card-green:hover {
+    box-shadow: 
+        0 12px 40px rgba(16, 185, 129, 0.2),
+        inset 0 1px 0 var(--glass-border);
+}
+
+/* ===== ENHANCED BUTTONS ===== */
+.btn-modern {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid transparent;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+    color: white;
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
+}
+
+.btn-secondary {
+    background: var(--tertiary-bg);
+    color: var(--text-primary);
+    border-color: var(--border-subtle);
+}
+
+.btn-secondary:hover {
+    border-color: var(--accent-purple);
+    background: rgba(139, 92, 246, 0.1);
+    transform: translateY(-2px);
+}
+
+.btn-glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-primary);
+}
+
+.btn-glass:hover {
+    border-color: var(--accent-purple);
+    background: linear-gradient(145deg, rgba(139, 92, 246, 0.1), rgba(59, 130, 246, 0.1));
+}
+
+/* Button Glow Animation */
+.btn-modern::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left var(--transition-slow);
+}
+
+.btn-modern:hover::before {
+    left: 100%;
+}
+
+/* ===== ENHANCED NAVIGATION ===== */
+.nav-enhanced {
+    background: rgba(13, 17, 23, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-subtle);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.nav-link {
+    position: relative;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all var(--transition-normal);
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--text-primary);
+    background: rgba(139, 92, 246, 0.1);
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-purple), var(--accent-blue));
+    transition: all var(--transition-normal);
+    transform: translateX(-50%);
+}
+
+.nav-link:hover::after, .nav-link.active::after {
+    width: 80%;
+}
+
+/* ===== ENHANCED FORMS ===== */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    background: var(--tertiary-bg);
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    transition: all var(--transition-normal);
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--accent-purple);
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+    background: var(--secondary-bg);
+}
+
+.form-input::placeholder {
+    color: var(--text-muted);
+}
+
+/* ===== ENHANCED TEXT STYLES ===== */
+.heading-gradient {
+    background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-purple) 50%, var(--accent-blue) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.text-glow {
+    text-shadow: 0 0 10px var(--glow-purple);
+}
+
+.text-animated {
+    position: relative;
+    transition: all var(--transition-normal);
+}
+
+.text-animated:hover {
+    transform: translateY(-1px);
+    text-shadow: 0 4px 10px rgba(139, 92, 246, 0.3);
+}
+
+/* ===== FLOATING ELEMENTS ===== */
+.floating-element {
+    position: absolute;
+    pointer-events: none;
+    animation: float 6s ease-in-out infinite;
+    z-index: 1;
+}
+
+.floating-element:nth-child(1) { animation-delay: 0s; }
+.floating-element:nth-child(2) { animation-delay: 2s; }
+.floating-element:nth-child(3) { animation-delay: 4s; }
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(180deg); }
+}
+
+/* Geometric Shapes */
+.floating-circle {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--glow-purple), var(--glow-blue));
+    border-radius: 50%;
+    border: 1px solid rgba(139, 92, 246, 0.3);
+}
+
+.floating-square {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--glow-blue), var(--glow-green));
+    border-radius: 8px;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    transform: rotate(45deg);
+}
+
+.floating-triangle {
+    width: 0;
+    height: 0;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-bottom: 35px solid rgba(16, 185, 129, 0.3);
+}
+
+/* ===== DASHBOARD CARD LINKS ===== */
+.dashboard-card-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    position: relative;
+    z-index: 10;
+    transition: all var(--transition-normal);
+    cursor: pointer !important;
+}
+
+.dashboard-card-link:hover,
+.dashboard-card-link:focus {
+    text-decoration: none;
+    color: inherit;
+    outline: 2px solid var(--accent-purple);
+    outline-offset: 2px;
+    border-radius: 16px;
+}
+
+.dashboard-card-link .content-card {
+    cursor: pointer !important;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    pointer-events: auto !important;
+    position: relative;
+    z-index: inherit;
+}
+
+/* Ensure the entire card is clickable */
+.dashboard-card-link .content-card > * {
+    pointer-events: none;
+}
+
+/* Re-enable pointer events for nested interactive elements */
+.dashboard-card-link .content-card a,
+.dashboard-card-link .content-card button,
+.dashboard-card-link .content-card input,
+.dashboard-card-link .content-card select {
+    pointer-events: auto;
+}
+
+/* Fix floating elements interference */
+.floating-element {
+    pointer-events: none !important;
+    z-index: 1 !important;
+}
+
+/* Ensure proper stacking context */
+.content-card {
+    position: relative;
+    z-index: 5;
+}
+
+/* Grid overlay should not interfere */
+.grid-overlay {
+    pointer-events: none !important;
+    z-index: 0 !important;
+}
+
+/* Fix any backdrop elements */
+.content-card::before,
+.content-card::after,
+.glass-card::before,
+.glass-card::after {
+    pointer-events: none !important;
+}
+
+/* Ensure dashboard grid doesn't interfere */
+.dashboard-card-link + .dashboard-card-link {
+    z-index: 10;
+}
+
+/* Debug styling to test clickability */
+.dashboard-card-link:active {
+    transform: scale(0.98);
+}
+
+/* ===== ENHANCED CARDS & CONTENT ===== */
+.content-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-subtle);
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: all var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+}
+
+.content-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
+.content-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-purple), transparent);
+    opacity: 0.6;
+}
+
+/* Card Hover Glow Effects */
+.content-card:hover::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+                               rgba(139, 92, 246, 0.1) 0%, 
+                               transparent 50%);
+    opacity: 0;
+    animation: glow-in 0.3s ease forwards;
+}
+
+@keyframes glow-in {
+    to { opacity: 1; }
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 1024px) {
+    .glass-card {
+        padding: 1.25rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .btn-modern {
+        padding: 0.625rem 1.25rem;
+        font-size: 0.85rem;
+    }
+    
+    .glass-card {
+        padding: 1rem;
+        border-radius: 12px;
+    }
+    
+    .floating-element {
+        display: none; /* Hide on mobile for performance */
+    }
+}
+
+@media (max-width: 480px) {
+    .content-card {
+        padding: 1rem;
+        border-radius: 12px;
+    }
+    
+    .form-input {
+        padding: 0.75rem;
+    }
+}
+
+/* ===== ACCESSIBILITY & PERFORMANCE ===== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .floating-element {
+        animation: none;
+    }
+    
+    .grid-overlay {
+        animation: none;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .glass-card {
+        border-color: var(--text-primary);
+        background: var(--primary-bg);
+    }
+    
+    .content-card {
+        border-color: var(--text-primary);
+        background: var(--secondary-bg);
+    }
+}
+
+/* Focus states for accessibility */
+.glass-card:focus-within,
+.content-card:focus-within,
+.btn-modern:focus {
+    outline: 2px solid var(--accent-purple);
+    outline-offset: 2px;
+}
+
+/* ===== UTILITY CLASSES ===== */
+.glow-purple { box-shadow: 0 0 20px var(--glow-purple); }
+.glow-blue { box-shadow: 0 0 20px var(--glow-blue); }
+.glow-green { box-shadow: 0 0 20px var(--glow-green); }
+
+.border-glow-purple { border-color: var(--accent-purple); box-shadow: 0 0 10px var(--glow-purple); }
+.border-glow-blue { border-color: var(--accent-blue); box-shadow: 0 0 10px var(--glow-blue); }
+.border-glow-green { border-color: var(--accent-green); box-shadow: 0 0 10px var(--glow-green); }
+
+.backdrop-blur { backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.backdrop-blur-strong { backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+
+/* Smooth reveal animations */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in:nth-child(1) { animation-delay: 0.1s; }
+.fade-in:nth-child(2) { animation-delay: 0.2s; }
+.fade-in:nth-child(3) { animation-delay: 0.3s; }
+.fade-in:nth-child(4) { animation-delay: 0.4s; }
+.fade-in:nth-child(5) { animation-delay: 0.5s; }

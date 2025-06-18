@@ -1,70 +1,223 @@
 {% extends 'basenonav.html' %}
+{% load static %}
 
 {% block content %}
-<div class="profile-container">
-    <h1>Create Account</h1>
-    <p class="tagline">Join the Boost.dev community</p>
-    
-    <form method="post" action="{% url 'register' %}">
-        {% csrf_token %}
-        
-        <div class="form-group">
-            <label for="{{ form.username.id_for_label }}">Username</label>
-            {{ form.username }}
-            <small id="id_username_helptext" class="help-text">Enter a unique username. Max 150 characters.</small>
-            {% if form.username.errors %}
-                <div class="error">{{ form.username.errors }}</div>
-            {% endif %}
+
+<!-- Grid overlay for lo-fi effect -->
+<div class="grid-overlay"></div>
+
+<!-- Floating geometric elements -->
+<div class="floating-element floating-circle" style="top: 20%; right: 10%; animation-delay: 1s;"></div>
+<div class="floating-element floating-square" style="top: 70%; left: 5%; animation-delay: 3s;"></div>
+<div class="floating-element floating-triangle" style="top: 45%; right: 5%; animation-delay: 5s;"></div>
+
+<div class="min-h-screen flex items-center justify-center px-4 py-8">
+    <div class="w-full max-w-lg">
+        <!-- Register Card -->
+        <div class="glass-card glass-card-blue p-8 fade-in">
+            <div class="text-center mb-8">
+                <h1 class="text-3xl font-bold heading-gradient mb-2">Join Boost.dev</h1>
+                <p class="text-gray-400">Start your journey as a developer today</p>
+            </div>
+
+            <form method="post" action="{% url 'register' %}" class="space-y-6">
+                {% csrf_token %}
+                
+                <!-- Username Field -->
+                <div class="form-group">
+                    <label for="{{ form.username.id_for_label }}" class="form-label">
+                        <i class="fas fa-user mr-2 text-blue-400"></i>Username
+                    </label>
+                    <input type="text" 
+                           name="username" 
+                           id="{{ form.username.id_for_label }}" 
+                           placeholder="Choose a unique username"
+                           class="form-input"
+                           value="{{ form.username.value|default:'' }}"
+                           required>
+                    <small class="text-gray-500 text-xs mt-1 block">
+                        <i class="fas fa-info-circle mr-1"></i>Max 150 characters. This will be your public display name.
+                    </small>
+                    {% if form.username.errors %}
+                    <p class="text-red-400 text-sm mt-2 flex items-center">
+                        <i class="fas fa-exclamation-circle mr-1"></i>{{ form.username.errors.0 }}
+                    </p>
+                    {% endif %}
+                </div>
+                
+                <!-- Email Field -->
+                <div class="form-group">
+                    <label for="{{ form.email.id_for_label }}" class="form-label">
+                        <i class="fas fa-envelope mr-2 text-blue-400"></i>Email Address
+                    </label>
+                    <input type="email" 
+                           name="email" 
+                           id="{{ form.email.id_for_label }}" 
+                           placeholder="your.email@example.com"
+                           class="form-input"
+                           value="{{ form.email.value|default:'' }}"
+                           required>
+                    {% if form.email.errors %}
+                    <p class="text-red-400 text-sm mt-2 flex items-center">
+                        <i class="fas fa-exclamation-circle mr-1"></i>{{ form.email.errors.0 }}
+                    </p>
+                    {% endif %}
+                </div>
+                
+                <!-- Password Field -->
+                <div class="form-group">
+                    <label for="{{ form.password1.id_for_label }}" class="form-label">
+                        <i class="fas fa-lock mr-2 text-blue-400"></i>Password
+                    </label>
+                    <input type="password" 
+                           name="password1" 
+                           id="{{ form.password1.id_for_label }}" 
+                           placeholder="Create a strong password"
+                           class="form-input"
+                           required>
+                    <small class="text-gray-500 text-xs mt-1 block">
+                        <i class="fas fa-shield-alt mr-1"></i>At least 8 characters with a mix of letters, numbers, and symbols.
+                    </small>
+                    {% if form.password1.errors %}
+                    <p class="text-red-400 text-sm mt-2 flex items-center">
+                        <i class="fas fa-exclamation-circle mr-1"></i>{{ form.password1.errors.0 }}
+                    </p>
+                    {% endif %}
+                </div>
+                
+                <!-- Confirm Password Field -->
+                <div class="form-group">
+                    <label for="{{ form.password2.id_for_label }}" class="form-label">
+                        <i class="fas fa-check-circle mr-2 text-blue-400"></i>Confirm Password
+                    </label>
+                    <input type="password" 
+                           name="password2" 
+                           id="{{ form.password2.id_for_label }}" 
+                           placeholder="Re-enter your password"
+                           class="form-input"
+                           required>
+                    {% if form.password2.errors %}
+                    <p class="text-red-400 text-sm mt-2 flex items-center">
+                        <i class="fas fa-exclamation-circle mr-1"></i>{{ form.password2.errors.0 }}
+                    </p>
+                    {% endif %}
+                </div>
+                
+                <!-- GitHub Username Field -->
+                <div class="form-group">
+                    <label for="{{ form.github_username.id_for_label }}" class="form-label">
+                        <i class="fab fa-github mr-2 text-blue-400"></i>GitHub Username
+                        <span class="text-gray-500 text-xs ml-1">(Optional)</span>
+                    </label>
+                    <input type="text" 
+                           name="github_username" 
+                           id="{{ form.github_username.id_for_label }}" 
+                           placeholder="your-github-username"
+                           class="form-input"
+                           value="{{ form.github_username.value|default:'' }}">
+                    <small class="text-gray-500 text-xs mt-1 block">
+                        <i class="fas fa-link mr-1"></i>Connect your GitHub to showcase your projects and contributions.
+                    </small>
+                    {% if form.github_username.errors %}
+                    <p class="text-red-400 text-sm mt-2 flex items-center">
+                        <i class="fas fa-exclamation-circle mr-1"></i>{{ form.github_username.errors.0 }}
+                    </p>
+                    {% endif %}
+                </div>
+                
+                <!-- Experience Level Field -->
+                <div class="form-group">
+                    <label for="{{ form.experience_level.id_for_label }}" class="form-label">
+                        <i class="fas fa-chart-line mr-2 text-blue-400"></i>Experience Level
+                    </label>
+                    <select name="experience_level" 
+                            id="{{ form.experience_level.id_for_label }}" 
+                            class="form-input">
+                        <option value="">Select your experience level</option>
+                        {% for value, label in form.experience_level.field.choices %}
+                            <option value="{{ value }}" {% if form.experience_level.value == value %}selected{% endif %}>
+                                {{ label }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    <small class="text-gray-500 text-xs mt-1 block">
+                        <i class="fas fa-info-circle mr-1"></i>This helps us tailor content and challenges to your skill level.
+                    </small>
+                    {% if form.experience_level.errors %}
+                    <p class="text-red-400 text-sm mt-2 flex items-center">
+                        <i class="fas fa-exclamation-circle mr-1"></i>{{ form.experience_level.errors.0 }}
+                    </p>
+                    {% endif %}
+                </div>
+                
+                <!-- Register Button -->
+                <button type="submit" class="btn-modern btn-primary w-full">
+                    <i class="fas fa-rocket mr-2"></i>Create My Account
+                </button>
+            </form>
+
+            <!-- Divider -->
+            <div class="flex items-center my-6">
+                <div class="flex-1 h-px bg-gradient-to-r from-transparent via-gray-600 to-transparent"></div>
+                <span class="px-4 text-gray-400 text-sm">or sign up with</span>
+                <div class="flex-1 h-px bg-gradient-to-r from-transparent via-gray-600 to-transparent"></div>
+            </div>
+
+            <!-- Social Registration -->
+            <div class="space-y-3">
+                <a href="{% url 'social:begin' 'github' %}" class="btn-modern btn-glass w-full">
+                    <i class="fab fa-github mr-2"></i>Sign up with GitHub
+                </a>
+
+                <a href="{% url 'social:begin' 'google-oauth2' %}" class="btn-modern btn-glass w-full">
+                    <i class="fab fa-google mr-2"></i>Sign up with Google
+                </a>
+            </div>
+
+            <!-- Footer -->
+            <div class="text-center mt-8 pt-6 border-t border-gray-700">
+                <p class="text-gray-400 text-sm mb-3">Already have an account?</p>
+                <a href="{% url 'login' %}" class="text-blue-400 hover:text-blue-300 font-medium text-animated">
+                    Sign in to your account <i class="fas fa-arrow-right ml-1"></i>
+                </a>
+            </div>
         </div>
-        
-        <div class="form-group">
-            <label for="{{ form.email.id_for_label }}">Email</label>
-            {{ form.email }}
-            {% if form.email.errors %}
-                <div class="error">{{ form.email.errors }}</div>
-            {% endif %}
+
+        <!-- Back to Home -->
+        <div class="text-center mt-6">
+            <a href="/" class="text-gray-400 hover:text-gray-300 text-sm text-animated flex items-center justify-center">
+                <i class="fas fa-arrow-left mr-2"></i>Back to Home
+            </a>
         </div>
-        
-        <div class="form-group">
-            <label for="{{ form.password1.id_for_label }}">Password</label>
-            {{ form.password1 }}
-            <small id="id_password1_helptext" class="help-text">Your password must be at least 8 characters long.</small>
-            {% if form.password1.errors %}
-                <div class="error">{{ form.password1.errors }}</div>
-            {% endif %}
-        </div>
-        
-        <div class="form-group">
-            <label for="{{ form.password2.id_for_label }}">Confirm Password</label>
-            {{ form.password2 }}
-            <small id="id_password2_helptext" class="help-text">Re-enter your password for confirmation.</small>
-            {% if form.password2.errors %}
-                <div class="error">{{ form.password2.errors }}</div>
-            {% endif %}
-        </div>
-        
-        <div class="form-group">
-            <label for="{{ form.github_username.id_for_label }}">GitHub Username (Optional)</label>
-            {{ form.github_username }}
-            {% if form.github_username.errors %}
-                <div class="error">{{ form.github_username.errors }}</div>
-            {% endif %}
-        </div>
-        
-        <div class="form-group">
-            <label for="{{ form.experience_level.id_for_label }}">Experience Level</label>
-            {{ form.experience_level }}
-            {% if form.experience_level.errors %}
-                <div class="error">{{ form.experience_level.errors }}</div>
-            {% endif %}
-        </div>
-        
-        <button type="submit" class="btn btn-primary">Register</button>
-    </form>
-    
-    <div class="form-footer" style="text-align: center; margin-top: 20px;">
-        <p>Already have an account?</p>
-        <a href="{% url 'login' %}" class="btn btn-secondary btn-small btn-half">Log in</a>
     </div>
 </div>
+
+<style>
+/* Page-specific enhancements */
+.glass-card-blue:hover {
+    box-shadow: 
+        0 20px 50px rgba(59, 130, 246, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Enhanced select styling */
+select.form-input {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.75rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+    appearance: none;
+}
+
+/* Form validation states */
+.form-input:valid {
+    border-color: var(--accent-green);
+}
+
+.form-input:invalid:not(:placeholder-shown) {
+    border-color: var(--accent-red);
+}
+</style>
+
 {% endblock %}

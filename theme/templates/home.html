@@ -15,8 +15,8 @@
         <!-- Left side: Text and Authentication -->
         <div class="hero-text">
             <h1 class="hero-title">
-                For <span class="highlight">Great</span><br>
-                Developers
+                For <span class="changing-text"></span><br>
+                <span class="developers-text">Developers</span>
             </h1>
             <p class="hero-description">
                 Boost.dev empowers developers by providing a platform to share knowledge, learn new techniques, 
@@ -46,10 +46,6 @@
                     </a>
                 </div>
                 
-                <div class="divider-enhanced">
-                    or continue with
-                </div>
-
                 <div class="primary-buttons">
                     <a href="/register/" class="text-link primary">
                         Register Now
@@ -64,7 +60,7 @@
         <!-- Right side: Enhanced Image -->
         <div class="hero-image">
             <div class="hero-image-container">
-                <img src="{% static 'css/images/imposter-image.webp' %}" alt="Imposter Syndrome" />
+                <img src="{% static 'css/images/imposter-syndrome-cats.jpg' %}" alt="Imposter Syndrome" />
             </div>
         </div>
     </div>
@@ -261,6 +257,31 @@
     pointer-events: none;
 }
 
+/* Changing text animation */
+.changing-text {
+    position: relative;
+    color: #ffffff !important;
+    font-weight: 800;
+    opacity: 1 !important;
+    transition: opacity 0.3s ease;
+    min-width: 120px; /* Prevent layout shift */
+    display: inline-block;
+    -webkit-text-fill-color: #ffffff !important;
+    background: none !important;
+    -webkit-background-clip: unset !important;
+    background-clip: unset !important;
+}
+
+/* Developers text styling */
+.developers-text {
+    position: relative;
+    display: inline-block;
+    background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
 /* Floating elements positioning */
 .hero-enhanced::before {
     content: '';
@@ -294,5 +315,34 @@ html {
     scroll-behavior: smooth;
 }
 </style>
+
+<script>
+// Changing text animation
+document.addEventListener('DOMContentLoaded', function() {
+    const words = ['Junior', 'Senior', 'New', 'Beginner'];
+    const changingText = document.querySelector('.changing-text');
+    let currentIndex = 0;
+    
+    function changeText() {
+        if (changingText) {
+            changingText.style.opacity = '0';
+            
+            setTimeout(() => {
+                changingText.textContent = words[currentIndex];
+                changingText.style.opacity = '1';
+                currentIndex = (currentIndex + 1) % words.length;
+            }, 300);
+        }
+    }
+    
+    // Set initial text
+    if (changingText) {
+        changingText.textContent = words[0];
+        
+        // Change text every 2 seconds
+        setInterval(changeText, 2000);
+    }
+});
+</script>
 
 {% endblock %}
