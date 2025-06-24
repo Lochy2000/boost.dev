@@ -1,7 +1,8 @@
-![image](https://github.com/user-attachments/assets/278cffae-f252-4e71-99f2-859eba8c18f2)
 
 
-# Boost.dev  <a id="top"/>
+# Boost.dev  <a id="top"/> ![rocket](https://github.com/user-attachments/assets/51db1815-5aa0-4cbd-84f4-6f884db2dcce)
+
+
 
 <img src="theme\static\css\images\responsiveness.png"> 
 
