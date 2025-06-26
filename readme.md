@@ -4,6 +4,14 @@
 
 
 
+![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python&logoColor=white)
+![Django](https://img.shields.io/badge/Django-5.2-green?logo=django&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-blue?logo=postgresql&logoColor=white)
+![Heroku](https://img.shields.io/badge/Deployed-Heroku-purple?logo=heroku&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-blue?logo=tailwindcss&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green)
+![Status](https://img.shields.io/badge/Status-Active-brightgreen)
+
 <img src="theme\static\css\images\responsiveness.png"> 
 
 ## Introduction
@@ -13,13 +21,22 @@ It aims to show users that they have good skills and to help dealing with Impost
 The idea for the project came from one of the members and was consistent with the suggested projects by CI - Hack Team.<br>
 Incorporating more than one idea of those suggested.<br>
 
-Live site: [Boost.dev](https://boost-dev-9ed56bf6f182.herokuapp.com/)
+🌐 **Live site**: [Boost.dev](https://boost-dev-9ed56bf6f182.herokuapp.com/)
+
+### 📊 Project Stats
+![GitHub contributors](https://img.shields.io/badge/Contributors-3-blue)
+![GitHub last commit](https://img.shields.io/badge/Last_Commit-Active-brightgreen)
+![Lines of code](https://img.shields.io/badge/Lines_of_Code-5000+-purple)
+![GitHub repo size](https://img.shields.io/badge/Repo_Size-Optimized-orange)
 
 ## Table of Contents
 - [Boost.dev](#boostdev)
     - [Introduction](#introduction)
     - [Table of Contents](#table-of-contents)
     - [Overview](#overview)
+- [Documentation](#documentation)
+    - [Technical Documentation](#technical-documentation)
+    - [Development Resources](#development-resources)
 - [Ux - User Experience](#ux---user-experience)
     - [Colour Scheme](#colour-scheme)
     - [Contrast Check](#contrast-check)
@@ -77,6 +94,31 @@ It's meant to be an interactive and responsive site.
 The site is designed to be responsive in different screen sizes.
 
 Our main goal is to let the user know that they are great developers and hopefully to let them improve their confidence with coding and to help others in similar situation, creating a supporting community for developers that have low-confidence.
+
+## Documentation
+
+📚 **Comprehensive Technical Documentation Available**
+
+For developers, system administrators, and contributors, we provide detailed technical documentation covering all aspects of the project:
+
+### 🏗️ Architecture & Development
+[![Architecture](https://img.shields.io/badge/📖_Architecture-Documentation-blue)](documentation/ARCHITECTURE.md) - Complete system architecture, models, and design patterns  
+[![Development Guide](https://img.shields.io/badge/🛠️_Development-Guide-green)](documentation/DEVELOPMENT_GUIDE.md) - Setup, coding standards, and best practices  
+[![API Reference](https://img.shields.io/badge/🔌_API-Reference-orange)](documentation/API_REFERENCE.md) - Endpoints, integrations, and data models  
+
+### 🚀 Deployment & Operations  
+[![Deployment Guide](https://img.shields.io/badge/🚀_Deployment-Guide-red)](documentation/DEPLOYMENT_GUIDE.md) - Production deployment and maintenance  
+[![URL Reference](https://img.shields.io/badge/🔗_URL-Routes-purple)](documentation/URL_ROUTES_REFERENCE.md) - Complete routing and endpoint reference  
+[![Project Summary](https://img.shields.io/badge/📋_Quick-Start-yellow)](documentation/PROJECT_SUMMARY.md) - 5-minute setup and overview  
+
+### 📊 Feature Documentation
+[![Progression System](https://img.shields.io/badge/🏆_Progress-System-gold)](documentation/progression_doc.md) - Points, levels, and achievements  
+[![Tech News](https://img.shields.io/badge/📰_Tech-News-cyan)](documentation/tech_news_docs.md) - News API integration  
+[![Fixes & Updates](https://img.shields.io/badge/🔧_Fixes-Updates-gray)](documentation/FIXES.md) - Bug fixes and troubleshooting  
+
+> **Quick Start for Developers**: Start with the [Project Summary](documentation/PROJECT_SUMMARY.md) for a 5-minute setup, then dive into the [Development Guide](documentation/DEVELOPMENT_GUIDE.md) for detailed instructions.
+
+[Back to top](#top)
 
 ## UX - User Experience
 This project was inspired in 2 sites:
@@ -268,29 +310,38 @@ Area with different resources related to Tech:<br>
 [Back to top](#top)
 
 ## Technologies Used
-### Languages and Technologies
-  - HTML
-  - CSS
-  - JavaScript
-  - Python
-  - PostgreSQL
-  - Git
-  - Github
-  - VS-Code
-  - Django
-  - Cloudinary
-  - Heroku
+## Technologies Used
 
-### Libraries
-  - Django v3.2.19
-  - Google Fonts
-  - Tailwind CSS
+### Languages and Technologies
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)
+![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?logo=postgresql&logoColor=white)
+![Git](https://img.shields.io/badge/Git-F05032?logo=git&logoColor=white)
+![GitHub](https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white)
+![VS Code](https://img.shields.io/badge/VS_Code-007ACC?logo=visualstudiocode&logoColor=white)
+![Django](https://img.shields.io/badge/Django-5.2-092E20?logo=django&logoColor=white)
+![Heroku](https://img.shields.io/badge/Heroku-430098?logo=heroku&logoColor=white)
+
+### Libraries and Frameworks
+![Django](https://img.shields.io/badge/Django-5.2-092E20?logo=django&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?logo=tailwind-css&logoColor=white)
+![Google Fonts](https://img.shields.io/badge/Google_Fonts-4285F4?logo=google&logoColor=white)
+![WhiteNoise](https://img.shields.io/badge/WhiteNoise-Static_Files-brightgreen)
+![Social Auth](https://img.shields.io/badge/Social_Auth-OAuth2-blue)
+
+### APIs and External Services
+![Google Gemini](https://img.shields.io/badge/Google_Gemini-AI_API-4285F4?logo=google&logoColor=white)
+![News API](https://img.shields.io/badge/News_API-Tech_News-orange)
+![GitHub OAuth](https://img.shields.io/badge/GitHub_OAuth-Authentication-181717?logo=github&logoColor=white)
+![Google OAuth](https://img.shields.io/badge/Google_OAuth-Authentication-4285F4?logo=google&logoColor=white)
 
 ### Tools and Programs
-  - Balsamiq wireframe
-  - MSCopilot AI
-  - VS-Code Copilot
-  - ChatGPT
+![Balsamiq](https://img.shields.io/badge/Balsamiq-Wireframes-CC0000)
+![GitHub Copilot](https://img.shields.io/badge/GitHub_Copilot-AI_Assistant-181717?logo=github&logoColor=white)
+![ChatGPT](https://img.shields.io/badge/ChatGPT-AI_Assistant-00A67E)
+![Claude](https://img.shields.io/badge/Claude-AI_Assistant-FF6B35)
 
 [Back to top](#top)
 
@@ -505,7 +556,13 @@ Generally, adapting the prompts to make the request specific and concise can hel
 [Back to top](#top)
 
 ## Testing
-Validation of HTML/CSS, Lighthouse Audits, Bugs
+
+![Testing](https://img.shields.io/badge/Testing-Passed-brightgreen)
+![HTML](https://img.shields.io/badge/HTML-Validated-green)
+![CSS](https://img.shields.io/badge/CSS-Validated-green)
+![Lighthouse](https://img.shields.io/badge/Lighthouse-Optimized-yellow)
+
+Comprehensive validation of HTML/CSS, Lighthouse Audits, and manual testing across multiple devices and browsers.
 
 ### HTML Validation
 Used [W3C Markup Validation Service](https://validator.w3.org/#validate_by_input) to test the HTML on all webpages and updated as needed. No errors found after fixing as can be seen on the examples bellow.
@@ -554,9 +611,33 @@ Website manually tested on the following devices/browsers for responsiveness:
 [Back to top](#top)
 
 ## Future Features
-- User projects showcase
-- Making the challenges more interactive
-- Adding a small IDE on the site to run the code created by the user
+
+🚀 **Planned Enhancements**
+
+![Roadmap](https://img.shields.io/badge/Roadmap-In_Progress-yellow)
+![Contributions](https://img.shields.io/badge/Contributions-Welcome-brightgreen)
+
+### 🏗️ Platform Enhancements
+- **User Projects Showcase** - Gallery for users to display their coding projects
+- **Interactive Code Editor** - In-browser IDE for running and testing code solutions
+- **Real-time Code Collaboration** - Pair programming features for community challenges
+
+### 🤖 AI & Learning Features  
+- **Advanced AI Mentoring** - Personalized learning paths based on user progress
+- **Code Review Bot** - Automated code quality feedback and suggestions
+- **Smart Challenge Generation** - AI-created challenges based on user skill gaps
+
+### 🌐 Community & Social
+- **Mentorship Program** - Connect experienced developers with beginners
+- **Study Groups** - Virtual coding sessions and group challenges
+- **Developer Blog Platform** - User-generated content about overcoming imposter syndrome
+
+### 📊 Analytics & Insights
+- **Progress Analytics** - Detailed insights into learning patterns and growth
+- **Skill Assessment** - Comprehensive evaluation of coding abilities
+- **Career Path Guidance** - Personalized recommendations for skill development
+
+> 💡 **Want to contribute?** Check our [Development Guide](documentation/DEVELOPMENT_GUIDE.md) for contribution guidelines!
 
 ## Credits
 ### Code References
@@ -568,12 +649,27 @@ This was a tough hackathon as 2-3 members of the initial group left in the begin
 
 It was a fun experience, with everyone learning something new in different ways, great communication and motivation.
 
-### Owner Details
-This website was created by Geraldine, Locky and Carlos. Students of Code Institute.<br>
+### 👥 Development Team
 
-  - [Geraldine](https://github.com/Gerbil1511)
-  - [Locky](https://github.com/Lochy2000)
-  - [Carlos](https://github.com/Carlos-n21)
+![Team](https://img.shields.io/badge/Team-3_Developers-blue)
+![Code Institute](https://img.shields.io/badge/Code_Institute-Students-orange)
+
+This website was created by a collaborative team of Code Institute students:
+
+[![Geraldine](https://img.shields.io/badge/👩‍💻_Geraldine-Frontend_%26_UX-pink)](https://github.com/Gerbil1511)  
+[![Locky](https://img.shields.io/badge/👨‍💻_Locky-Full--Stack_Development-blue)](https://github.com/Lochy2000)  
+[![Carlos](https://img.shields.io/badge/👨‍💻_Carlos-Backend_%26_AI_Integration-green)](https://github.com/Carlos-n21)
+
+### 🤝 Contributing
+
+![Contributions Welcome](https://img.shields.io/badge/Contributions-Welcome-brightgreen)
+![Open Source](https://img.shields.io/badge/Open_Source-❤️-red)
+
+We welcome contributions! Please check our [Development Guide](documentation/DEVELOPMENT_GUIDE.md) for:
+- Setup instructions
+- Coding standards  
+- Contribution guidelines
+- Code review process
 
 [Back to top](#top)
 
