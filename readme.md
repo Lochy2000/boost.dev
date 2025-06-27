@@ -23,6 +23,8 @@ Incorporating more than one idea of those suggested.<br>
 
 🌐 **Live site**: [Boost.dev](https://boost-dev-9ed56bf6f182.herokuapp.com/)
 
+**Imposter Syndrom**: [Article about infinite learning and imposter sysndrome](https://www.linkedin.com/pulse/taming-tech-tidal-wave-surviving-infinite-scroll-learning-without-hlyoe/)
+
 ### 📊 Project Stats
 ![GitHub contributors](https://img.shields.io/badge/Contributors-3-blue)
 ![GitHub last commit](https://img.shields.io/badge/Last_Commit-Active-brightgreen)
