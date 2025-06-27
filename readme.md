@@ -99,21 +99,21 @@ Our main goal is to let the user know that they are great developers and hopeful
 
 ## Documentation
 
-📚 **Comprehensive Technical Documentation Available**
+**Comprehensive Technical Documentation Available**
 
 For developers, system administrators, and contributors, we provide detailed technical documentation covering all aspects of the project:
 
-### 🏗️ Architecture & Development
+### Architecture & Development
 [![Architecture](https://img.shields.io/badge/📖_Architecture-Documentation-blue)](documentation/ARCHITECTURE.md) - Complete system architecture, models, and design patterns  
 [![Development Guide](https://img.shields.io/badge/🛠️_Development-Guide-green)](documentation/DEVELOPMENT_GUIDE.md) - Setup, coding standards, and best practices  
 [![API Reference](https://img.shields.io/badge/🔌_API-Reference-orange)](documentation/API_REFERENCE.md) - Endpoints, integrations, and data models  
 
-### 🚀 Deployment & Operations  
+### Deployment & Operations  
 [![Deployment Guide](https://img.shields.io/badge/🚀_Deployment-Guide-red)](documentation/DEPLOYMENT_GUIDE.md) - Production deployment and maintenance  
 [![URL Reference](https://img.shields.io/badge/🔗_URL-Routes-purple)](documentation/URL_ROUTES_REFERENCE.md) - Complete routing and endpoint reference  
 [![Project Summary](https://img.shields.io/badge/📋_Quick-Start-yellow)](documentation/PROJECT_SUMMARY.md) - 5-minute setup and overview  
 
-### 📊 Feature Documentation
+### Feature Documentation
 [![Progression System](https://img.shields.io/badge/🏆_Progress-System-gold)](documentation/progression_doc.md) - Points, levels, and achievements  
 [![Tech News](https://img.shields.io/badge/📰_Tech-News-cyan)](documentation/tech_news_docs.md) - News API integration  
 [![Fixes & Updates](https://img.shields.io/badge/🔧_Fixes-Updates-gray)](documentation/FIXES.md) - Bug fixes and troubleshooting  
