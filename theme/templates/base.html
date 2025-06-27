@@ -23,6 +23,8 @@
   <link rel="stylesheet" href="{% static 'css/home-enhanced.css' %}">
   <link rel="stylesheet" href="{% static 'css/boost-card.css' %}">
   <link rel="stylesheet" href="{% static 'css/weather-card.css' %}">
+  <link rel="stylesheet" href="{% static 'css/navbar-fix.css' %}">
+  <link rel="stylesheet" href="{% static 'css/loading-animation.css' %}">
 
   <!-- FontAwesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -36,16 +38,16 @@
 
   <!-- Enhanced Navbar -->
   <header class="nav-enhanced shadow-lg sticky top-0 z-50">
-    <nav class="container mx-auto flex items-center justify-between px-4 py-3 lg:px-6 xl:px-8">
+    <nav class="container mx-auto flex items-center justify-between px-4 py-3 lg:px-6 xl:px-8 min-h-[64px]">
       <!-- Logo Section -->
-      <div class="flex items-center">
+      <div class="flex items-center flex-shrink-0">
         <a href="/" class="text-2xl font-bold text-white flex items-center gap-2 hover:opacity-80 transition-opacity focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2 focus:ring-offset-transparent rounded-lg">
           <img src="{% static 'images/whitlogo.png' %}" alt="Boost.dev Logo" class="responsive-logo" />
         </a>
       </div>
 
       <!-- Desktop Navigation -->
-      <div class="hidden lg:flex items-center space-x-6">
+      <div class="hidden lg:flex items-center space-x-4 xl:space-x-6 flex-shrink-0">
         <a href="{% url 'dashboard:dashboard' %}" class="nav-link">
           <i class="fas fa-home mr-2"></i>Dashboard
         </a>
@@ -64,19 +66,21 @@
       </div>
 
       <!-- User Profile Section -->
-      <div class="flex items-center space-x-4">
+      <div class="flex items-center space-x-2 md:space-x-4 flex-shrink-0">
         {% if user.is_authenticated %}
         <!-- Progress Bar Section -->
-        <div class="hidden lg:block">
+        <div class="hidden lg:block progress-section">
           <div class="flex items-center space-x-3">
             <div class="text-right">
               <div class="text-xs text-gray-300">Level {{ user.progress.level }}</div>
-              <div class="w-24 bg-gray-700 rounded-full h-2 mt-1">
-                <div class="bg-{{ user.progress.get_level_color }}-500 h-2 rounded-full transition-all duration-500"
-                     style="width: {{ user.progress.calculate_percentage }}%"></div>
+              <div class="progress-bar-container">
+                <div class="w-20 bg-gray-700 rounded-full h-2 mt-1">
+                  <div class="bg-{{ user.progress.get_level_color }}-500 h-2 rounded-full transition-all duration-500"
+                       style="width: {{ user.progress.calculate_percentage }}%"></div>
+                </div>
               </div>
             </div>
-            <div class="text-xs text-gray-400">
+            <div class="text-xs text-gray-400 hidden xl:block">
               {{ user.progress.points }}/{{ user.progress.next_level_threshold }}
             </div>
           </div>
@@ -97,16 +101,16 @@
 
         <!-- User Avatar & Dropdown -->
         <div class="relative group">
-          <div class="flex items-center space-x-2 cursor-pointer p-2 hover:bg-gray-700 rounded-lg transition-colors">
+          <button class="flex items-center space-x-2 p-2 hover:bg-gray-700 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400">
             <img src="{{ user.userprofile.avatar|default:'https://via.placeholder.com/32' }}"
                  alt="{{ user.username }}'s Profile"
                  class="w-8 h-8 rounded-full object-cover border border-gray-600" />
             <div class="hidden lg:block text-sm text-white">{{ user.username }}</div>
             <i class="fas fa-chevron-down text-xs text-gray-400 group-hover:text-white transition-colors"></i>
-          </div>
+          </button>
 
           <!-- Enhanced Dropdown -->
-          <div class="absolute right-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-lg shadow-xl opacity-0 group-hover:opacity-100 transition-all duration-300 z-50 transform translate-y-2 group-hover:translate-y-0">
+          <div class="absolute right-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
             <div class="p-3 border-b border-gray-700">
               <div class="text-sm font-medium text-white">{{ user.username }}</div>
               <div class="text-xs text-gray-400">Level {{ user.progress.level }}</div>
@@ -373,6 +377,8 @@
     }
   </script>
   {% block extra_js %}
+  <!-- Include loading animation script -->
+  <script src="{% static 'js/page-loading.js' %}"></script>
   <!-- Include notification scripts -->
   <script src="{% static 'js/notifications.js' %}"></script>
   <script src="{% static 'js/wins.js' %}"></script>
