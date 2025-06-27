@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navbar Test - Boost.dev</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Include your navbar-fix.css styles here for testing */
+        :root {
+            --primary-bg: #0d1117;
+            --secondary-bg: #161b22;
+            --tertiary-bg: #21262d;
+            --accent-purple: #8b5cf6;
+            --text-primary: #f0f6fc;
+            --text-secondary: #8b949e;
+            --border-subtle: #30363d;
+        }
+        
+        body { 
+            background: var(--primary-bg); 
+            color: var(--text-primary); 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        /* Copy the responsive logo styles */
+        .responsive-logo {
+            width: 200px;
+            max-width: 100%;
+            height: auto; 
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 1200px) {
+            .responsive-logo { width: 180px; }
+        }
+        @media (max-width: 1024px) {
+            .responsive-logo { width: 160px; }
+        }
+        @media (max-width: 768px) {
+            .responsive-logo { width: 140px; }
+        }
+        @media (max-width: 640px) {
+            .responsive-logo { width: 120px; }
+        }
+        @media (max-width: 480px) {
+            .responsive-logo { width: 100px; }
+        }
+        
+        .nav-enhanced {
+            background: rgba(13, 17, 23, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        
+        .nav-link {
+            position: relative;
+            padding: 0.5rem 0.75rem;
+            border-radius: 8px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+        }
+        
+        .nav-link:hover {
+            color: var(--text-primary);
+            background: rgba(139, 92, 246, 0.1);
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-900">
+    <!-- Test Navbar -->
+    <header class="nav-enhanced shadow-lg sticky top-0 z-50">
+        <nav class="container mx-auto flex items-center justify-between px-4 py-3 lg:px-6 xl:px-8 min-h-[64px]">
+            <!-- Logo Section -->
+            <div class="flex items-center flex-shrink-0">
+                <a href="#" class="text-2xl font-bold text-white flex items-center gap-2 hover:opacity-80 transition-opacity">
+                    <div class="responsive-logo bg-purple-600 rounded-lg p-2 flex items-center justify-center text-white font-bold">
+                        BOOST.DEV
+                    </div>
+                </a>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <div class="hidden lg:flex items-center space-x-4 xl:space-x-6 flex-shrink-0">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-home mr-2"></i>Dashboard
+                </a>
+                <a href="#" class="nav-link">
+                    <i class="fas fa-newspaper mr-2"></i>Resources
+                </a>
+                <a href="#" class="nav-link">
+                    <i class="fas fa-trophy mr-2"></i>My Wins
+                </a>
+                <a href="#" class="nav-link">
+                    <i class="fas fa-code mr-2"></i>Challenges
+                </a>
+                <a href="#" class="nav-link">
+                    <i class="fas fa-users mr-2"></i>Community
+                </a>
+            </div>
+
+            <!-- User Profile Section -->
+            <div class="flex items-center space-x-2 md:space-x-4 flex-shrink-0">
+                <!-- Progress Bar (Desktop) -->
+                <div class="hidden lg:block progress-section">
+                    <div class="flex items-center space-x-3">
+                        <div class="text-right">
+                            <div class="text-xs text-gray-300">Level 5</div>
+                            <div class="progress-bar-container">
+                                <div class="w-20 bg-gray-700 rounded-full h-2 mt-1">
+                                    <div class="bg-purple-500 h-2 rounded-full transition-all duration-500" style="width: 75%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-xs text-gray-400 hidden xl:block">400/500</div>
+                    </div>
+                </div>
+
+                <!-- Notification Icon -->
+                <div class="relative">
+                    <button class="text-gray-300 hover:text-white transition-colors p-2 hover:bg-gray-700 rounded-lg">
+                        <i class="fas fa-bell text-lg"></i>
+                        <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
+                    </button>
+                </div>
+
+                <!-- User Dropdown -->
+                <div class="relative group">
+                    <button class="flex items-center space-x-2 p-2 hover:bg-gray-700 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-purple-400">
+                        <img src="https://via.placeholder.com/32" alt="Profile" class="w-8 h-8 rounded-full object-cover border border-gray-600" />
+                        <div class="hidden lg:block text-sm text-white">testuser</div>
+                        <i class="fas fa-chevron-down text-xs text-gray-400 group-hover:text-white transition-colors"></i>
+                    </button>
+
+                    <!-- Dropdown Menu -->
+                    <div class="absolute right-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-50">
+                        <div class="p-3 border-b border-gray-700">
+                            <div class="text-sm font-medium text-white">testuser</div>
+                            <div class="text-xs text-gray-400">Level 5</div>
+                        </div>
+                        <div class="py-2">
+                            <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors">
+                                <i class="fas fa-user mr-3"></i>My Profile
+                            </a>
+                            <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors">
+                                <i class="fas fa-cog mr-3"></i>Settings
+                            </a>
+                        </div>
+                        <div class="border-t border-gray-700">
+                            <button class="flex items-center w-full px-4 py-3 text-sm text-red-400 hover:bg-red-900/20 hover:text-red-300 transition-colors">
+                                <i class="fas fa-sign-out-alt mr-3"></i>Log Out
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="lg:hidden text-white p-2 hover:bg-gray-700 rounded-lg transition-colors">
+                    <i class="fas fa-bars text-lg"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-3xl font-bold text-white mb-8">Navbar Test Page</h1>
+            
+            <div class="grid gap-6 md:grid-cols-2">
+                <div class="bg-gray-800 rounded-lg p-6">
+                    <h2 class="text-xl font-semibold text-white mb-4">Responsive Testing</h2>
+                    <ul class="space-y-2 text-gray-300">
+                        <li>✅ Resize window to test logo scaling</li>
+                        <li>✅ Check dropdown hover behavior</li>
+                        <li>✅ Verify text doesn't overflow</li>
+                        <li>✅ Test on mobile devices</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-gray-800 rounded-lg p-6">
+                    <h2 class="text-xl font-semibold text-white mb-4">Breakpoints</h2>
+                    <ul class="space-y-2 text-gray-300 text-sm">
+                        <li><strong>1200px+:</strong> Logo 200px, full features</li>
+                        <li><strong>1024-1199px:</strong> Logo 180px</li>
+                        <li><strong>768-1023px:</strong> Logo 160px, no progress</li>
+                        <li><strong>640-767px:</strong> Logo 140px</li>
+                        <li><strong>480-639px:</strong> Logo 120px</li>
+                        <li><strong>320-479px:</strong> Logo 100px, minimal</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="mt-8 bg-green-900/20 border border-green-700 rounded-lg p-4">
+                <p class="text-green-300">
+                    <i class="fas fa-check-circle mr-2"></i>
+                    If you can see this page properly on different screen sizes and the dropdown works correctly, 
+                    the navbar fixes are working as intended!
+                </p>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

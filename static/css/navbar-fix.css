@@ -1,0 +1,280 @@
+/* ===== NAVBAR FIXES ===== */
+
+/* Fix logo scaling and responsiveness */
+.responsive-logo {
+    width: 200px; /* Reduced base size */
+    max-width: 100%;
+    height: auto; 
+    transition: all 0.3s ease;
+}
+
+/* Logo container fixes */
+.nav-enhanced .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+/* Fix navigation container to prevent overflow */
+.nav-enhanced nav {
+    min-height: 64px; /* Ensure consistent height */
+    align-items: center;
+}
+
+/* Desktop navigation improvements */
+.nav-enhanced .hidden.lg\\:flex {
+    gap: 1rem; /* Reduce gap between items */
+}
+
+.nav-link {
+    white-space: nowrap; /* Prevent text wrapping */
+    font-size: 0.9rem; /* Slightly smaller font */
+    padding: 0.5rem 0.75rem; /* Adjust padding */
+    display: flex;
+    align-items: center;
+    gap: 0.375rem; /* Space between icon and text */
+}
+
+.nav-link i {
+    width: 16px; /* Fixed icon width */
+    text-align: center;
+}
+
+/* Fix dropdown hover area issues */
+.relative.group {
+    position: relative;
+}
+
+/* Ensure dropdown only appears when hovering the actual button */
+.relative.group > div:first-child {
+    position: relative;
+    z-index: 10;
+}
+
+/* Fix dropdown positioning and hover zone */
+.relative.group > div:last-child {
+    position: absolute;
+    top: 100%; /* Position right below the button */
+    right: 0;
+    margin-top: 0.5rem;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.2s ease;
+    pointer-events: none;
+    z-index: 50;
+}
+
+/* Show dropdown only when hovering the parent */
+.relative.group:hover > div:last-child {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+/* Add a small bridge area to prevent dropdown from disappearing */
+.relative.group::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 100%;
+    height: 0.5rem;
+    background: transparent;
+    z-index: 40;
+}
+
+/* Progress bar responsiveness */
+.progress-section {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.progress-bar-container {
+    min-width: 80px; /* Minimum width for progress bar */
+}
+
+/* Mobile menu styles (missing from original CSS) */
+.mobile-nav-link {
+    display: flex;
+    align-items: center;
+    padding: 1rem 0;
+    color: var(--text-secondary, #9ca3af);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    gap: 1rem;
+}
+
+.mobile-nav-link:hover {
+    color: var(--text-primary, #ffffff);
+    background: rgba(139, 92, 246, 0.1);
+    padding-left: 1rem;
+    border-radius: 8px;
+    border-bottom-color: transparent;
+}
+
+.mobile-nav-link i {
+    width: 20px;
+    text-align: center;
+    color: var(--accent-purple, #8b5cf6);
+}
+
+.mobile-nav-link span {
+    flex: 1;
+    font-weight: 500;
+}
+
+.mobile-nav-link .fa-chevron-right {
+    color: var(--text-muted, #6e7681);
+    transition: transform 0.3s ease;
+}
+
+.mobile-nav-link:hover .fa-chevron-right {
+    transform: translateX(4px);
+}
+
+/* Responsive typography for nav elements */
+@media (max-width: 1200px) {
+    .responsive-logo {
+        width: 180px;
+    }
+    
+    .nav-link {
+        font-size: 0.85rem;
+        padding: 0.5rem;
+    }
+    
+    .nav-link i {
+        display: none; /* Hide icons on smaller screens to save space */
+    }
+    
+    /* Hide progress bar text on smaller screens */
+    .progress-section .text-xs:not(.text-gray-400) {
+        display: none;
+    }
+}
+
+@media (max-width: 1024px) {
+    .responsive-logo {
+        width: 160px;
+    }
+    
+    /* Hide entire progress section on tablets */
+    .hidden.lg\\:block {
+        display: none !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .responsive-logo {
+        width: 140px;
+    }
+    
+    /* Improve mobile header spacing */
+    .nav-enhanced nav {
+        padding: 0.75rem 1rem;
+    }
+    
+    /* Ensure user avatar section doesn't get cramped */
+    .flex.items-center.space-x-4 {
+        gap: 0.5rem;
+    }
+    
+    /* Hide username on mobile */
+    .hidden.lg\\:block.text-sm {
+        display: none !important;
+    }
+}
+
+@media (max-width: 640px) {
+    .responsive-logo {
+        width: 120px;
+    }
+    
+    /* Further reduce spacing on small screens */
+    .nav-enhanced nav {
+        padding: 0.5rem 0.75rem;
+    }
+    
+    /* Hide notification icon on very small screens */
+    .relative button i.fa-bell {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .responsive-logo {
+        width: 100px;
+    }
+    
+    /* Minimal spacing for very small screens */
+    .nav-enhanced nav {
+        padding: 0.5rem;
+    }
+    
+    /* Stack user elements more efficiently */
+    .flex.items-center.space-x-4 {
+        gap: 0.25rem;
+    }
+}
+
+/* Fix for logo container link */
+.nav-enhanced a:first-child {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0; /* Prevent logo from shrinking */
+}
+
+/* Ensure navigation doesn't wrap */
+.nav-enhanced .hidden.lg\\:flex {
+    flex-shrink: 0;
+    min-width: 0; /* Allow flex items to shrink */
+}
+
+/* User section optimization */
+.nav-enhanced .flex.items-center.space-x-4 {
+    flex-shrink: 0;
+    min-width: 0;
+}
+
+/* Notification dropdown positioning fix */
+#notification-dropdown {
+    min-width: 280px;
+    max-width: 90vw;
+    right: 0;
+    transform-origin: top right;
+}
+
+/* Better mobile menu backdrop */
+#mobile-menu {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+/* Mobile menu header improvements */
+#mobile-menu .flex.justify-between.items-center {
+    background: rgba(22, 27, 34, 0.95);
+    backdrop-filter: blur(12px);
+}
+
+/* Glass card improvements for mobile menu */
+#mobile-menu .glass-card {
+    background: rgba(33, 38, 45, 0.9);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Fix any z-index issues */
+.nav-enhanced {
+    z-index: 100;
+}
+
+#mobile-menu {
+    z-index: 999;
+}
+
+.relative.group > div:last-child {
+    z-index: 150;
+}
