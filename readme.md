@@ -12,7 +12,8 @@
 ![License](https://img.shields.io/badge/License-MIT-green)
 ![Status](https://img.shields.io/badge/Status-Active-brightgreen)
 
-<img src="theme\static\css\images\responsiveness.png"> 
+<img width="1841" height="770" alt="image" src="https://github.com/user-attachments/assets/2a8fa121-e465-458d-a191-c1399cc5dee8" />
+
 
 ## Introduction
 
